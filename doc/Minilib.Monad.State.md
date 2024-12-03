@@ -22,6 +22,10 @@ State monad wraps a function from a initial state to a pair of a value and a fin
 
 A trait for generic state monads that manages the internal state.
 
+#### associated type `StateType sm`
+
+The type of the internal state.
+
 #### method `get_state : sm (Minilib.Monad.State::MonadStateIF::StateType sm)`
 
 A monad that returns the internal state as a value.

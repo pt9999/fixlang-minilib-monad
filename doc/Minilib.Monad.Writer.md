@@ -27,6 +27,10 @@ Writer monad wraps a pair of an environment and a value.
 
 A trait for generic writer monads that manages the internal environment.
 
+#### associated type `EnvType wm`
+
+The type of the environment.
+
 #### method `tell : Minilib.Monad.Writer::MonadWriterIF::EnvType wm -> wm ()`
 
 Tells specified value to the internal environment.

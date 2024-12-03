@@ -27,6 +27,10 @@ Reader monad wraps a function from an environment to a value.
 
 A trait for generic reader monads that manages the internal environment.
 
+#### associated type `EnvType rm`
+
+The type of the internal environment.
+
 #### method `ask : rm (Minilib.Monad.Reader::MonadReaderIF::EnvType rm)`
 
 A monad that returns the internal environment as a value.
