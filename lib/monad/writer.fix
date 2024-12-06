@@ -75,10 +75,6 @@ get_value = |ma| ma.get_value_t.get;
 map_writer_t: [m: Monad, n: Monad] (m (e, a) -> n (e1, b)) -> WriterT e m a -> WriterT e1 n b;
 map_writer_t = |f, ma| writer_t $ f(ma.run_writer_t);
 
-// Lifts an underlyind monad to a writer monad.
-lift_writer: [e: Monoid, m: Monad] m a -> WriterT e m a;
-lift_writer = |ma| writer_t $ ma.bind(|a| pure $ (mempty, a));
-
 impl [m: Monad] WriterT e m: Functor {
     map = |f, ma| writer_t $ do {
         let (e, a) = *ma.run_writer_t;
@@ -115,7 +111,7 @@ impl [e: Monoid, m: Monad] WriterT e m: MonadWriterIF {
 }
 
 impl [e: Monoid] WriterT e: MonadTrans {
-    lift_t = lift_writer;
+    lift_t = |ma| writer_t $ ma.bind(|a| pure $ (mempty, a));
 }
 
 impl [e: Monoid, m: MonadError] WriterT e m: MonadErrorIF {

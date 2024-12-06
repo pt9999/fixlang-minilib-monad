@@ -79,10 +79,6 @@ Gets the value from a writer monad.
 
 Gets the value from a generic writer monad.
 
-### `lift_writer : [e : Minilib.Trait.Monoid::Monoid, m : Std::Monad] m a -> Minilib.Monad.Writer::WriterT e m a`
-
-Lifts an underlyind monad to a writer monad.
-
 ### `map_writer_t : [m : Std::Monad, n : Std::Monad] (m (e, a) -> n (e1, b)) -> Minilib.Monad.Writer::WriterT e m a -> Minilib.Monad.Writer::WriterT e1 n b`
 
 Maps an underlying monad and a value using the specified function.

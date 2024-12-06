@@ -61,10 +61,6 @@ map_reader_t = |f, rma| reader_t $ |e| f(rma.run_reader_t(e));
 with_reader_t: [m: Monad] (e1 -> e) -> ReaderT e m a -> ReaderT e1 m a;
 with_reader_t = |f, rma| reader_t $ |e1| rma.run_reader_t(f(e1));
 
-// Lifts an underlying monad to a reader monad.
-lift_reader: [m: Monad] m a -> ReaderT e m a;
-lift_reader = |ma| reader_t $ |_| ma;
-
 impl [m: Monad] ReaderT e m: Functor {
     map = |f, rma| reader_t $ |e| (
         let a = *rma.run_reader_t(e);
@@ -87,7 +83,7 @@ impl [m: Monad] ReaderT e m: MonadReaderIF {
 }
 
 impl ReaderT e: MonadTrans {
-    lift_t = lift_reader;
+    lift_t = |ma| reader_t $ |_| ma;
 }
 
 impl [m: MonadError] ReaderT e m: MonadErrorIF {

@@ -70,14 +70,6 @@ exec_state_t = |s, ma| (
 exec_state: s -> State s a -> s;
 exec_state = |s, ma| ma.exec_state_t(s).get;
 
-// Converts an underlying monad to a StateT monad.
-lift_state: [m: Monad] m a -> StateT s m a;
-lift_state = |ma| (
-    make_state_t_monad $ |s|
-    let a = *ma;
-    pure $ (s, a)
-);
-
 // Maps both the return value and final state.
 map_state_t: [m: Monad, n: Monad] (m (s, a) -> n (s, a)) -> StateT s m a -> StateT s n b;
 map_state_t = |f, ma| (
@@ -107,7 +99,11 @@ impl [m: Monad] StateT s m: MonadStateIF {
 }
 
 impl StateT s: MonadTrans {
-    lift_t = lift_state;
+    lift_t = |ma| (
+        make_state_t_monad $ |s|
+        let a = *ma;
+        pure $ (s, a)
+    );
 }
 
 impl [m: MonadError] StateT s m: MonadErrorIF {

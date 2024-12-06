@@ -70,10 +70,6 @@ Runs a State monad with the supplied initial state and return the final state, d
 
 Runs a StateT monad with the supplied initial state and return the final state, discarding the final value.
 
-### `lift_state : [m : Std::Monad] m a -> Minilib.Monad.State::StateT s m a`
-
-Converts an underlying monad to a StateT monad.
-
 ### `make_state_monad : (s -> (s, a)) -> Minilib.Monad.State::StateT s Minilib.Monad.Identity::Identity a`
 
 Creates a State monad from a function.

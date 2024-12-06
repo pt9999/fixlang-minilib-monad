@@ -59,10 +59,6 @@ A monad that returns the internal environment as a value.
 
 ## `namespace Minilib.Monad.Reader`
 
-### `lift_reader : [m : Std::Monad] m a -> Minilib.Monad.Reader::ReaderT e m a`
-
-Lifts an underlying monad to a reader monad.
-
 ### `map_reader_t : [m : Std::Monad, n : Std::Monad] (m a -> n b) -> Minilib.Monad.Reader::ReaderT e m a -> Minilib.Monad.Reader::ReaderT e n b`
 
 Maps an underlying monad and a value using the specified function.
