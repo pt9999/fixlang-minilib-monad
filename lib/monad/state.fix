@@ -123,3 +123,46 @@ impl [m: MonadIO] StateT s m: MonadIOIF {
 impl [m: MonadIOFail] StateT s m: MonadIOFailIF {
     lift_iofail = lift_t << lift_iofail;
 }
+
+//------------------------------------------------------------------------
+// Looks similar to WriterT, but this is a functor against `s`, ie. the left part of Tuple2.
+type [m: * -> *] StateResultT a m s = unbox struct {
+    data: m (s, a)
+};
+
+namespace StateResultT {
+    make: [m: * -> *] m (s, a) -> StateResultT a m s;
+    make = |data| StateResultT { data: data };
+}
+
+impl [m: Monad] StateResultT a m: Functor {
+    map = |f, ms| StateResultT {
+        data: do {
+            let (s, a) = *ms.@data;
+            pure $ (f(s), a)
+        }
+    };
+}
+
+// Transforms a state monad with an lens action.
+// For example, if `Foo` has a field `bar: Bar`, then `act_bar` is a function of type
+// `[f: Functor] (bar -> f bar) -> (foo -> f foo)`.
+// Using `act_bar`, a state monad of `Bar` can be transformed to a state monad of `Foo`.
+// ```
+// change_bar: StateT Bar IO ();
+// change_bar = ...;
+// change_foo: StateT Foo IO ();
+// change_foo = change_bar.lens_state_t(Foo::act_bar);
+// ```
+// Note that `act_xxx` can be composed, for example `Foo::act_bar << Bar::act_baz << Baz::act_qux`.
+lens_state_t: [m: Monad] ((s -> StateResultT a m s) -> (t -> StateResultT a m t)) -> StateT s m a -> StateT t m a;
+lens_state_t = |act, sma| (
+    let f: s -> m (s, a) = sma.@data;
+    let f: s -> StateResultT a m s = f >> StateResultT::make;
+    let f: t -> StateResultT a m t = act(f);
+    let f: t -> m (t, a) = f >> StateResultT::@data;
+    make_state_t_monad(f)
+);
+
+lens_state: ((s -> StateResultT a Identity s) -> (t -> StateResultT a Identity t)) -> State s a -> State t a;
+lens_state = lens_state_t;

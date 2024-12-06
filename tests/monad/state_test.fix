@@ -147,6 +147,47 @@ test_state_iofail_lift_io = (
     assert_equal("eq", ok $ ([1, 57, 42], ()), *sm.run_state_t([1]).to_result.lift)
 );
 
+type Book = unbox struct {
+    title: String
+};
+
+type Shelf = unbox struct {
+    books: Array Book
+};
+
+test_lens_state_t: TestCase;
+test_lens_state_t = (
+    make_test("test_lens_state_t") $ |_|
+    let sm: StateT String (Result ErrMsg) I64 = do {
+        let s = *get_state;
+        let a = s.get_size;
+        eval *put_state("<" + s + ">");
+        pure $ a
+    };
+    let shelf = Shelf {
+        books: [ Book { title: "a book" }, Book { title: "another book" } ]
+    };
+    let sm: StateT Shelf (Result ErrMsg) I64 = sm.lens_state_t(Book::act_title >> Array::act(0) >> Shelf::act_books);
+    eval *assert_equal("eval_state_t", ok $ 6, sm.eval_state_t(shelf));
+    eval *assert_equal("exec_state_t", ok $ "<a book>", sm.exec_state_t(shelf).map(@books >> @(0) >> @title));
+    pure()
+);
+
+test_lens_state: TestCase;
+test_lens_state = (
+    make_test("test_lens_state_t") $ |_|
+    let sm: State String I64 = do {
+        let s = *get_state;
+        let a = s.get_size;
+        eval *put_state("<" + s + ">");
+        pure $ a
+    };
+    let sm: State Book I64 = sm.lens_state(Book::act_title);
+    let book = Book { title: "a book" };
+    eval *assert_equal("eval_state", 6, sm.eval_state(book));
+    eval *assert_equal("exec_state", "<a book>", sm.exec_state(book).@title);
+    pure()
+);
 
 main: IO ();
 main = (
@@ -159,6 +200,8 @@ main = (
         test_state_iofail_error,
         test_state_io_lift_io,
         test_state_iofail_lift_io,
+        test_lens_state_t,
+        test_lens_state,
         TestCase::empty
     ]
     .run_test_driver
