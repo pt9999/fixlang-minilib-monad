@@ -1,6 +1,6 @@
 [general]
 name = "minilib-monad"
-version = "0.1.5"
+version = "0.2.0"
 authors = ["pt9999"]
 license = "MIT"
 
