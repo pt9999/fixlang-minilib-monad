@@ -1,0 +1,47 @@
+module PairTest;
+
+import Minilib.Functor.Pair;
+import Minilib.Testing.UnitTest;
+
+test_pair_r_functor: TestCase;
+test_pair_r_functor = (
+    make_test("test_pair_r_functor") $ |_|
+    let fa = PairR::make $ ("a", 1);
+    let fa = fa.map(to_string);
+    assert_equal("eq", ("a", "1"), fa.get)
+);
+
+test_pair_l_functor: TestCase;
+test_pair_l_functor = (
+    make_test("test_pair_l_functor") $ |_|
+    let fa = PairL::make $ (1, "a");
+    let fa = fa.map(to_string);
+    assert_equal("eq", ("1", "a"), fa.get)
+);
+
+test_pair_rt_functor: TestCase;
+test_pair_rt_functor = (
+    make_test("test_pair_rt_functor") $ |_|
+    let fa = PairRT::make $ pure $ ("a", 1);
+    let fa = fa.map(to_string);
+    assert_equal("eq", ("a", "1"), *fa.get)
+);
+
+test_pair_lt_functor: TestCase;
+test_pair_lt_functor = (
+    make_test("test_pair_lt_functor") $ |_|
+    let fa = PairLT::make $ pure $ (1, "a");
+    let fa = fa.map(to_string);
+    assert_equal("eq", ("1", "a"), *fa.get)
+);
+
+main: IO ();
+main = (
+    [
+        test_pair_r_functor,
+        test_pair_l_functor,
+        test_pair_rt_functor,
+        test_pair_lt_functor,
+    ]
+    .run_test_driver
+);

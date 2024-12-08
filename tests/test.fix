@@ -2,6 +2,7 @@ module Test;
 
 import Minilib.Testing.UnitTest;
 
+import PairTest;
 import ContTest;
 import ErrorTest;
 import ExceptTest;
@@ -14,6 +15,7 @@ import MonoidTest;
 
 testsuite: TestSuite;
 testsuite = [
+    ("PairTest", PairTest::main),
     ("ContTest", ContTest::main),
     ("ErrorTest", ErrorTest::main),
     ("ExceptTest", ExceptTest::main),
@@ -24,7 +26,6 @@ testsuite = [
     ("WriterTest", WriterTest::main),
     ("MonoidTest", MonoidTest::main),
 ];
-
 
 test: IO ();
 test = (

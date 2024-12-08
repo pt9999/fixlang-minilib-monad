@@ -7,23 +7,25 @@ license = "MIT"
 [build]
 opt_level = "separated"
 files = [
-"lib/monad/cont.fix",
-"lib/monad/error.fix",
-"lib/monad/except.fix",
-"lib/monad/identity.fix",
-"lib/monad/io.fix",
-"lib/monad/reader.fix",
-"lib/monad/state.fix",
-"lib/monad/trans.fix",
-"lib/monad/writer.fix",
-"lib/trait/monoid.fix",
-"lib/trait/semigroup.fix",
+    "lib/functor/pair.fix",
+    "lib/monad/cont.fix",
+    "lib/monad/error.fix",
+    "lib/monad/except.fix",
+    "lib/monad/identity.fix",
+    "lib/monad/io.fix",
+    "lib/monad/reader.fix",
+    "lib/monad/state.fix",
+    "lib/monad/trans.fix",
+    "lib/monad/writer.fix",
+    "lib/trait/monoid.fix",
+    "lib/trait/semigroup.fix",
 ]
 
 [build.test]
 opt_level = "separated"
 files = [
     "tests/test.fix",
+    "tests/functor/pair_test.fix",
     "tests/monad/cont_test.fix",
     "tests/monad/error_test.fix",
     "tests/monad/except_test.fix",

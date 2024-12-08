@@ -1,0 +1,85 @@
+module Minilib.Functor.Pair;
+
+// A functor on the right component. This is same as `Tuple2`.
+type PairR l r = unbox struct {
+    data: (l, r)
+};
+
+namespace PairR {
+    make: (l, r) -> PairR l r;
+    make = |data| PairR { data: data };
+
+    get: PairR l r -> (l, r);
+    get = @data;
+}
+
+impl PairR l: Functor {
+    map = |g, p| PairR::make $ (
+        let (l, r) = p.@data;
+        (l, g(r))
+    );
+}
+
+//----------------------------------------------------------------
+
+// A functor on the left component. This is a swapped version of `Tuple2`.
+type PairL r l = unbox struct {
+    data: (l, r)
+};
+
+namespace PairL {
+    make: (l, r) -> PairL r l;
+    make = |data| PairL { data: data };
+
+    get: PairL r l -> (l, r);
+    get = @data;
+}
+
+impl PairL r: Functor {
+    map = |g, p| PairL::make $ (
+        let (l, r) = p.@data;
+        (g(l), r)
+    );
+}
+
+//----------------------------------------------------------------
+
+// A functor on the right component with an underlying functor.
+type [f: * -> *] PairRT l f r = unbox struct {
+    data: f (l, r)
+};
+
+namespace PairRT {
+    make: [f: * -> *] f (l, r) -> PairRT l f r;
+    make = |data| PairRT { data: data };
+
+    get: [f: * -> *] PairRT l f r -> f (l, r);
+    get = @data;
+}
+
+impl [f: Functor] PairRT l f: Functor {
+    map = |g, p| PairRT::make $ p.@data.map(
+        |(l, r)| (l, g(r))
+    );
+}
+
+//----------------------------------------------------------------
+
+// A functor on the left component with an underlying functor.
+type [f: * -> *] PairLT r f l = unbox struct {
+    data: f (l, r)
+};
+
+namespace PairLT {
+    make: [f: * -> *] f (l, r) -> PairLT r f l;
+    make = |data| PairLT { data: data };
+
+    get: [f: * -> *] PairLT r f l -> f (l, r);
+    get = @data;
+}
+
+impl [f: Functor] PairLT r f: Functor {
+    map = |g, p| PairLT::make $ p.@data.map(
+        |(l, r)| (g(l), r)
+    );
+}
