@@ -72,7 +72,7 @@ exec_state: s -> State s a -> s;
 exec_state = |s, ma| ma.exec_state_t(s).get;
 
 // Maps both the return value and final state.
-map_state_t: [m: Monad, n: Monad] (m (s, a) -> n (s, a)) -> StateT s m a -> StateT s n b;
+map_state_t: [m: Monad, n: Monad] (m (s, a) -> n (s, b)) -> StateT s m a -> StateT s n b;
 map_state_t = |f, ma| (
     make_state_t_monad $ (ma.@data) >> f
 );

@@ -94,7 +94,7 @@ Creates a State monad from a function.
 
 Creates a StateT monad from a function.
 
-### `map_state_t : [m : Std::Monad, n : Std::Monad] (m (s, a) -> n (s, a)) -> Minilib.Monad.State::StateT s m a -> Minilib.Monad.State::StateT s n b`
+### `map_state_t : [m : Std::Monad, n : Std::Monad] (m (s, a) -> n (s, b)) -> Minilib.Monad.State::StateT s m a -> Minilib.Monad.State::StateT s n b`
 
 Maps both the return value and final state.
 
