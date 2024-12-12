@@ -96,21 +96,3 @@ A monad that returns the internal environment as a value.
 ### `local : [rm : Minilib.Monad.Reader::MonadReaderIF] (Minilib.Monad.Reader::MonadReaderIF::EnvType rm -> Minilib.Monad.Reader::MonadReaderIF::EnvType rm) -> rm a -> rm a`
 
 `rm.local(f)` creates a reader monad with an environment modified by `f`.
-
-## `namespace Minilib.Monad.Reader::ReaderT`
-
-### `@data : Minilib.Monad.Reader::ReaderT e m a -> e -> m a`
-
-Retrieves the field `data` from a value of `ReaderT`.
-
-### `act_data : [f : Std::Functor] ((e -> m a) -> f (e -> m a)) -> Minilib.Monad.Reader::ReaderT e m a -> f (Minilib.Monad.Reader::ReaderT e m a)`
-
-Updates a value of `ReaderT` by applying a functorial action to field `data`.
-
-### `mod_data : ((e -> m a) -> e -> m a) -> Minilib.Monad.Reader::ReaderT e m a -> Minilib.Monad.Reader::ReaderT e m a`
-
-Updates a value of `ReaderT` by applying a function to field `data`.
-
-### `set_data : (e -> m a) -> Minilib.Monad.Reader::ReaderT e m a -> Minilib.Monad.Reader::ReaderT e m a`
-
-Updates a value of `ReaderT` by setting field `data` to a specified one.

@@ -119,21 +119,3 @@ A monad that returns the internal state as a value.
 ### `put_state : [sm : Minilib.Monad.State::MonadStateIF] Minilib.Monad.State::MonadStateIF::StateType sm -> sm ()`
 
 A monad that puts the specified value to the internal state.
-
-## `namespace Minilib.Monad.State::StateT`
-
-### `@data : Minilib.Monad.State::StateT s m a -> s -> m (s, a)`
-
-Retrieves the field `data` from a value of `StateT`.
-
-### `act_data : [f : Std::Functor] ((s -> m (s, a)) -> f (s -> m (s, a))) -> Minilib.Monad.State::StateT s m a -> f (Minilib.Monad.State::StateT s m a)`
-
-Updates a value of `StateT` by applying a functorial action to field `data`.
-
-### `mod_data : ((s -> m (s, a)) -> s -> m (s, a)) -> Minilib.Monad.State::StateT s m a -> Minilib.Monad.State::StateT s m a`
-
-Updates a value of `StateT` by applying a function to field `data`.
-
-### `set_data : (s -> m (s, a)) -> Minilib.Monad.State::StateT s m a -> Minilib.Monad.State::StateT s m a`
-
-Updates a value of `StateT` by setting field `data` to a specified one.

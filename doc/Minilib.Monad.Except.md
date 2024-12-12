@@ -46,21 +46,3 @@ Maps an underlying monad and an operation result using the specified function.
 ### `run_except_t : Minilib.Monad.Except::ExceptT e m a -> m (Std::Result e a)`
 
 Gets the operation result.
-
-## `namespace Minilib.Monad.Except::ExceptT`
-
-### `@data : Minilib.Monad.Except::ExceptT e m a -> m (Std::Result e a)`
-
-Retrieves the field `data` from a value of `ExceptT`.
-
-### `act_data : [f : Std::Functor] (m (Std::Result e a) -> f (m (Std::Result e a))) -> Minilib.Monad.Except::ExceptT e m a -> f (Minilib.Monad.Except::ExceptT e m a)`
-
-Updates a value of `ExceptT` by applying a functorial action to field `data`.
-
-### `mod_data : (m (Std::Result e a) -> m (Std::Result e a)) -> Minilib.Monad.Except::ExceptT e m a -> Minilib.Monad.Except::ExceptT e m a`
-
-Updates a value of `ExceptT` by applying a function to field `data`.
-
-### `set_data : m (Std::Result e a) -> Minilib.Monad.Except::ExceptT e m a -> Minilib.Monad.Except::ExceptT e m a`
-
-Updates a value of `ExceptT` by setting field `data` to a specified one.

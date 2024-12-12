@@ -116,21 +116,3 @@ Provide a writer transformer which changes internals of the written object.
 ### `tell : [wm : Minilib.Monad.Writer::MonadWriterIF] Minilib.Monad.Writer::MonadWriterIF::EnvType wm -> wm ()`
 
 Tells specified value to the internal environment.
-
-## `namespace Minilib.Monad.Writer::WriterT`
-
-### `@data : Minilib.Monad.Writer::WriterT e m a -> m (e, a)`
-
-Retrieves the field `data` from a value of `WriterT`.
-
-### `act_data : [f : Std::Functor] (m (e, a) -> f (m (e, a))) -> Minilib.Monad.Writer::WriterT e m a -> f (Minilib.Monad.Writer::WriterT e m a)`
-
-Updates a value of `WriterT` by applying a functorial action to field `data`.
-
-### `mod_data : (m (e, a) -> m (e, a)) -> Minilib.Monad.Writer::WriterT e m a -> Minilib.Monad.Writer::WriterT e m a`
-
-Updates a value of `WriterT` by applying a function to field `data`.
-
-### `set_data : m (e, a) -> Minilib.Monad.Writer::WriterT e m a -> Minilib.Monad.Writer::WriterT e m a`
-
-Updates a value of `WriterT` by setting field `data` to a specified one.

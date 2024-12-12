@@ -68,24 +68,6 @@ Runs a Cont monad with the supplied continuation function.
 
 Runs a ContT monad with the supplied continuation function.
 
-## `namespace Minilib.Monad.Cont::ContT`
-
-### `@data : Minilib.Monad.Cont::ContT r m a -> (a -> m r) -> m r`
-
-Retrieves the field `data` from a value of `ContT`.
-
-### `act_data : [f : Std::Functor] (((a -> m r) -> m r) -> f ((a -> m r) -> m r)) -> Minilib.Monad.Cont::ContT r m a -> f (Minilib.Monad.Cont::ContT r m a)`
-
-Updates a value of `ContT` by applying a functorial action to field `data`.
-
-### `mod_data : (((a -> m r) -> m r) -> (a -> m r) -> m r) -> Minilib.Monad.Cont::ContT r m a -> Minilib.Monad.Cont::ContT r m a`
-
-Updates a value of `ContT` by applying a function to field `data`.
-
-### `set_data : ((a -> m r) -> m r) -> Minilib.Monad.Cont::ContT r m a -> Minilib.Monad.Cont::ContT r m a`
-
-Updates a value of `ContT` by setting field `data` to a specified one.
-
 ## `namespace Minilib.Monad.Cont::MonadContIF`
 
 ### `call_cc : [cm : Minilib.Monad.Cont::MonadContIF] ((a -> cm b) -> cm a) -> cm a`
