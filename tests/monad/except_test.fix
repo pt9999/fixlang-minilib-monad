@@ -4,7 +4,7 @@ module ExceptTest;
 import Minilib.Monad.Except;
 import Minilib.Monad.Trans;
 import Minilib.Monad.Error;
-import Minilib.Monad.FunctorM;
+import Minilib.Trait.Traversable;
 import Minilib.Text.StringEx;
 import Minilib.Testing.UnitTest;
 
