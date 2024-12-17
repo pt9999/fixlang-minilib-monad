@@ -1,47 +1,47 @@
-module ExceptTest;
+module ResultTest;
 
 
-import Minilib.Monad.Except;
+import Minilib.Monad.Result;
 import Minilib.Monad.Trans;
 import Minilib.Monad.Error;
 import Minilib.Trait.Traversable;
 import Minilib.Text.StringEx;
 import Minilib.Testing.UnitTest;
 
-test_except_t_functor: TestCase;
-test_except_t_functor = (
-    make_test("test_except_t_functor") $ |_|
-    let ema: ExceptT ErrMsg IO I64 = except_t $ pure $ ok(2);
-    let ema = ema.map(add(1));
-    let ema = ema.map(to_string);
-    assert_equal("eq", ok $ "3", *ema.run_except_t.lift)
+test_result_t_functor: TestCase;
+test_result_t_functor = (
+    make_test("test_result_t_functor") $ |_|
+    let rma: ResultT ErrMsg IO I64 = result_t $ pure $ ok(2);
+    let rma = rma.map(add(1));
+    let rma = rma.map(to_string);
+    assert_equal("eq", ok $ "3", *rma.run_result_t.lift)
 );
 
-test_except_t_monad: TestCase;
-test_except_t_monad = (
-    make_test("test_except_t_monad") $ |_|
-    let ema: ExceptT ErrMsg IOFail String = do {
+test_result_t_monad: TestCase;
+test_result_t_monad = (
+    make_test("test_result_t_monad") $ |_|
+    let rma: ResultT ErrMsg IOFail String = do {
         let i = *pure(42);
         let i = *pure(i + 1);
         pure(i.to_string)
     };
-    assert_equal("eq", ok $ "43", *ema.run_except_t)
+    assert_equal("eq", ok $ "43", *rma.run_result_t)
 );
 
-test_except_t_catch: TestCase;
-test_except_t_catch = (
-    make_test("test_except_t_monad") $ |_|
-    let check_number: I64 -> ExceptT ErrMsg IOFail String = |i| (
+test_result_t_catch: TestCase;
+test_result_t_catch = (
+    make_test("test_result_t_monad") $ |_|
+    let check_number: I64 -> ResultT ErrMsg IOFail String = |i| (
         if i == 0 { pure("pure") };
         if i == 1 { error("error") };
         if i == 2 { lift_t $ (throw("throw") : IOFail String) };
         pure $ "undefined"
     );
     let get_result: I64 -> IOFail String = |i| (
-        let ema: ExceptT ErrMsg IOFail String = check_number(i).catch(
+        let rma: ResultT ErrMsg IOFail String = check_number(i).catch(
             |err| pure $ "catch:" + err
         );
-        let iof: IOFail (Result ErrMsg String) = ema.run_except_t;
+        let iof: IOFail (Result ErrMsg String) = rma.run_result_t;
         let io: IO String = iof.map(to_string).try(|errmsg| pure $ "try:" + errmsg);
         io.lift
     );
@@ -52,10 +52,10 @@ test_except_t_catch = (
     pure()
 );
 
-test_except_array: TestCase;
-test_except_array = (
-    make_test("test_except_array") $ |_|
-    let ema: ExceptT ErrMsg Array I64 = do {
+test_result_array: TestCase;
+test_result_array = (
+    make_test("test_result_array") $ |_|
+    let rma: ResultT ErrMsg Array I64 = do {
         let a = *[1, 2, 3].lift_t;
         let b = *[10, 20].lift_t;
         let c = a + b;
@@ -63,17 +63,17 @@ test_except_array = (
         pure $ c
     };
     let expected = [ok(11), ok(21), err("error12"), err("error22"), ok(13), ok(23)];
-    let actual = ema.run_except_t;
+    let actual = rma.run_result_t;
     assert_equal("eq", expected, actual)
 );
 
 main: IO ();
 main = (
     [
-        test_except_t_functor,
-        test_except_t_monad,
-        test_except_t_catch,
-        test_except_array,
+        test_result_t_functor,
+        test_result_t_monad,
+        test_result_t_catch,
+        test_result_array,
     ]
     .run_test_driver
 );

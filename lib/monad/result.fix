@@ -1,0 +1,59 @@
+// A monad transformer that wraps `m (Result e a)`.
+module Minilib.Monad.Result;
+
+import Minilib.Monad.Trans;
+import Minilib.Monad.Error;
+
+// A monad transformer that wraps `m (Result e a)`.
+// This represents an operation result (success or error).
+// `e` is a type of an error if the operation fails.
+// `m` is a type of an underlying monad.
+// `a` is a type of an operation result if operation is successful.
+type [m: *->*] ResultT e m a = unbox struct {
+    data: m (Result e a)
+};
+
+// Creates an ResultT monad from an operation result.
+result_t: [m: *->*] m (Result e a) -> ResultT e m a;
+result_t = |ma| ResultT { data: ma };
+
+// Gets the operation result.
+run_result_t: [m: *->*] ResultT e m a -> m (Result e a);
+run_result_t = @data;
+
+// Maps an underlying monad and an operation result using the specified function.
+map_result_t: [m: *->*, n: *->*] (m (Result e a) -> n (Result e1 b)) -> ResultT e m a -> ResultT e1 n b;
+map_result_t = |f| (
+    result_t << f << run_result_t
+);
+
+impl [m: Functor] ResultT e m: Functor {
+    map = |f, rma| result_t $ (
+        rma.run_result_t.map(map(f))
+    );
+}
+
+impl [m: Monad] ResultT e m: Monad {
+    pure = |a| result_t $ pure $ pure $ a;
+    bind = |f, rma| result_t $ do {
+        let res = *rma.run_result_t;
+        if res.is_err { pure $ err(res.as_err) };
+        let emb = f(res.as_ok);
+        emb.run_result_t
+    };
+}
+
+impl ResultT e: MonadTrans {
+    lift_t = |ma| result_t $ ma.bind(ok >> pure);
+}
+
+impl [m: Monad] ResultT ErrMsg m: MonadErrorIF {
+    error = |e| result_t $ pure $ err(e);
+    catch = |handler, rma| (
+        result_t $ do {
+            let res = *rma.run_result_t;
+            if res.is_ok { pure $ res };
+            handler(res.as_err).run_result_t
+        }
+    );
+}

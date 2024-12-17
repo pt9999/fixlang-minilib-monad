@@ -5,10 +5,10 @@ import Minilib.Testing.UnitTest;
 import PairTest;
 import ContTest;
 import ErrorTest;
-import ExceptTest;
 import IdentityTest;
 import IoTest;
 import ReaderTest;
+import ResultTest;
 import StateTest;
 import WriterTest;
 import MonoidTest;
@@ -18,10 +18,10 @@ testsuite = [
     ("PairTest", PairTest::main),
     ("ContTest", ContTest::main),
     ("ErrorTest", ErrorTest::main),
-    ("ExceptTest", ExceptTest::main),
     ("IdentityTest", IdentityTest::main),
     ("IoTest", IoTest::main),
     ("ReaderTest", ReaderTest::main),
+    ("ResultTest", ResultTest::main),
     ("StateTest", StateTest::main),
     ("WriterTest", WriterTest::main),
     ("MonoidTest", MonoidTest::main),
