@@ -13,19 +13,13 @@ type [m: *->*] ResultT e m a = unbox struct {
     data: m (Result e a)
 };
 
-// Creates an ResultT monad from an operation result.
+// Creates a ResultT monad from an operation result.
 result_t: [m: *->*] m (Result e a) -> ResultT e m a;
 result_t = |ma| ResultT { data: ma };
 
 // Gets the operation result.
 run_result_t: [m: *->*] ResultT e m a -> m (Result e a);
 run_result_t = @data;
-
-// Maps an underlying monad and an operation result using the specified function.
-map_result_t: [m: *->*, n: *->*] (m (Result e a) -> n (Result e1 b)) -> ResultT e m a -> ResultT e1 n b;
-map_result_t = |f| (
-    result_t << f << run_result_t
-);
 
 impl [m: Functor] ResultT e m: Functor {
     map = |f, rma| result_t $ (
