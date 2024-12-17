@@ -4,33 +4,101 @@ module ResultTest;
 import Minilib.Monad.Result;
 import Minilib.Monad.Trans;
 import Minilib.Monad.Error;
+import Minilib.Monad.IO;
 import Minilib.Trait.Traversable;
-import Minilib.Text.StringEx;
+//import Minilib.Text.StringEx;
 import Minilib.Testing.UnitTest;
 
-test_result_t_functor: TestCase;
-test_result_t_functor = (
-    make_test("test_result_t_functor") $ |_|
-    let rma: ResultT ErrMsg IO I64 = result_t $ pure $ ok(2);
-    let rma = rma.map(add(1));
-    let rma = rma.map(to_string);
-    assert_equal("eq", ok $ "3", *rma.run_result_t.lift)
+test_functor: TestCase;
+test_functor = (
+    make_test("test_functor") $ |_|
+    let rma: ResultT (Array ErrMsg) Option I64 = result_t $ some $ ok $ 42;
+    let rma2 = rma.map(to_string);
+    assert_equal("eq", some $ ok $ "42", rma2.run_result_t);;
+
+    let rma: ResultT (Array ErrMsg) Option I64 = result_t $ some $ err $ ["err1", "err2"];
+    let rma2 = rma.map(to_string);
+    assert_equal("eq", some $ err $ ["err1", "err2"], rma2.run_result_t);;
+
+    let rma: ResultT (Array ErrMsg) Option I64 = result_t $ none();
+    let rma2 = rma.map(to_string);
+    assert_equal("eq", none(), rma2.run_result_t);;
+
+    pure()
 );
 
-test_result_t_monad: TestCase;
-test_result_t_monad = (
-    make_test("test_result_t_monad") $ |_|
-    let rma: ResultT ErrMsg IOFail String = do {
-        let i = *pure(42);
-        let i = *pure(i + 1);
-        pure(i.to_string)
+test_pure: TestCase;
+test_pure = (
+    make_test("test_pure") $ |_|
+    let rma: ResultT ErrMsg Option I64 = pure(42);
+    assert_equal("eq", some $ ok $ 42, rma.run_result_t)
+);
+
+test_bind: TestCase;
+test_bind = (
+    make_test("test_bind") $ |_|
+    // an `err()` or `none()` in `rma` has priority over `rma2`
+    let rma: ResultT ErrMsg Option I64 = result_t $ some $ ok(42);
+    let rma2: ResultT ErrMsg Option String = rma.bind(|i| result_t $ some $ ok $ "a" + i.to_string);
+    assert_equal("eq", some $ ok $ "a42", rma2.run_result_t);;
+    let rma2: ResultT ErrMsg Option String = rma.bind(|i| result_t $ some $ err("err"));
+    assert_equal("eq", some $ err $ "err", rma2.run_result_t);;
+    let rma2: ResultT ErrMsg Option String = rma.bind(|i| result_t $ none());
+    assert_equal("eq", none(), rma2.run_result_t);;
+
+    let rma: ResultT ErrMsg Option I64 = result_t $ some $ err("err0");
+    let rma2: ResultT ErrMsg Option String = rma.bind(|i| result_t $ some $ ok $ "a" + i.to_string);
+    assert_equal("eq", some $ err $ "err0", rma2.run_result_t);;
+    let rma2: ResultT ErrMsg Option String = rma.bind(|i| result_t $ some $ err("err"));
+    assert_equal("eq", some $ err $ "err0", rma2.run_result_t);;
+    let rma2: ResultT ErrMsg Option String = rma.bind(|i| result_t $ none());
+    assert_equal("eq", some $ err $ "err0", rma2.run_result_t);;
+
+    let rma: ResultT ErrMsg Option I64 = result_t $ none();
+    let rma2: ResultT ErrMsg Option String = rma.bind(|i| result_t $ some $ ok $ "a" + i.to_string);
+    assert_equal("eq", none(), rma2.run_result_t);;
+    let rma2: ResultT ErrMsg Option String = rma.bind(|i| result_t $ some $ err("err"));
+    assert_equal("eq", none(), rma2.run_result_t);;
+    let rma2: ResultT ErrMsg Option String = rma.bind(|i| result_t $ none());
+    assert_equal("eq", none(), rma2.run_result_t);;
+    pure()
+);
+
+test_lift_t: TestCase;
+test_lift_t = (
+    make_test("test_lift_t") $ |_|
+    let rma: ResultT ErrMsg Option I64 = lift_t $ some(42);
+    assert_equal("eq", some $ ok $ 42, rma.run_result_t);;
+    let rma: ResultT ErrMsg Option I64 = lift_t $ none();
+    assert_equal("eq", none(), rma.run_result_t);;
+    pure()
+);
+
+test_lift_t_array: TestCase;
+test_lift_t_array = (
+    make_test("test_lift_t_array") $ |_|
+    let rma: ResultT ErrMsg Array I64 = do {
+        let a = *[1, 2, 3].lift_t;
+        let b = *[10, 20].lift_t;
+        let c = a + b;
+        if c % 2 == 0 { error $ "error" + c.to_string };
+        pure $ c
     };
-    assert_equal("eq", ok $ "43", *rma.run_result_t)
+    let expected = [ok(11), ok(21), err("error12"), err("error22"), ok(13), ok(23)];
+    let actual = rma.run_result_t;
+    assert_equal("eq", expected, actual)
 );
 
-test_result_t_catch: TestCase;
-test_result_t_catch = (
-    make_test("test_result_t_monad") $ |_|
+test_error: TestCase;
+test_error = (
+    make_test("test_error") $ |_|
+    let rma: ResultT ErrMsg Option I64 = error $ "err";
+    assert_equal("eq", some $ err $ "err", rma.run_result_t)
+);
+
+test_catch: TestCase;
+test_catch = (
+    make_test("test_catch") $ |_|
     let check_number: I64 -> ResultT ErrMsg IOFail String = |i| (
         if i == 0 { pure("pure") };
         if i == 1 { error("error") };
@@ -52,30 +120,42 @@ test_result_t_catch = (
     pure()
 );
 
-test_result_array: TestCase;
-test_result_array = (
-    make_test("test_result_array") $ |_|
-    let rma: ResultT ErrMsg Array I64 = do {
-        let a = *[1, 2, 3].lift_t;
-        let b = *[10, 20].lift_t;
-        let c = a + b;
-        if c % 2 == 0 { error $ "error" + c.to_string };
-        pure $ c
+test_lift_io: TestCase;
+test_lift_io = (
+    make_test("test_lift_io") $ |_|
+    let rma: ResultT ErrMsg IOFail I64 = do {
+        lift_io $ println("message from test_lift_io");;
+        let a = *(result_t $ pure $ err("err"));
+        lift_io $ println("this message will not be printed");;
+        pure(a + 1)
     };
-    let expected = [ok(11), ok(21), err("error12"), err("error22"), ok(13), ok(23)];
-    let actual = rma.run_result_t;
-    assert_equal("eq", expected, actual)
+    assert_equal("eq", ok $ err $ "err", *rma.run_result_t.to_result.lift)
+);
+
+test_lift_iofail: TestCase;
+test_lift_iofail = (
+    make_test("test_lift_io") $ |_|
+    let rma: ResultT ErrMsg IOFail I64 = do {
+        lift_io $ println("message from test_lift_iofail");;
+        let a = *(lift_iofail $ throw("err"));
+        lift_io $ println("this message will not be printed");;
+        pure(a + 1)
+    };
+    assert_equal("eq", err $ "err", *rma.run_result_t.to_result.lift)
 );
 
 main: IO ();
 main = (
     [
-        test_result_t_functor,
-        test_result_t_monad,
-        test_result_t_catch,
-        test_result_array,
+        test_functor,
+        test_pure,
+        test_bind,
+        test_lift_t,
+        test_lift_t_array,
+        test_error,
+        test_catch,
+        test_lift_io,
+        test_lift_iofail,
     ]
     .run_test_driver
 );
-
-

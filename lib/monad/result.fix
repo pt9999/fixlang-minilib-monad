@@ -3,6 +3,7 @@ module Minilib.Monad.Result;
 
 import Minilib.Monad.Trans;
 import Minilib.Monad.Error;
+import Minilib.Monad.IO;
 
 // A monad transformer that wraps `m (Result e a)`.
 // This represents an operation result (success or error).
@@ -50,4 +51,12 @@ impl [m: Monad] ResultT ErrMsg m: MonadErrorIF {
             handler(res.as_err).run_result_t
         }
     );
+}
+
+impl [m: MonadIO] ResultT e m: MonadIOIF {
+    lift_io = lift_t << lift_io;
+}
+
+impl [m: MonadIOFail] ResultT e m: MonadIOFailIF {
+    lift_iofail = lift_t << lift_iofail;
 }
