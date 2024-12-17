@@ -7,6 +7,7 @@ import ContTest;
 import ErrorTest;
 import IdentityTest;
 import IoTest;
+import OptionTest;
 import ReaderTest;
 import ResultTest;
 import StateTest;
@@ -20,6 +21,7 @@ testsuite = [
     ("ErrorTest", ErrorTest::main),
     ("IdentityTest", IdentityTest::main),
     ("IoTest", IoTest::main),
+    ("OptionTest", OptionTest::main),
     ("ReaderTest", ReaderTest::main),
     ("ResultTest", ResultTest::main),
     ("StateTest", StateTest::main),
