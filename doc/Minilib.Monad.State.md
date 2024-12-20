@@ -74,9 +74,9 @@ Runs a StateT monad with the supplied initial state and return the final state, 
 
 ### `lens_state_t : [m : Std::Monad, m : Std::Functor] ((s -> Minilib.Functor.Pair::PairLT a m s) -> t -> Minilib.Functor.Pair::PairLT a m t) -> Minilib.Monad.State::StateT s m a -> Minilib.Monad.State::StateT t m a`
 
-Transforms a state monad with an lens action.
+Transforms a state monad with a lens action.
 For example, if `Foo` has a field `bar: Bar`, then `act_bar` is a function of type
-`[f: Functor] (bar -> f bar) -> (foo -> f foo)`.
+`[f: Functor] (Bar -> f Bar) -> (Foo -> f Foo)`.
 Using `act_bar`, a state monad of `Bar` can be transformed to a state monad of `Foo`.
 ```
 change_bar: StateT Bar IO ();
@@ -109,6 +109,14 @@ Runs a State monad with the supplied initial state.
 ### `run_state_t : [m : Std::Monad] s -> Minilib.Monad.State::StateT s m a -> m (s, a)`
 
 Runs a StateT monad with the supplied initial state.
+
+### `state : (s -> (s, a)) -> Minilib.Monad.State::StateT s Minilib.Monad.Identity::Identity a`
+
+Synonym of `make_state_monad`.
+
+### `state_t : [m : Std::Monad] (s -> m (s, a)) -> Minilib.Monad.State::StateT s m a`
+
+Synonym of `make_state_t_monad`.
 
 ## `namespace Minilib.Monad.State::MonadStateIF`
 

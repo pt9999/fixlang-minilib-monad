@@ -58,6 +58,8 @@ Creates a ContT monad from a function which receives a continuation function and
 
 ### `lift_cont : [m : Std::Monad] m a -> Minilib.Monad.Cont::ContT r m a`
 
+Deprecated: Please use `MonadTrans::lift_t`.
+
 Lifts an underlying monad to a continuation monad.
 
 ### `run_cont : (a -> r) -> Minilib.Monad.Cont::ContT r Minilib.Monad.Identity::Identity a -> r`

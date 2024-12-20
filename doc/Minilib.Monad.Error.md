@@ -32,9 +32,15 @@ A trait for monads which can report errors.
 
 ### `from_result_t : [m : Minilib.Monad.Error::MonadError] Std::Result Std::String a -> m a`
 
+Synonym of `lift_result`.
+
 ### `lift_result : [m : Minilib.Monad.Error::MonadError] Std::Result Std::String a -> m a`
 
+Lifts an operation result to a monad.
+
 ### `to_result_t : [m : Minilib.Monad.Error::MonadError] m a -> m (Std::Result Std::String a)`
+
+Converts to an operation result.
 
 ## `namespace Minilib.Monad.Error::MonadErrorIF`
 

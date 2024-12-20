@@ -24,6 +24,10 @@ This represents an operation result (success or error).
 
 ### `impl Minilib.Monad.Result::ResultT e : Minilib.Monad.Trans::MonadTrans`
 
+### `impl [m : Minilib.Monad.IO::MonadIOFail] Minilib.Monad.Result::ResultT e m : Minilib.Monad.IO::MonadIOFailIF`
+
+### `impl [m : Minilib.Monad.IO::MonadIO] Minilib.Monad.Result::ResultT e m : Minilib.Monad.IO::MonadIOIF`
+
 ### `impl [m : Std::Functor] Minilib.Monad.Result::ResultT e m : Std::Functor`
 
 ### `impl [m : Std::Monad] Minilib.Monad.Result::ResultT e m : Std::Monad`
@@ -32,13 +36,9 @@ This represents an operation result (success or error).
 
 ## `namespace Minilib.Monad.Result`
 
-### `map_result_t : (m (Std::Result e a) -> n (Std::Result e1 b)) -> Minilib.Monad.Result::ResultT e m a -> Minilib.Monad.Result::ResultT e1 n b`
-
-Maps an underlying monad and an operation result using the specified function.
-
 ### `result_t : m (Std::Result e a) -> Minilib.Monad.Result::ResultT e m a`
 
-Creates an ResultT monad from an operation result.
+Creates a ResultT monad from an operation result.
 
 ### `run_result_t : Minilib.Monad.Result::ResultT e m a -> m (Std::Result e a)`
 
