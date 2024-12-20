@@ -51,6 +51,8 @@ run_cont = |fa_r, cma| (
     cma.run_cont_t(fa_r >> Identity::make).Identity::get
 );
 
+// Deprecated: Please use `MonadTrans::lift_t`.
+//
 // Lifts an underlying monad to a continuation monad.
 lift_cont: [m: Monad] m a -> ContT r m a;
 lift_cont = |ma| cont_t $ |fa_mr| ma.bind(fa_mr);
