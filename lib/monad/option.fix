@@ -10,7 +10,7 @@ import Minilib.Monad.IO;
 // `m` is a type of an underlying monad.
 // `a` is a type of a value.
 type [m: * -> *] OptionT m a = unbox struct {
-  data: m (Option a)
+    data: m (Option a)
 };
 
 // Creates an OptionT monad from an optional value.
@@ -26,25 +26,25 @@ lift_option: [m: Monad] Option a -> OptionT m a;
 lift_option = |opt| option_t $ pure(opt);
 
 impl [m: Functor] OptionT m: Functor {
-  map = |f, ma| (
-    option_t $ ma.run_option_t.map(map(f))
-  );
+    map = |f, ma| (
+        option_t $ ma.run_option_t.map(map(f))
+    );
 }
 
 impl [m: Monad] OptionT m: Monad {
-  pure = |a| option_t(pure(pure(a)));
-  bind = |f, ma| (
-    option_t $ do {
-      match *ma.run_option_t {
-          none() => pure $ none(),
-          some(a) => f(a).run_option_t
-      }
-    }
-  );
+    pure = |a| option_t(pure(pure(a)));
+    bind = |f, ma| (
+        option_t $ do {
+            match *ma.run_option_t {
+                none() => pure $ none(),
+                some(a) => f(a).run_option_t
+            }
+        }
+    );
 }
 
 impl OptionT: MonadTrans {
-  lift_t = |ma| option_t $ ma.bind(some >> pure);
+    lift_t = |ma| option_t $ ma.bind(some >> pure);
 }
 
 impl [m: MonadError] OptionT m: MonadErrorIF {
