@@ -37,9 +37,17 @@ type State s a = StateT s Identity a;
 make_state_t_monad: [m: Monad] (s -> m (s, a)) -> StateT s m a;
 make_state_t_monad = |f| StateT { data: f };
 
+// Synonym of `make_state_t_monad`.
+state_t: [m: Monad] (s -> m (s, a)) -> StateT s m a;
+state_t = make_state_t_monad;
+
 // Creates a State monad from a function.
 make_state_monad: (s -> (s, a)) -> State s a;
 make_state_monad = |f| make_state_t_monad(f >> pure);
+
+// Synonym of `make_state_monad`.
+state: (s -> (s, a)) -> State s a;
+state = make_state_monad;
 
 // Runs a StateT monad with the supplied initial state.
 run_state_t: [m: Monad] s -> StateT s m a -> m (s, a);
