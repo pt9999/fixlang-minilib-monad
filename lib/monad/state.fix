@@ -125,9 +125,9 @@ impl [m: MonadIOFail] StateT s m: MonadIOFailIF {
     lift_iofail = lift_t << lift_iofail;
 }
 
-// Transforms a state monad with an lens action.
+// Transforms a state monad with a lens action.
 // For example, if `Foo` has a field `bar: Bar`, then `act_bar` is a function of type
-// `[f: Functor] (bar -> f bar) -> (foo -> f foo)`.
+// `[f: Functor] (Bar -> f Bar) -> (Foo -> f Foo)`.
 // Using `act_bar`, a state monad of `Bar` can be transformed to a state monad of `Foo`.
 // ```
 // change_bar: StateT Bar IO ();
