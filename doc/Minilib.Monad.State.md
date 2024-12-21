@@ -6,7 +6,7 @@ State Monad which maintains a mutable state.
 
 ## `namespace Minilib.Monad.State`
 
-### `type State = Minilib.Monad.State::StateT s Minilib.Monad.Identity::Identity a`
+### `type State = Minilib.Monad.State::StateT s Minilib.Monad.Identity::Identity`
 
 ### `type [m : *->*] StateT s m a = unbox struct { ...fields... }`
 

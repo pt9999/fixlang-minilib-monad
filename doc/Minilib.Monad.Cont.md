@@ -6,7 +6,7 @@ Continuation Monad.
 
 ## `namespace Minilib.Monad.Cont`
 
-### `type Cont = Minilib.Monad.Cont::ContT r Minilib.Monad.Identity::Identity a`
+### `type Cont = Minilib.Monad.Cont::ContT r Minilib.Monad.Identity::Identity`
 
 A continuation monad whose undelying monad is Identity.
 

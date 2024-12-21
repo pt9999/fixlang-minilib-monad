@@ -8,7 +8,7 @@ For details, see [blog post: The Reader and Writer Monads and Comonads](https://
 
 ## `namespace Minilib.Monad.Reader`
 
-### `type Reader = Minilib.Monad.Reader::ReaderT e Minilib.Monad.Identity::Identity a`
+### `type Reader = Minilib.Monad.Reader::ReaderT e Minilib.Monad.Identity::Identity`
 
 ### `type [m : *->*] ReaderT e m a = unbox struct { ...fields... }`
 
