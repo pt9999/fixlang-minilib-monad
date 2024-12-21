@@ -31,7 +31,7 @@ type [m: *->*] StateT s m a = unbox struct {
     data: s -> m (s, a)
 };
 
-type State s a = StateT s Identity a;
+type State s = StateT s Identity;
 
 // Creates a StateT monad from a function.
 make_state_t_monad: [m: Monad] (s -> m (s, a)) -> StateT s m a;

@@ -31,7 +31,7 @@ type [m: * -> *] ReaderT e m a = unbox struct {
     data: e -> m a
 };
 
-type Reader e a = ReaderT e Identity a;
+type Reader e = ReaderT e Identity;
 
 // Creates a generic reader monad from a function.
 reader_t: [m: Monad] (e -> m a) -> ReaderT e m a;

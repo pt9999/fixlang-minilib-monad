@@ -27,7 +27,7 @@ type [m: * -> *] ContT r m a = unbox struct {
 };
 
 // A continuation monad whose undelying monad is Identity.
-type Cont r a = ContT r Identity a;
+type Cont r = ContT r Identity;
 
 // Creates a ContT monad from a function which receives a continuation function and returns the monadic value of the result.
 cont_t: [m: Monad] ((a -> m r) -> m r) -> ContT r m a;

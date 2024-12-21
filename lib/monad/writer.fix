@@ -33,7 +33,7 @@ type [m: * -> *] WriterT e m a = unbox struct {
     data: m (e, a)
 };
 
-type Writer e a = WriterT e Identity a;
+type Writer e = WriterT e Identity;
 
 // Creates a generic writer monad from an enviroment and a value.
 writer_t: [m: Monad] m (e, a) -> WriterT e m a;
