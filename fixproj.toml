@@ -5,7 +5,7 @@ authors = ["pt9999"]
 license = "MIT"
 
 [build]
-opt_level = "separated"
+opt_level = "basic"
 files = [
     "lib/functor/pair.fix",
     "lib/monad/cont.fix",
@@ -23,7 +23,7 @@ files = [
 ]
 
 [build.test]
-opt_level = "separated"
+opt_level = "basic"
 files = [
     "tests/test.fix",
     "tests/functor/pair_test.fix",
