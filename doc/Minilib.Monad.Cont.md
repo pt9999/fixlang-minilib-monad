@@ -48,7 +48,7 @@ The exit function can be passed to another function.
 
 ## `namespace Minilib.Monad.Cont`
 
-### `cont : ((a -> r) -> r) -> Minilib.Monad.Cont::ContT r Minilib.Monad.Identity::Identity a`
+### `cont : ((a -> r) -> r) -> Minilib.Monad.Cont::Cont r a`
 
 Creates a Cont monad from a function which receives a continuation function and returns the result value.
 
@@ -62,7 +62,7 @@ Deprecated: Please use `MonadTrans::lift_t`.
 
 Lifts an underlying monad to a continuation monad.
 
-### `run_cont : (a -> r) -> Minilib.Monad.Cont::ContT r Minilib.Monad.Identity::Identity a -> r`
+### `run_cont : (a -> r) -> Minilib.Monad.Cont::Cont r a -> r`
 
 Runs a Cont monad with the supplied continuation function.
 

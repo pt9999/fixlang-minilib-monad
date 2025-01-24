@@ -54,7 +54,7 @@ A monad that puts the specified value to the internal state.
 
 ## `namespace Minilib.Monad.State`
 
-### `eval_state : s -> Minilib.Monad.State::StateT s Minilib.Monad.Identity::Identity a -> a`
+### `eval_state : s -> Minilib.Monad.State::State s a -> a`
 
 Runs a State monad with the supplied initial state and return the final value, discarding the final state.
 
@@ -62,7 +62,7 @@ Runs a State monad with the supplied initial state and return the final value, d
 
 Runs a StateT monad with the supplied initial state and return the final value, discarding the final state.
 
-### `exec_state : s -> Minilib.Monad.State::StateT s Minilib.Monad.Identity::Identity a -> s`
+### `exec_state : s -> Minilib.Monad.State::State s a -> s`
 
 Runs a State monad with the supplied initial state and return the final state, discarding the final value.
 
@@ -70,7 +70,7 @@ Runs a State monad with the supplied initial state and return the final state, d
 
 Runs a StateT monad with the supplied initial state and return the final state, discarding the final value.
 
-### `lens_state : ((s -> Minilib.Functor.Pair::PairLT a Minilib.Monad.Identity::Identity s) -> t -> Minilib.Functor.Pair::PairLT a Minilib.Monad.Identity::Identity t) -> Minilib.Monad.State::StateT s Minilib.Monad.Identity::Identity a -> Minilib.Monad.State::StateT t Minilib.Monad.Identity::Identity a`
+### `lens_state : ((s -> Minilib.Functor.Pair::PairLT a Minilib.Monad.Identity::Identity s) -> t -> Minilib.Functor.Pair::PairLT a Minilib.Monad.Identity::Identity t) -> Minilib.Monad.State::State s a -> Minilib.Monad.State::State t a`
 
 ### `lens_state_t : [m : Std::Monad, m : Std::Functor] ((s -> Minilib.Functor.Pair::PairLT a m s) -> t -> Minilib.Functor.Pair::PairLT a m t) -> Minilib.Monad.State::StateT s m a -> Minilib.Monad.State::StateT t m a`
 
@@ -86,7 +86,7 @@ change_foo = change_bar.lens_state_t(Foo::act_bar);
 ```
 Note that `act_xxx` can be composed, for example `Foo::act_bar << Bar::act_baz << Baz::act_qux`.
 
-### `make_state_monad : (s -> (s, a)) -> Minilib.Monad.State::StateT s Minilib.Monad.Identity::Identity a`
+### `make_state_monad : (s -> (s, a)) -> Minilib.Monad.State::State s a`
 
 Creates a State monad from a function.
 
@@ -102,7 +102,7 @@ Maps both the return value and final state.
 
 A monad that modifies the current state with the specified function.
 
-### `run_state : s -> Minilib.Monad.State::StateT s Minilib.Monad.Identity::Identity a -> (s, a)`
+### `run_state : s -> Minilib.Monad.State::State s a -> (s, a)`
 
 Runs a State monad with the supplied initial state.
 
@@ -110,7 +110,7 @@ Runs a State monad with the supplied initial state.
 
 Runs a StateT monad with the supplied initial state.
 
-### `state : (s -> (s, a)) -> Minilib.Monad.State::StateT s Minilib.Monad.Identity::Identity a`
+### `state : (s -> (s, a)) -> Minilib.Monad.State::State s a`
 
 Synonym of `make_state_monad`.
 

@@ -67,7 +67,7 @@ Maps an underlying monad and a value using the specified function.
 
 A reader monad that returns the environment as a value.
 
-### `reader : (e -> a) -> Minilib.Monad.Reader::ReaderT e Minilib.Monad.Identity::Identity a`
+### `reader : (e -> a) -> Minilib.Monad.Reader::Reader e a`
 
 Creates a reader monad from a function.
 
@@ -75,7 +75,7 @@ Creates a reader monad from a function.
 
 Creates a generic reader monad from a function.
 
-### `run_reader : e -> Minilib.Monad.Reader::ReaderT e Minilib.Monad.Identity::Identity a -> a`
+### `run_reader : e -> Minilib.Monad.Reader::Reader e a -> a`
 
 Runs a reader monad with the supplied environment.
 

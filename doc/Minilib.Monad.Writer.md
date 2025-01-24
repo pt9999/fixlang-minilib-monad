@@ -63,7 +63,7 @@ Provide a writer transformer which changes internals of the written object.
 
 ## `namespace Minilib.Monad.Writer`
 
-### `get_env : Minilib.Monad.Writer::WriterT e Minilib.Monad.Identity::Identity a -> e`
+### `get_env : Minilib.Monad.Writer::Writer e a -> e`
 
 Gets the envirionment from a writer monad.
 
@@ -71,7 +71,7 @@ Gets the envirionment from a writer monad.
 
 Gets the envirionment from a generic writer monad.
 
-### `get_value : Minilib.Monad.Writer::WriterT e Minilib.Monad.Identity::Identity a -> a`
+### `get_value : Minilib.Monad.Writer::Writer e a -> a`
 
 Gets the value from a writer monad.
 
@@ -83,7 +83,7 @@ Gets the value from a generic writer monad.
 
 Maps an underlying monad and a value using the specified function.
 
-### `run_writer : Minilib.Monad.Writer::WriterT e Minilib.Monad.Identity::Identity a -> (e, a)`
+### `run_writer : Minilib.Monad.Writer::Writer e a -> (e, a)`
 
 Runs a writer monad to get an enviroment and a value.
 
@@ -95,7 +95,7 @@ Runs a generic writer monad to get an enviroment and a value.
 
 Creates a writer monad that appends to the environment.
 
-### `writer : e -> a -> Minilib.Monad.Writer::WriterT e Minilib.Monad.Identity::Identity a`
+### `writer : e -> a -> Minilib.Monad.Writer::Writer e a`
 
 Creates a writer monad from an enviroment and a value.
 
