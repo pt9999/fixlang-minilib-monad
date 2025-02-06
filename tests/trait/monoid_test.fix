@@ -21,11 +21,11 @@ test_array = (
 test_iterator: TestCase;
 test_iterator = (
     make_test("test_iterator") $ |_|
-    let a: Iterator I64 = mempty;
+    let a: DynIterator I64 = mempty;
     let _ = *assert_equal("mempty", [], a.to_array);
-    let a = a.sappend([1].to_iter);
+    let a = a.sappend([1].to_iter.to_dyn);
     let _ = *assert_equal("sappend", [1], a.to_array);
-    let a = a.sappend([2,3].to_iter);
+    let a = a.sappend([2,3].to_iter.to_dyn);
     let _ = *assert_equal("sappend", [1,2,3], a.to_array);
     pure()
 );

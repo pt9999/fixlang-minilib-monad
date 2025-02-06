@@ -18,8 +18,8 @@ impl Array a: Semigroup {
 }
 
 // For iterators, `sappend` appends two iterators.
-impl Iterator a: Semigroup {
-    sappend = Iterator::append;
+impl DynIterator a: Semigroup {
+    sappend = |rhs, lhs| lhs.append(rhs).to_dyn;
 }
 
 // For strings, `sappend` concats two strings.
