@@ -18,7 +18,7 @@ test_reader_functor = (
     assert_equal("eq", "3", r.run_reader([2]))
 );
 
-type Config = Iterator (String, String);
+type Config = DynIterator (String, String);
 
 test_reader_monad: TestCase;
 test_reader_monad = (
@@ -32,11 +32,11 @@ test_reader_monad = (
         let value2 = *get_config_value("key2");
         pure $ "value1=" + value1 + " value2=" + value2
     };
-    let config = Iterator::empty.push_front(("key1", "a")).push_front(("key2", "b"));
+    let config = Iterator::empty.push_front(("key1", "a")).push_front(("key2", "b")).to_dyn;
     eval *assert_equal("case1", "value1=a value2=b", r.run_reader(config));
-    let rr = r.local(push_front(("key2", "bb")));
+    let rr = r.local(|config| config.push_front(("key2", "bb")).to_dyn);
     eval *assert_equal("case2", "value1=a value2=bb", rr.run_reader(config));
-    eval *assert_equal("case3", "value1= value2=bb", rr.run_reader(Iterator::empty));
+    eval *assert_equal("case3", "value1= value2=bb", rr.run_reader(DynIterator::empty));
     pure()
 );
 

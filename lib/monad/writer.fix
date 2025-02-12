@@ -57,7 +57,7 @@ write = |e| writer_t $ pure $ (e, ());
 
 // Gets the envirionment from a generic writer monad.
 get_env_t: [m: Monad] WriterT e m a -> m e;
-get_env_t = |ma| ma.@data.bind(@0 >> pure);
+get_env_t = |ma| ma.@data.bind(Tuple2::@0 >> pure);
 
 // Gets the envirionment from a writer monad.
 get_env: Writer e a -> e;
@@ -65,7 +65,7 @@ get_env = |ma| ma.get_env_t.get;
 
 // Gets the value from a generic writer monad.
 get_value_t: [m: Monad] WriterT e m a -> m a;
-get_value_t = |ma| ma.@data.bind(@1 >> pure);
+get_value_t = |ma| ma.@data.bind(Tuple2::@1 >> pure);
 
 // Gets the value from a writer monad.
 get_value: Writer e a -> a;
