@@ -26,7 +26,7 @@ An identity of a monoid, such as an empty instance.
 
 ### `impl Std::Array a : Minilib.Trait.Monoid::MEmpty`
 
-### `impl Std::Iterator a : Minilib.Trait.Monoid::MEmpty`
+### `impl Std::Iterator::DynIterator a : Minilib.Trait.Monoid::MEmpty`
 
 ### `impl [a : Minilib.Trait.Semigroup::Semigroup] Std::Option a : Minilib.Trait.Monoid::MEmpty`
 
@@ -36,7 +36,7 @@ An identity of a monoid, such as an empty instance.
 
 ## `namespace Minilib.Trait.Monoid`
 
-### `mconcat : [a : Minilib.Trait.Monoid::Monoid] Std::Iterator a -> a`
+### `mconcat : [a : Minilib.Trait.Monoid::Monoid] Std::Iterator::DynIterator a -> a`
 
 Concats an iterator of monoids to a monoid.
 

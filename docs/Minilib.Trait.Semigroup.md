@@ -31,7 +31,7 @@ A trait that represents a semigroup.
 
 For arrays, `sappend` appends two arrays.
 
-### `impl Std::Iterator a : Minilib.Trait.Semigroup::Semigroup`
+### `impl Std::Iterator::DynIterator a : Minilib.Trait.Semigroup::Semigroup`
 
 For iterators, `sappend` appends two iterators.
 
