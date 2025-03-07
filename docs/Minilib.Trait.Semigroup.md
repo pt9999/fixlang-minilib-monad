@@ -1,4 +1,6 @@
-# `module Minilib.Trait.Semigroup`
+# Minilib.Trait.Semigroup
+
+Defined in minilib-monad@0.5.1
 
 Semigroup trait and its several implementations (Array, Iterator, String etc).
 
@@ -7,46 +9,50 @@ It may or may not have an identity.
 
 For details, see [Wikipedia: Semigroup](https://en.wikipedia.org/wiki/Semigroup).
 
-# Types and aliases
+## Values
 
-# Traits and aliases
+### namespace Minilib.Trait.Semigroup::Semigroup
 
-## `namespace Minilib.Trait.Semigroup`
+#### sappend
 
-### `trait a : Semigroup`
+Type: `[a : Minilib.Trait.Semigroup::Semigroup] a -> a -> a`
+
+`a.sappend(b)` appends `b` after `a`.
+
+## Types and aliases
+
+## Traits and aliases
+
+### namespace Minilib.Trait.Semigroup
+
+#### trait `a : Semigroup`
 
 A trait that represents a semigroup.
 
-#### method `sappend : a -> a -> a`
+##### method `sappend`
+
+Type: `a -> a -> a`
 
 `a.sappend(b)` appends `b` after `a`.
 
-# Trait implementations
+## Trait implementations
 
-### `impl () : Minilib.Trait.Semigroup::Semigroup`
+### impl `() : Minilib.Trait.Semigroup::Semigroup`
 
 `()` does not change with `sappend`.
 
-### `impl Std::Array a : Minilib.Trait.Semigroup::Semigroup`
+### impl `Std::Array a : Minilib.Trait.Semigroup::Semigroup`
 
 For arrays, `sappend` appends two arrays.
 
-### `impl Std::Iterator::DynIterator a : Minilib.Trait.Semigroup::Semigroup`
+### impl `Std::Iterator::DynIterator a : Minilib.Trait.Semigroup::Semigroup`
 
 For iterators, `sappend` appends two iterators.
 
-### `impl [a : Minilib.Trait.Semigroup::Semigroup] Std::Option a : Minilib.Trait.Semigroup::Semigroup`
+### impl `[a : Minilib.Trait.Semigroup::Semigroup] Std::Option a : Minilib.Trait.Semigroup::Semigroup`
 
 For options, `sappand` appends two values if both is some.
 
-### `impl Std::String : Minilib.Trait.Semigroup::Semigroup`
+### impl `Std::String : Minilib.Trait.Semigroup::Semigroup`
 
 For strings, `sappend` concats two strings.
-
-# Values
-
-## `namespace Minilib.Trait.Semigroup::Semigroup`
-
-### `sappend : [a : Minilib.Trait.Semigroup::Semigroup] a -> a -> a`
-
-`a.sappend(b)` appends `b` after `a`.

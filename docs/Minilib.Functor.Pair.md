@@ -1,67 +1,101 @@
-# `module Minilib.Functor.Pair`
+# Minilib.Functor.Pair
 
-# Types and aliases
+Defined in minilib-monad@0.5.1
 
-## `namespace Minilib.Functor.Pair`
+## Values
 
-### `type PairL r l = unbox struct { ...fields... }`
+### namespace Minilib.Functor.Pair::PairL
+
+#### get
+
+Type: `Minilib.Functor.Pair::PairL r l -> (l, r)`
+
+#### make
+
+Type: `(l, r) -> Minilib.Functor.Pair::PairL r l`
+
+### namespace Minilib.Functor.Pair::PairLT
+
+#### get
+
+Type: `Minilib.Functor.Pair::PairLT r f l -> f (l, r)`
+
+#### make
+
+Type: `f (l, r) -> Minilib.Functor.Pair::PairLT r f l`
+
+### namespace Minilib.Functor.Pair::PairR
+
+#### get
+
+Type: `Minilib.Functor.Pair::PairR l r -> (l, r)`
+
+#### make
+
+Type: `(l, r) -> Minilib.Functor.Pair::PairR l r`
+
+### namespace Minilib.Functor.Pair::PairRT
+
+#### get
+
+Type: `Minilib.Functor.Pair::PairRT l f r -> f (l, r)`
+
+#### make
+
+Type: `f (l, r) -> Minilib.Functor.Pair::PairRT l f r`
+
+## Types and aliases
+
+### namespace Minilib.Functor.Pair
+
+#### PairL
+
+Defined as: `type PairL r l = unbox struct { ...fields... }`
 
 A functor on the left component. This is a swapped version of `Tuple2`.
 
-#### field `data : (l, r)`
+##### field `data`
 
-### `type [f : *->*] PairLT r f l = unbox struct { ...fields... }`
+Type: `(l, r)`
+
+#### PairLT
+
+Defined as: `type [f : *->*] PairLT r f l = unbox struct { ...fields... }`
 
 A functor on the left component with an underlying functor.
 
-#### field `data : f (l, r)`
+##### field `data`
 
-### `type PairR l r = unbox struct { ...fields... }`
+Type: `f (l, r)`
+
+#### PairR
+
+Defined as: `type PairR l r = unbox struct { ...fields... }`
 
 A functor on the right component. This is same as `Tuple2`.
 
-#### field `data : (l, r)`
+##### field `data`
 
-### `type [f : *->*] PairRT l f r = unbox struct { ...fields... }`
+Type: `(l, r)`
+
+#### PairRT
+
+Defined as: `type [f : *->*] PairRT l f r = unbox struct { ...fields... }`
 
 A functor on the right component with an underlying functor.
 
-#### field `data : f (l, r)`
+##### field `data`
 
-# Traits and aliases
+Type: `f (l, r)`
 
-# Trait implementations
+## Traits and aliases
 
-### `impl Minilib.Functor.Pair::PairL r : Std::Functor`
+## Trait implementations
 
-### `impl [f : Std::Functor] Minilib.Functor.Pair::PairLT r f : Std::Functor`
+### impl `Minilib.Functor.Pair::PairL r : Std::Functor`
 
-### `impl Minilib.Functor.Pair::PairR l : Std::Functor`
+### impl `[f : Std::Functor] Minilib.Functor.Pair::PairLT r f : Std::Functor`
 
-### `impl [f : Std::Functor] Minilib.Functor.Pair::PairRT l f : Std::Functor`
+### impl `Minilib.Functor.Pair::PairR l : Std::Functor`
 
-# Values
-
-## `namespace Minilib.Functor.Pair::PairL`
-
-### `get : Minilib.Functor.Pair::PairL r l -> (l, r)`
-
-### `make : (l, r) -> Minilib.Functor.Pair::PairL r l`
-
-## `namespace Minilib.Functor.Pair::PairLT`
-
-### `get : Minilib.Functor.Pair::PairLT r f l -> f (l, r)`
-
-### `make : f (l, r) -> Minilib.Functor.Pair::PairLT r f l`
-
-## `namespace Minilib.Functor.Pair::PairR`
-
-### `get : Minilib.Functor.Pair::PairR l r -> (l, r)`
-
-### `make : (l, r) -> Minilib.Functor.Pair::PairR l r`
-
-## `namespace Minilib.Functor.Pair::PairRT`
-
-### `get : Minilib.Functor.Pair::PairRT l f r -> f (l, r)`
-
-### `make : f (l, r) -> Minilib.Functor.Pair::PairRT l f r`
+### impl `[f : Std::Functor] Minilib.Functor.Pair::PairRT l f : Std::Functor`

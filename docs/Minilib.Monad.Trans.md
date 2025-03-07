@@ -1,27 +1,33 @@
-# `module Minilib.Monad.Trans`
+# Minilib.Monad.Trans
+
+Defined in minilib-monad@0.5.1
 
 Trait for a monad transformer.
 
-# Types and aliases
+## Values
 
-# Traits and aliases
+### namespace Minilib.Monad.Trans::MonadTrans
 
-## `namespace Minilib.Monad.Trans`
+#### lift_t
 
-### `trait [t : (*->*)->*->*] t : MonadTrans`
+Type: `[t : Minilib.Monad.Trans::MonadTrans, m : Std::Monad] m a -> t m a`
+
+Lifts an underlying monad to a transformed monad.
+
+## Types and aliases
+
+## Traits and aliases
+
+### namespace Minilib.Monad.Trans
+
+#### trait `[t : (*->*)->*->*] t : MonadTrans`
 
 Trait for a monad transformer.
 
-#### method `lift_t : [m : Std::Monad] m a -> t m a`
+##### method `lift_t`
+
+Type: `[m : Std::Monad] m a -> t m a`
 
 Lifts an underlying monad to a transformed monad.
 
-# Trait implementations
-
-# Values
-
-## `namespace Minilib.Monad.Trans::MonadTrans`
-
-### `lift_t : [t : Minilib.Monad.Trans::MonadTrans, m : Std::Monad] m a -> t m a`
-
-Lifts an underlying monad to a transformed monad.
+## Trait implementations

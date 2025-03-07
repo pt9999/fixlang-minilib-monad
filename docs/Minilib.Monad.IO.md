@@ -1,39 +1,49 @@
-# `module Minilib.Monad.IO`
+# Minilib.Monad.IO
+
+Defined in minilib-monad@0.5.1
 
 Monadic traits which can lift IO and IOFail monad.
 
-# Types and aliases
+## Values
 
-# Traits and aliases
+### namespace Minilib.Monad.IO::MonadIOFailIF
 
-## `namespace Minilib.Monad.IO`
+#### lift_iofail
 
-### `trait [m : *->*] m : MonadIOFailIF`
+Type: `[m : Minilib.Monad.IO::MonadIOFailIF] Std::IO::IOFail a -> m a`
+
+### namespace Minilib.Monad.IO::MonadIOIF
+
+#### lift_io
+
+Type: `[m : Minilib.Monad.IO::MonadIOIF] Std::IO a -> m a`
+
+## Types and aliases
+
+## Traits and aliases
+
+### namespace Minilib.Monad.IO
+
+#### trait `[m : *->*] m : MonadIOFailIF`
 
 An interface of a monadic trait which can lift IOFail monad.
 
-#### method `lift_iofail : Std::IO::IOFail a -> m a`
+##### method `lift_iofail`
 
-### `trait [m : *->*] m : MonadIOIF`
+Type: `Std::IO::IOFail a -> m a`
+
+#### trait `[m : *->*] m : MonadIOIF`
 
 An interface of a monadic trait which can lift IO monad.
 
-#### method `lift_io : Std::IO a -> m a`
+##### method `lift_io`
 
-# Trait implementations
+Type: `Std::IO a -> m a`
 
-### `impl Std::IO : Minilib.Monad.IO::MonadIOIF`
+## Trait implementations
 
-### `impl Std::IO::IOFail : Minilib.Monad.IO::MonadIOFailIF`
+### impl `Std::IO : Minilib.Monad.IO::MonadIOIF`
 
-### `impl Std::IO::IOFail : Minilib.Monad.IO::MonadIOIF`
+### impl `Std::IO::IOFail : Minilib.Monad.IO::MonadIOFailIF`
 
-# Values
-
-## `namespace Minilib.Monad.IO::MonadIOFailIF`
-
-### `lift_iofail : [m : Minilib.Monad.IO::MonadIOFailIF] Std::IO::IOFail a -> m a`
-
-## `namespace Minilib.Monad.IO::MonadIOIF`
-
-### `lift_io : [m : Minilib.Monad.IO::MonadIOIF] Std::IO a -> m a`
+### impl `Std::IO::IOFail : Minilib.Monad.IO::MonadIOIF`
