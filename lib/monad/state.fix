@@ -18,11 +18,19 @@ trait [sm: * -> *] sm: MonadStateIF {
     get_state: sm (StateType sm);
     // A monad that puts the specified value to the internal state.
     put_state: (StateType sm) -> sm ();
+    // A monad that modifies the current state with the specified function.
+    mod_state_: (StateType sm -> StateType sm) -> sm ();
 }
 
 // A monad that modifies the current state with the specified function.
 mod_state: [sm: MonadState] (StateType sm -> StateType sm) -> sm ();
-mod_state = |f| put_state $ f $ *get_state;
+mod_state = mod_state_;
+
+// NOTE: The old implementation of `mod_state` had a bug that prevented the state from being unique.
+// ```
+// mod_state = |f| put_state $ f $ *get_state;
+// ```
+// NOTE: For backward compatibility, `mod_state` should be accessible as `State::mod_state`.
 
 //------------------------------------------------------------------------
 
@@ -105,6 +113,7 @@ impl [m: Monad] StateT s m: MonadStateIF {
     type StateType (StateT s m) = s;
     get_state = make_state_t_monad $ |s| pure $ (s, s);
     put_state = |s| make_state_t_monad $ |_| pure $ (s, ());
+    mod_state_ = |f| make_state_t_monad $ |s| pure $ (f(s), ());
 }
 
 impl StateT s: MonadTrans {
