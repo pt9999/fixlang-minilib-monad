@@ -1,6 +1,6 @@
 # Minilib.Monad.Reader
 
-Defined in minilib-monad@0.5.1
+Defined in minilib-monad@0.6.0
 
 Reader monad.
 

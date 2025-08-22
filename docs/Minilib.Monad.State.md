@@ -1,6 +1,6 @@
 # Minilib.Monad.State
 
-Defined in minilib-monad@0.5.1
+Defined in minilib-monad@0.6.0
 
 State Monad which maintains a mutable state.
 
@@ -108,6 +108,12 @@ Type: `[sm : Minilib.Monad.State::MonadStateIF] sm (Minilib.Monad.State::MonadSt
 
 A monad that returns the internal state as a value.
 
+#### mod_state_
+
+Type: `[sm : Minilib.Monad.State::MonadStateIF] (Minilib.Monad.State::MonadStateIF::StateType sm -> Minilib.Monad.State::MonadStateIF::StateType sm) -> sm ()`
+
+A monad that modifies the current state with the specified function.
+
 #### put_state
 
 Type: `[sm : Minilib.Monad.State::MonadStateIF] Minilib.Monad.State::MonadStateIF::StateType sm -> sm ()`
@@ -157,6 +163,12 @@ A monad that returns the internal state as a value.
 Type: `Minilib.Monad.State::MonadStateIF::StateType sm -> sm ()`
 
 A monad that puts the specified value to the internal state.
+
+##### method `mod_state_`
+
+Type: `(Minilib.Monad.State::MonadStateIF::StateType sm -> Minilib.Monad.State::MonadStateIF::StateType sm) -> sm ()`
+
+A monad that modifies the current state with the specified function.
 
 ## Trait implementations
 
