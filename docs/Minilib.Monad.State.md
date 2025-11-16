@@ -1,6 +1,6 @@
 # Minilib.Monad.State
 
-Defined in minilib-monad@0.6.0
+Defined in minilib-monad@0.6.1
 
 State Monad which maintains a mutable state.
 
@@ -141,6 +141,12 @@ Type: `s -> m (s, a)`
 ## Traits and aliases
 
 ### namespace Minilib.Monad.State
+
+#### trait `MonadState = Std::Monad + Minilib.Monad.State::MonadStateIF`
+
+Kind: `*->*`
+
+A trait for the interface of generic state monads.
 
 #### trait `[sm : *->*] sm : MonadStateIF`
 

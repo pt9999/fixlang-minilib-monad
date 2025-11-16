@@ -1,6 +1,6 @@
 # Minilib.Trait.Monoid
 
-Defined in minilib-monad@0.6.0
+Defined in minilib-monad@0.6.1
 
 Monoid trait and its several implementations (Array, Iterator, String etc).
 
@@ -41,6 +41,12 @@ A trait that represents an identity of a monoid.
 Type: `a`
 
 An identity of a monoid, such as an empty instance.
+
+#### trait `Monoid = Minilib.Trait.Semigroup::Semigroup + Minilib.Trait.Monoid::MEmpty`
+
+Kind: `*`
+
+A trait that represents a monoid.
 
 ## Trait implementations
 

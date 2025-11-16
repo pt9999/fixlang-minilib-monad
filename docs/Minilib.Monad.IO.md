@@ -1,6 +1,6 @@
 # Minilib.Monad.IO
 
-Defined in minilib-monad@0.6.0
+Defined in minilib-monad@0.6.1
 
 Monadic traits which can lift IO and IOFail monad.
 
@@ -23,6 +23,18 @@ Type: `[m : Minilib.Monad.IO::MonadIOIF] Std::IO a -> m a`
 ## Traits and aliases
 
 ### namespace Minilib.Monad.IO
+
+#### trait `MonadIO = Std::Monad + Minilib.Monad.IO::MonadIOIF`
+
+Kind: `*->*`
+
+A monadic trait which can lift IO monad.
+
+#### trait `MonadIOFail = Std::Monad + Minilib.Monad.IO::MonadIOIF + Minilib.Monad.IO::MonadIOFailIF`
+
+Kind: `*->*`
+
+A monadic trait which can lift IO and IOFail monad.
 
 #### trait `[m : *->*] m : MonadIOFailIF`
 

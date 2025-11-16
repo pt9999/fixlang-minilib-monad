@@ -1,6 +1,6 @@
 # Minilib.Monad.Reader
 
-Defined in minilib-monad@0.6.0
+Defined in minilib-monad@0.6.1
 
 Reader monad.
 
@@ -90,6 +90,12 @@ Type: `e -> m a`
 ## Traits and aliases
 
 ### namespace Minilib.Monad.Reader
+
+#### trait `MonadReader = Std::Monad + Minilib.Monad.Reader::MonadReaderIF`
+
+Kind: `*->*`
+
+A trait for the interface of generic reader monads.
 
 #### trait `[rm : *->*] rm : MonadReaderIF`
 

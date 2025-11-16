@@ -1,6 +1,6 @@
 # Minilib.Monad.Cont
 
-Defined in minilib-monad@0.6.0
+Defined in minilib-monad@0.6.1
 
 Continuation Monad.
 
@@ -77,6 +77,12 @@ Type: `(a -> m r) -> m r`
 ## Traits and aliases
 
 ### namespace Minilib.Monad.Cont
+
+#### trait `MonadCont = Std::Monad + Minilib.Monad.Cont::MonadContIF`
+
+Kind: `*->*`
+
+A trait for the interface of generic continuation  monads.
 
 #### trait `[cm : *->*] cm : MonadContIF`
 

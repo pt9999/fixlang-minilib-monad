@@ -1,6 +1,6 @@
 # Minilib.Monad.Error
 
-Defined in minilib-monad@0.6.0
+Defined in minilib-monad@0.6.1
 
 Definition of `MonadErrorIF` trait which can report errors.
 
@@ -45,6 +45,12 @@ Type: `[m : Minilib.Monad.Error::MonadErrorIF] Std::ErrMsg -> m a`
 ## Traits and aliases
 
 ### namespace Minilib.Monad.Error
+
+#### trait `MonadError = Std::Monad + Minilib.Monad.Error::MonadErrorIF`
+
+Kind: `*->*`
+
+A trait for the interface of monads which can report errors.
 
 #### trait `[m : *->*] m : MonadErrorIF`
 

@@ -1,6 +1,6 @@
 # Minilib.Monad.Writer
 
-Defined in minilib-monad@0.6.0
+Defined in minilib-monad@0.6.1
 
 Writer monad.
 
@@ -114,6 +114,12 @@ Type: `m (e, a)`
 ## Traits and aliases
 
 ### namespace Minilib.Monad.Writer
+
+#### trait `MonadWriter = Std::Monad + Minilib.Monad.Writer::MonadWriterIF`
+
+Kind: `*->*`
+
+A trait for the interface of generic writer monads.
 
 #### trait `[wm : *->*] wm : MonadWriterIF`
 
