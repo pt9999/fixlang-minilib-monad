@@ -10,11 +10,11 @@ test_array: TestCase;
 test_array = (
     make_test("test_array") $ |_|
     let a: Array I64 = mempty;
-    let _ = *assert_equal("mempty", [], a);
+    assert_equal("mempty", [], a);;
     let a = a.sappend([1]);
-    let _ = *assert_equal("sappend", [1], a);
+    assert_equal("sappend", [1], a);;
     let a = a.sappend([2,3]);
-    let _ = *assert_equal("sappend", [1,2,3], a);
+    assert_equal("sappend", [1,2,3], a);;
     pure()
 );
 
@@ -22,11 +22,11 @@ test_iterator: TestCase;
 test_iterator = (
     make_test("test_iterator") $ |_|
     let a: DynIterator I64 = mempty;
-    let _ = *assert_equal("mempty", [], a.to_array);
+    assert_equal("mempty", [], a.to_array);;
     let a = a.sappend([1].to_iter.to_dyn);
-    let _ = *assert_equal("sappend", [1], a.to_array);
+    assert_equal("sappend", [1], a.to_array);;
     let a = a.sappend([2,3].to_iter.to_dyn);
-    let _ = *assert_equal("sappend", [1,2,3], a.to_array);
+    assert_equal("sappend", [1,2,3], a.to_array);;
     pure()
 );
 
@@ -34,11 +34,11 @@ test_string: TestCase;
 test_string = (
     make_test("test_string") $ |_|
     let a: String = mempty;
-    let _ = *assert_equal("mempty", "", a);
+    assert_equal("mempty", "", a);;
     let a = a.sappend("1");
-    let _ = *assert_equal("sappend", "1", a);
+    assert_equal("sappend", "1", a);;
     let a = a.sappend("23");
-    let _ = *assert_equal("sappend", "123", a);
+    assert_equal("sappend", "123", a);;
     pure()
 );
 

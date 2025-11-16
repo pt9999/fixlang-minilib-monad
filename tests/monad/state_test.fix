@@ -30,7 +30,7 @@ test_state_monad = (
         put_state(a)
     );
     let sm = do {
-        eval *set_elt(1, 4);
+        set_elt(1, 4);;
         let x = *get_elt(0);
         let y = *get_elt(1);
         pure $ x + y
@@ -54,11 +54,11 @@ test_eval_exec_state_t = (
     let sm: StateT String (Result ErrMsg) I64 = do {
         let s = *get_state;
         let a = s.get_size;
-        eval *put_state("end");
+        put_state("end");;
         pure $ a
     };
-    eval *assert_equal("eval_state_t", ok $ 5, sm.eval_state_t("start"));
-    eval *assert_equal("exec_state_t", ok $ "end", sm.exec_state_t("start"));
+    assert_equal("eval_state_t", ok $ 5, sm.eval_state_t("start"));;
+    assert_equal("exec_state_t", ok $ "end", sm.exec_state_t("start"));;
     pure()
 );
 
@@ -68,11 +68,11 @@ test_eval_exec_state = (
     let sm: State String I64 = do {
         let s = *get_state;
         let a = s.get_size;
-        eval *put_state("end");
+        put_state("end");;
         pure $ a
     };
-    eval *assert_equal("eval_state", 5, sm.eval_state("start"));
-    eval *assert_equal("exec_state", "end", sm.exec_state("start"));
+    assert_equal("eval_state", 5, sm.eval_state("start"));;
+    assert_equal("exec_state", "end", sm.exec_state("start"));;
     pure()
 );
 
@@ -81,15 +81,15 @@ test_map_state_t = (
     make_test("test_map_state_t") $ |_|
     let sm: StateT I64 Identity I32 = do {
         let i64 = *get_state;
-        eval *put_state(i64 + 1);
+        put_state(i64 + 1);;
         pure $ i64.to_I32
     };
     let sm: StateT I64 IOFail String = sm.map_state_t(|ma|
         pure $ ma.get.map(to_string)
     );
     let (i64, str) = *sm.run_state_t(42);
-    eval *assert_equal("i64", 43, i64);
-    eval *assert_equal("str", "42", str);
+    assert_equal("i64", 43, i64);;
+    assert_equal("str", "42", str);;
     pure()
 );
 
@@ -98,23 +98,23 @@ test_state_result_error = (
     make_test("test_state_result_error") $ |_|
     let sm: StateT I64 (Result ErrMsg) I64 = do {
         let i = *get_state;
-        eval *put_state(i + 10);
+        put_state(i + 10);;
         if i == 1 { error $ "err1" };
         if i == 2 { error $ "err2" };
         pure(i + 20)
     };
-    eval *assert_equal("err1", err $ "err1", sm.run_state_t(1));
-    eval *assert_equal("err2", err $ "err2", sm.run_state_t(2));
-    eval *assert_equal("ok3", ok $ (13, 23), sm.run_state_t(3));
+    assert_equal("err1", err $ "err1", sm.run_state_t(1));;
+    assert_equal("err2", err $ "err2", sm.run_state_t(2));;
+    assert_equal("ok3", ok $ (13, 23), sm.run_state_t(3));;
     let handler: String -> StateT I64 (Result ErrMsg) I64 = |errmsg| (
         let i = *get_state;     // state is not modified when the error is caught
-        eval *put_state(i + 100);
+        put_state(i + 100);;
         if i == 1 { pure(999) };
         error $ errmsg
     );
-    eval *assert_equal("catch err1", ok $ (101, 999), sm.catch(handler).run_state_t(1));
-    eval *assert_equal("catch err2", err $ "err2", sm.catch(handler).run_state_t(2));
-    eval *assert_equal("catch ok3", ok $ (13, 23), sm.catch(handler).run_state_t(3));
+    assert_equal("catch err1", ok $ (101, 999), sm.catch(handler).run_state_t(1));;
+    assert_equal("catch err2", err $ "err2", sm.catch(handler).run_state_t(2));;
+    assert_equal("catch ok3", ok $ (13, 23), sm.catch(handler).run_state_t(3));;
     pure()
 );
 
@@ -125,22 +125,22 @@ test_state_iofail_error = (
         let arr: Array I64 = *get_state;
         let arr = arr.push_back(2);
         if arr.get_size != 2 { error $ "err" };
-        eval *put_state(arr);
+        put_state(arr);;
         pure $ arr.to_iter.sum
     };
-    eval *assert_equal("eq1", ok $ ([1, 2], 3), *sm.run_state_t([1]).to_result.lift);
-    eval *assert_equal("eq2", err $ "err", *sm.run_state_t([1, 2]).to_result.lift);
+    assert_equal("eq1", ok $ ([1, 2], 3), *sm.run_state_t([1]).to_result.lift);;
+    assert_equal("eq2", err $ "err", *sm.run_state_t([1, 2]).to_result.lift);;
     let handler: String -> StateT (Array I64) IOFail I64 = |errmsg| (
         let arr: Array I64 = *get_state; // state is not modified when the error is caught
-        eval *put_state(arr.push_back(99));
+        put_state(arr.push_back(99));;
         pure $ 99
     );
     let sm2 = do {
         let i = *sm.catch(handler);
         pure $ i + 100
     };
-    eval *assert_equal("eq1", ok $ ([1, 2], 103), *sm2.run_state_t([1]).to_result.lift);
-    eval *assert_equal("eq2", ok $ ([1, 2, 99], 199), *sm2.run_state_t([1, 2]).to_result.lift);
+    assert_equal("eq1", ok $ ([1, 2], 103), *sm2.run_state_t([1]).to_result.lift);;
+    assert_equal("eq2", ok $ ([1, 2, 99], 199), *sm2.run_state_t([1, 2]).to_result.lift);;
     pure()
 );
 
@@ -158,11 +158,11 @@ test_state_iofail_lift_io: TestCase;
 test_state_iofail_lift_io = (
     make_test("test_state_iofail_lift_io") $ |_|
     let inner_io: IO I64 = do {
-        //eval *println("inner_io");
+        //println("inner_io");;
         pure $ 42
     };
     let inner_iofail: IOFail I64 = do {
-        //eval *println("inner_iofail").lift;
+        //println("inner_iofail").lift;;
         pure $ 57
     };
     let sm: StateT (Array I64) IOFail () = do {
@@ -189,15 +189,15 @@ test_lens_state_t = (
     let sm: StateT String (Result ErrMsg) I64 = do {
         let s = *get_state;
         let a = s.get_size;
-        eval *put_state("<" + s + ">");
+        put_state("<" + s + ">");;
         pure $ a
     };
     let shelf = Shelf {
         books: [ Book { title: "a book" }, Book { title: "another book" } ]
     };
     let sm: StateT Shelf (Result ErrMsg) I64 = sm.lens_state_t(Book::act_title >> Array::act(0) >> Shelf::act_books);
-    eval *assert_equal("eval_state_t", ok $ 6, sm.eval_state_t(shelf));
-    eval *assert_equal("exec_state_t", ok $ "<a book>", sm.exec_state_t(shelf).map(@books >> @(0) >> @title));
+    assert_equal("eval_state_t", ok $ 6, sm.eval_state_t(shelf));;
+    assert_equal("exec_state_t", ok $ "<a book>", sm.exec_state_t(shelf).map(@books >> @(0) >> @title));;
     pure()
 );
 
@@ -207,13 +207,13 @@ test_lens_state = (
     let sm: State String I64 = do {
         let s = *get_state;
         let a = s.get_size;
-        eval *put_state("<" + s + ">");
+        put_state("<" + s + ">");;
         pure $ a
     };
     let sm: State Book I64 = sm.lens_state(Book::act_title);
     let book = Book { title: "a book" };
-    eval *assert_equal("eval_state", 6, sm.eval_state(book));
-    eval *assert_equal("exec_state", "<a book>", sm.exec_state(book).@title);
+    assert_equal("eval_state", 6, sm.eval_state(book));;
+    assert_equal("exec_state", "<a book>", sm.exec_state(book).@title);;
     pure()
 );
 

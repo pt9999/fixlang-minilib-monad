@@ -13,17 +13,17 @@ test_result_error = (
         if i == 2 { error $ "err2" };
         pure $ i
     );
-    eval *assert_equal("ok0", ok(0), f(0));
-    eval *assert_equal("err1", err("err1"), f(1));
-    eval *assert_equal("err2", err("err2"), f(2));
+    assert_equal("ok0", ok(0), f(0));;
+    assert_equal("err1", err("err1"), f(1));;
+    assert_equal("err2", err("err2"), f(2));;
     let handler = |errmsg| (
         if errmsg == "err1" { ok $ "catch: " + errmsg }
         else { err $ "rethrow: " + errmsg }
     );
     let f2 = |i| f(i).map(|ans| "ok: " + ans.to_string).catch(handler);
-    eval *assert_equal("catch ok0", ok $ ("ok: 0"), f2(0));
-    eval *assert_equal("catch err1", ok $ ("catch: err1"), f2(1));
-    eval *assert_equal("catch err2", err $ ("rethrow: err2"), f2(2));
+    assert_equal("catch ok0", ok $ ("ok: 0"), f2(0));;
+    assert_equal("catch err1", ok $ ("catch: err1"), f2(1));;
+    assert_equal("catch err2", err $ ("rethrow: err2"), f2(2));;
     pure()
 );
 
@@ -35,17 +35,17 @@ test_iofail_error = (
         if i == 2 { error $ "err2" };
         pure $ i + 10
     );
-    eval *assert_equal("ok0", ok(10), *f(0).to_result.lift);
-    eval *assert_equal("err1", err("err1"), *f(1).to_result.lift);
-    eval *assert_equal("err2", err("err2"), *f(2).to_result.lift);
+    assert_equal("ok0", ok(10), *f(0).to_result.lift);;
+    assert_equal("err1", err("err1"), *f(1).to_result.lift);;
+    assert_equal("err2", err("err2"), *f(2).to_result.lift);;
     let handler: String -> IOFail I64 = |errmsg| (
         if errmsg == "err1" { pure $ 20 };
         error $ errmsg
     );
     let f2 = |i| f(i).catch(handler);
-    eval *assert_equal("catch ok0", ok $ 10, *f2(0).to_result.lift);
-    eval *assert_equal("catch err1", ok $ 20, *f2(1).to_result.lift);
-    eval *assert_equal("catch err2", err $ "err2", *f2(2).to_result.lift);
+    assert_equal("catch ok0", ok $ 10, *f2(0).to_result.lift);;
+    assert_equal("catch err1", ok $ 20, *f2(1).to_result.lift);;
+    assert_equal("catch err2", err $ "err2", *f2(2).to_result.lift);;
     pure()
 );
 

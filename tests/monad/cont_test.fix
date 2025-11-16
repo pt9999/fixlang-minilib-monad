@@ -43,7 +43,7 @@ test_monad_cont = (
     };
     let actual = md.run_cont(|x| x);
     let expected = ["3", "4", "3", "4"];
-    //eval *println (actual.to_string).lift;
+    //println (actual.to_string).lift;;
     assert_equal("eq", expected, actual)
 );
 
@@ -100,12 +100,12 @@ test_call_cc_1 = (
     let cma: ContT String IOFail String = do {
         let jmpbuf = *setjmp(0);
         let i = jmpbuf.@arg;
-        //eval *eprintln("i=" + i.to_string).lift.lift_t;
+        //eprintln("i=" + i.to_string).lift.lift_t;;
         if i < 5 { jmpbuf.longjmp(i + 1) };
         pure(i.to_string)
     };
     let actual = *cma.run_cont_t(|i| pure $ i);
-    //eval *eprintln("result="+ actual.to_string).lift;
+    //eprintln("result="+ actual.to_string).lift;;
     let expected = "5";
     assert_equal("eq", expected, actual)
 );

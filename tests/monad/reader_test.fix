@@ -33,10 +33,10 @@ test_reader_monad = (
         pure $ "value1=" + value1 + " value2=" + value2
     };
     let config = Iterator::empty.push_front(("key1", "a")).push_front(("key2", "b")).to_dyn;
-    eval *assert_equal("case1", "value1=a value2=b", r.run_reader(config));
+    assert_equal("case1", "value1=a value2=b", r.run_reader(config));;
     let rr = r.local(|config| config.push_front(("key2", "bb")).to_dyn);
-    eval *assert_equal("case2", "value1=a value2=bb", rr.run_reader(config));
-    eval *assert_equal("case3", "value1= value2=bb", rr.run_reader(DynIterator::empty));
+    assert_equal("case2", "value1=a value2=bb", rr.run_reader(config));;
+    assert_equal("case3", "value1= value2=bb", rr.run_reader(DynIterator::empty));;
     pure()
 );
 
@@ -73,9 +73,9 @@ test_reader_iofail_error = (
         let f64 = *iof(i64).lift_t;
         pure $ f64
     };
-    eval *assert_equal("ok", ok(24.0), *r.run_reader_t(12).to_result.lift);
-    eval *assert_equal("err1", err("err1"), *r.run_reader_t(100).to_result.lift);
-    eval *assert_equal("err2", err("err2"), *r.run_reader_t(-1).to_result.lift);
+    assert_equal("ok", ok(24.0), *r.run_reader_t(12).to_result.lift);;
+    assert_equal("err1", err("err1"), *r.run_reader_t(100).to_result.lift);;
+    assert_equal("err2", err("err2"), *r.run_reader_t(-1).to_result.lift);;
     let handler: ErrMsg -> ReaderT I64 IOFail F64 = |errmsg| (
         if errmsg == "err1" { pure $ 999.0 };
         error $ "rethrow: " + errmsg
@@ -84,9 +84,9 @@ test_reader_iofail_error = (
         let f64 = *r.catch(handler);
         pure $ f64.to_string
     };
-    eval *assert_equal("catch ok", ok("24.000000"), *r2.run_reader_t(12).to_result.lift);
-    eval *assert_equal("catch err1", ok("999.000000"), *r2.run_reader_t(100).to_result.lift);
-    eval *assert_equal("catch err2", err("rethrow: err2"), *r2.run_reader_t(-1).to_result.lift);
+    assert_equal("catch ok", ok("24.000000"), *r2.run_reader_t(12).to_result.lift);;
+    assert_equal("catch err1", ok("999.000000"), *r2.run_reader_t(100).to_result.lift);;
+    assert_equal("catch err2", err("rethrow: err2"), *r2.run_reader_t(-1).to_result.lift);;
     pure()
 );
 
@@ -114,11 +114,11 @@ test_lift_io: TestCase;
 test_lift_io = (
     make_test("test_lift_io") $ |_|
     let inner_io: IO I64 = do {
-        //eval *println("inner_io");
+        //println("inner_io");;
         pure $ 42
     };
     let inner_iofail: IOFail I64 = do {
-        //eval *println("inner_iofail").lift;
+        //println("inner_iofail").lift;;
         pure $ 57
     };
     let r: ReaderT I64 IOFail (Array I64) = do {
