@@ -1,13 +1,13 @@
-module IdentityTest;
+module IdenTest;
 
 
-import Minilib.Monad.Identity;
+import Minilib.Monad.Iden;
 import Minilib.Testing.UnitTest;
 
 test_identity_functor: TestCase;
 test_identity_functor = (
     make_test("test_identity_functor") $ |_|
-    let ma = Identity::make(2);
+    let ma = Iden::make(2);
     let ma = ma.map(add(1));
     let ma = ma.map(to_string);
     assert_equal("eq", "3", ma.get)
@@ -16,7 +16,7 @@ test_identity_functor = (
 test_identity_monad: TestCase;
 test_identity_monad = (
     make_test("test_identity_monad") $ |_|
-    let ma = Identity::make(2);
+    let ma = Iden::make(2);
     let mc = do {
         let a = *ma;
         let b = *pure(a + 1);

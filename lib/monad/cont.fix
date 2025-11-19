@@ -1,7 +1,7 @@
 // Continuation Monad.
 module Minilib.Monad.Cont;
 
-import Minilib.Monad.Identity;
+import Minilib.Monad.Iden;
 import Minilib.Monad.Trans;
 import Minilib.Monad.Error;
 
@@ -26,8 +26,8 @@ type [m: * -> *] ContT r m a = unbox struct {
     data: (a -> m r) -> m r
 };
 
-// A continuation monad whose undelying monad is Identity.
-type Cont r = ContT r Identity;
+// A continuation monad whose undelying monad is Iden.
+type Cont r = ContT r Iden;
 
 // Creates a ContT monad from a function which receives a continuation function and returns the monadic value of the result.
 cont_t: [m: Monad] ((a -> m r) -> m r) -> ContT r m a;
@@ -36,7 +36,7 @@ cont_t = |f| ContT { data: f };
 // Creates a Cont monad from a function which receives a continuation function and returns the result value.
 cont: ((a -> r) -> r) -> Cont r a;
 cont = |farr| cont_t $ |famr| (
-    Identity::make $ farr $ famr >> Identity::get
+    Iden::make $ farr $ famr >> Iden::get
 );
 
 // Runs a ContT monad with the supplied continuation function.
@@ -48,7 +48,7 @@ run_cont_t = |fa_mr, cma| (
 // Runs a Cont monad with the supplied continuation function.
 run_cont: (a -> r) -> Cont r a -> r;
 run_cont = |fa_r, cma| (
-    cma.run_cont_t(fa_r >> Identity::make).Identity::get
+    cma.run_cont_t(fa_r >> Iden::make).Iden::get
 );
 
 // Deprecated: Please use `MonadTrans::lift_t`.

@@ -1,0 +1,24 @@
+// Identity monad
+module Minilib.Monad.Iden;
+
+// Identity monad
+type Iden a = unbox struct {
+    data: a
+};
+
+// Creates an identity monad from a value.
+make: a -> Iden a;
+make = |a| Iden { data: a };
+
+// Gets a value from an identity monad.
+get: Iden a -> a;
+get = @data;
+
+impl Iden: Functor {
+    map = |f, ia| Iden::make(f(ia.get));
+}
+
+impl Iden: Monad {
+    pure = Iden::make;
+    bind = |f, ia| f(ia.get);
+}

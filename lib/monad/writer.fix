@@ -3,7 +3,7 @@
 // For details, see [blog post: The Reader and Writer Monads and Comonads](https://www.olivierverdier.com/posts/2014/12/31/reader-writer-monad-comonad/).
 module Minilib.Monad.Writer;
 
-import Minilib.Monad.Identity;
+import Minilib.Monad.Iden;
 import Minilib.Monad.Trans;
 import Minilib.Monad.Error;
 import Minilib.Monad.IO;
@@ -33,7 +33,7 @@ type [m: * -> *] WriterT e m a = unbox struct {
     data: m (e, a)
 };
 
-type Writer e = WriterT e Identity;
+type Writer e = WriterT e Iden;
 
 // Creates a generic writer monad from an enviroment and a value.
 writer_t: [m: Monad] m (e, a) -> WriterT e m a;
@@ -41,7 +41,7 @@ writer_t = |ea| WriterT { data: ea };
 
 // Creates a writer monad from an enviroment and a value.
 writer: e -> a -> Writer e a;
-writer = |e, a| writer_t $ Identity::make $ (e, a);
+writer = |e, a| writer_t $ Iden::make $ (e, a);
 
 // Runs a generic writer monad to get an enviroment and a value.
 run_writer_t: [m: Monad] WriterT e m a -> m (e, a);
@@ -49,7 +49,7 @@ run_writer_t = @data;
 
 // Runs a writer monad to get an enviroment and a value.
 run_writer: Writer e a -> (e, a);
-run_writer = run_writer_t >> Identity::get;
+run_writer = run_writer_t >> Iden::get;
 
 // Creates a writer monad that appends to the environment.
 write: [e: Monoid, m: Monad] e -> WriterT e m ();

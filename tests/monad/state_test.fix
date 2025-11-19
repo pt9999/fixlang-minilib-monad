@@ -1,7 +1,7 @@
 module StateTest;
 
 
-import Minilib.Monad.Identity;
+import Minilib.Monad.Iden;
 import Minilib.Monad.State;
 import Minilib.Monad.Error;
 import Minilib.Monad.IO;
@@ -79,7 +79,7 @@ test_eval_exec_state = (
 test_map_state_t: TestCase;
 test_map_state_t = (
     make_test("test_map_state_t") $ |_|
-    let sm: StateT I64 Identity I32 = do {
+    let sm: StateT I64 Iden I32 = do {
         let i64 = *get_state;
         put_state(i64 + 1);;
         pure $ i64.to_I32
