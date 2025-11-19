@@ -1,6 +1,6 @@
 # Minilib.Monad.IO
 
-Defined in minilib-monad@0.6.1
+Defined in minilib-monad@0.7.0
 
 Monadic traits which can lift IO and IOFail monad.
 

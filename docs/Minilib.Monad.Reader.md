@@ -1,6 +1,6 @@
 # Minilib.Monad.Reader
 
-Defined in minilib-monad@0.6.1
+Defined in minilib-monad@0.7.0
 
 Reader monad.
 
@@ -72,7 +72,7 @@ Type: `[rm : Minilib.Monad.Reader::MonadReaderIF] (Minilib.Monad.Reader::MonadRe
 
 #### Reader
 
-Defined as: `type Reader e = Minilib.Monad.Reader::ReaderT e Minilib.Monad.Identity::Identity`
+Defined as: `type Reader e = Minilib.Monad.Reader::ReaderT e Minilib.Monad.Iden::Iden`
 
 #### ReaderT
 

@@ -1,6 +1,6 @@
 # Minilib.Monad.Cont
 
-Defined in minilib-monad@0.6.1
+Defined in minilib-monad@0.7.0
 
 Continuation Monad.
 
@@ -57,9 +57,9 @@ The exit function can be passed to another function.
 
 #### Cont
 
-Defined as: `type Cont r = Minilib.Monad.Cont::ContT r Minilib.Monad.Identity::Identity`
+Defined as: `type Cont r = Minilib.Monad.Cont::ContT r Minilib.Monad.Iden::Iden`
 
-A continuation monad whose undelying monad is Identity.
+A continuation monad whose undelying monad is Iden.
 
 #### ContT
 

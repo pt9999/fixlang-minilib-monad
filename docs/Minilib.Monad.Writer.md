@@ -1,6 +1,6 @@
 # Minilib.Monad.Writer
 
-Defined in minilib-monad@0.6.1
+Defined in minilib-monad@0.7.0
 
 Writer monad.
 
@@ -96,7 +96,7 @@ Tells specified value to the internal environment.
 
 #### Writer
 
-Defined as: `type Writer e = Minilib.Monad.Writer::WriterT e Minilib.Monad.Identity::Identity`
+Defined as: `type Writer e = Minilib.Monad.Writer::WriterT e Minilib.Monad.Iden::Iden`
 
 #### WriterT
 

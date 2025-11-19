@@ -1,6 +1,6 @@
 # Minilib.Monad.State
 
-Defined in minilib-monad@0.6.1
+Defined in minilib-monad@0.7.0
 
 State Monad which maintains a mutable state.
 
@@ -34,7 +34,7 @@ Runs a StateT monad with the supplied initial state and return the final state, 
 
 #### lens_state
 
-Type: `((s -> Minilib.Functor.Pair::PairLT a Minilib.Monad.Identity::Identity s) -> t -> Minilib.Functor.Pair::PairLT a Minilib.Monad.Identity::Identity t) -> Minilib.Monad.State::State s a -> Minilib.Monad.State::State t a`
+Type: `((s -> Minilib.Functor.Pair::PairLT a Minilib.Monad.Iden::Iden s) -> t -> Minilib.Functor.Pair::PairLT a Minilib.Monad.Iden::Iden t) -> Minilib.Monad.State::State s a -> Minilib.Monad.State::State t a`
 
 #### lens_state_t
 
@@ -126,7 +126,7 @@ A monad that puts the specified value to the internal state.
 
 #### State
 
-Defined as: `type State s = Minilib.Monad.State::StateT s Minilib.Monad.Identity::Identity`
+Defined as: `type State s = Minilib.Monad.State::StateT s Minilib.Monad.Iden::Iden`
 
 #### StateT
 
