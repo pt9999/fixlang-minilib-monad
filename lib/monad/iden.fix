@@ -1,24 +1,13 @@
 // Identity monad
 module Minilib.Monad.Iden;
 
-// Identity monad
-type Iden a = unbox struct {
-    data: a
-};
+// The identity monad, which is an alias for `Std::Identity`.
+type Iden = Std::Identity;
 
 // Creates an identity monad from a value.
 make: a -> Iden a;
-make = |a| Iden { data: a };
+make = |a| Identity { data: a };
 
 // Gets a value from an identity monad.
 get: Iden a -> a;
 get = @data;
-
-impl Iden: Functor {
-    map = |f, ia| Iden::make(f(ia.get));
-}
-
-impl Iden: Monad {
-    pure = Iden::make;
-    bind = |f, ia| f(ia.get);
-}
