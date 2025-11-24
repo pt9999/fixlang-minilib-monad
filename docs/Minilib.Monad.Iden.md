@@ -1,6 +1,6 @@
 # Minilib.Monad.Iden
 
-Defined in minilib-monad@0.7.0
+Defined in minilib-monad@0.7.1
 
 Identity monad
 
@@ -26,18 +26,10 @@ Creates an identity monad from a value.
 
 #### Iden
 
-Defined as: `type Iden a = unbox struct { ...fields... }`
+Defined as: `type Iden = Std::Identity`
 
-Identity monad
-
-##### field `data`
-
-Type: `a`
+The identity monad, which is an alias for `Std::Identity`.
 
 ## Traits and aliases
 
 ## Trait implementations
-
-### impl `Minilib.Monad.Iden::Iden : Std::Functor`
-
-### impl `Minilib.Monad.Iden::Iden : Std::Monad`
