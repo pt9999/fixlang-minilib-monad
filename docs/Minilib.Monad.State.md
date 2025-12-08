@@ -1,6 +1,6 @@
 # Minilib.Monad.State
 
-Defined in minilib-monad@0.7.1
+Defined in minilib-monad@0.7.2
 
 State Monad which maintains a mutable state.
 
@@ -38,7 +38,7 @@ Type: `((s -> Minilib.Functor.Pair::PairLT a Minilib.Monad.Iden::Iden s) -> t ->
 
 #### lens_state_t
 
-Type: `[m : Std::Monad, m : Std::Functor] ((s -> Minilib.Functor.Pair::PairLT a m s) -> t -> Minilib.Functor.Pair::PairLT a m t) -> Minilib.Monad.State::StateT s m a -> Minilib.Monad.State::StateT t m a`
+Type: `[m : Std::Functor, m : Std::Monad] ((s -> Minilib.Functor.Pair::PairLT a m s) -> t -> Minilib.Functor.Pair::PairLT a m t) -> Minilib.Monad.State::StateT s m a -> Minilib.Monad.State::StateT t m a`
 
 Transforms a state monad with a lens action.
 For example, if `Foo` has a field `bar: Bar`, then `act_bar` is a function of type
