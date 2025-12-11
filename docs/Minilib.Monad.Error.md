@@ -1,6 +1,6 @@
 # Minilib.Monad.Error
 
-Defined in minilib-monad@0.7.2
+Defined in minilib-monad@0.7.3
 
 Definition of `MonadErrorIF` trait which can report errors.
 
