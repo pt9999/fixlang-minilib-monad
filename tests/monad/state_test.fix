@@ -7,6 +7,7 @@ import Minilib.Monad.Error;
 import Minilib.Monad.IO;
 import Minilib.Text.StringEx;
 import Minilib.Testing.UnitTest;
+import Minilib.Trait.Traversable;
 
 test_state_functor: TestCase;
 test_state_functor = (
@@ -217,6 +218,36 @@ test_lens_state = (
     pure()
 );
 
+type Obj = unbox struct {
+    names: Array String,
+    scores: Array I64,
+};
+
+test_svar: TestCase;
+test_svar = (
+    make_test("test_svar") $ |_|
+    let obj = Obj {
+        names: [],
+        scores: []
+    };
+    let sm: StateT Obj IOFail () = do {
+        let names = SVar::make(|obj| obj[^names]);
+        let scores = SVar::make(|obj| obj[^scores]);
+        range(0, 5).foreach_m(|i|
+           names.mod(push_back("name" + i.to_string));; 
+           scores.mod(push_back(100 * i))
+        );;
+        let scores_3 = SVar::make(|obj| obj[^scores][3]);
+        scores_3.SVar::set(33);;
+        let obj = SVar::whole_state;
+        obj.mod(mod_scores(push_back(99)));;
+        assert_equal("names", ["name0", "name1", "name2", "name3", "name4"], *names.get).lift_iofail;;
+        assert_equal("scores", [0, 100, 200, 33, 400, 99], *scores.get).lift_iofail;;
+        pure()
+    };
+    sm.eval_state_t(obj)
+);
+
 main: IO ();
 main = (
     [
@@ -232,9 +263,8 @@ main = (
         test_state_iofail_lift_io,
         test_lens_state_t,
         test_lens_state,
+        test_svar,
         TestCase::empty
     ]
     .run_test_driver
 );
-
-
