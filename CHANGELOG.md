@@ -1,3 +1,7 @@
+## 0.7.4
+### Added
+- Minilib.Monad.State: Add `SVar`, which is a variable bound to a substate of the State monad.
+
 ## 0.7.1
 ### Changed
 - Minilib.Monad.Iden: Make `Iden` an alias for `Std::Identity`.
