@@ -1,6 +1,6 @@
 # Minilib.Monad.State
 
-Defined in minilib-monad@0.7.3
+Defined in minilib-monad@0.7.4
 
 State Monad which maintains a mutable state.
 
@@ -120,9 +120,114 @@ Type: `[sm : Minilib.Monad.State::MonadStateIF] Minilib.Monad.State::MonadStateI
 
 A monad that puts the specified value to the internal state.
 
+### namespace Minilib.Monad.State::SVar
+
+#### get
+
+Type: `[m : Minilib.Monad.State::MonadState, Minilib.Monad.State::MonadStateIF::StateType m = s] Minilib.Monad.State::SVar s a -> m a`
+
+Get the substate from a variable.
+
+##### Examples
+
+```
+let a = *svar.get;
+```
+
+##### Parameters
+
+- `svar` - A variable
+
+#### make
+
+Type: `(s -> (a -> Std::Result a a) -> Std::Result a s) -> Minilib.Monad.State::SVar s a`
+
+Create a variable bound to a substate.
+
+##### Examples
+
+```
+let svar = SVar::make(|s| s[^a]);
+```
+
+##### Parameters
+
+- `f` - A function from a state to the store of a substate.
+
+#### mod
+
+Type: `[m : Minilib.Monad.State::MonadState, Minilib.Monad.State::MonadStateIF::StateType m = s] (a -> a) -> Minilib.Monad.State::SVar s a -> m ()`
+
+Modify the substate using a variable.
+
+##### Examples
+
+```
+svar.mod(|val| val + 123);;
+```
+
+##### Parameters
+
+- `f` - A function to modify the substate
+- `svar` - A variable
+
+#### set
+
+Type: `[m : Minilib.Monad.State::MonadState, Minilib.Monad.State::MonadStateIF::StateType m = s] a -> Minilib.Monad.State::SVar s a -> m ()`
+
+Set the substate to a variable.
+
+##### Examples
+
+```
+svar.SVar::set(123);;
+```
+
+##### Parameters
+
+- `val` - A value to set
+- `svar` - A variable
+
+#### whole_state
+
+Type: `Minilib.Monad.State::SVar s s`
+
+A variable bound to the whole state.
+
 ## Types and aliases
 
 ### namespace Minilib.Monad.State
+
+#### SVar
+
+Defined as: `type SVar s a = unbox struct { ...fields... }`
+
+A variable bound to a substate of the State monad.
+You can get, set, and modify the bound substate.
+This is similar to `AsyncTask::Var`, but the operation results are State monad, not IO monad.
+
+##### Examples
+
+```
+type S = unbox struct { a: I64 };
+
+main: IO ();
+main = (
+   eval_state_t(S{ a: 123 }) $ do {
+     let v = SVar::make(|s| s[^a]);
+     let a = *v.get;
+     println("a=" + a.to_string).lift_io;;
+     v.SVar::set(456);;
+     println("a=" + (*v.get).to_string).lift_io;;
+     v.mod(|a| a + 78);;
+     println("a=" + (*v.get).to_string).lift_io
+   }
+);
+```
+
+##### field `data`
+
+Type: `s -> (a -> Std::Result a a) -> Std::Result a s`
 
 #### State
 

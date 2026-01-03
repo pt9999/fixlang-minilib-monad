@@ -1,6 +1,6 @@
 # Minilib.Monad.Option
 
-Defined in minilib-monad@0.7.3
+Defined in minilib-monad@0.7.4
 
 A monad transformer that wraps `m (Option a)`.
 
