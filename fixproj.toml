@@ -43,6 +43,6 @@ files = [
 
 [[dependencies]]
 name = "minilib-common"
-version = "0.7.0"
+version = "*"
 # path = "../fixlang-minilib-common"
 git = { url = "https://github.com/pt9999/fixlang-minilib-common.git" }
