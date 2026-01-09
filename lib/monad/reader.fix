@@ -1,6 +1,22 @@
 // Reader monad.
 //
 // For details, see [blog post: The Reader and Writer Monads and Comonads](https://www.olivierverdier.com/posts/2014/12/31/reader-writer-monad-comonad/).
+//
+// Example:
+// ```
+// type Obj = unbox struct { foo: I64, bar: String };
+//
+// main: IO () = (
+//     let r: ReaderT Obj IO () = do {
+//         let foo = *asks(@foo);
+//         let bar = *asks(@bar);
+//         println((foo,bar).format("foo={} bar={}")).lift_io
+//     };
+//     r.run_reader_t(Obj { foo:1, bar:"abc" })
+//     // will print "foo=1 bar=abc"
+// );
+// ```
+//
 module Minilib.Monad.Reader;
 
 import Minilib.Monad.Iden;
