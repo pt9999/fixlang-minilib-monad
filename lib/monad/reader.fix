@@ -21,6 +21,10 @@ trait [rm: * -> *] rm: MonadReaderIF {
     local: (EnvType rm -> EnvType rm) -> rm a -> rm a;
 }
 
+// `asks(f)` is same as `ask.map(f)`.
+asks: [rm: MonadReader] (EnvType rm -> a) -> rm a;
+asks = |f| ask.bind(f >> pure);
+
 //------------------------------------------------------------------------
 
 // Reader monad wraps a function from an environment to a value.

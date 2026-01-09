@@ -40,6 +40,24 @@ test_reader_monad = (
     pure()
 );
 
+type Obj = unbox struct {
+    foo: I64,
+    bar: String
+};
+
+test_asks: TestCase;
+test_asks = (
+    make_test("test_asks") $ |_|
+    let r: Reader Obj String = do {
+        let foo = *asks(@foo);
+        let bar = *asks(@bar);
+        pure $ (foo,bar).format("foo={} bar={}")
+    };
+    let expected = "foo=1 bar=abc";
+    let actual = r.run_reader(Obj { foo:1, bar:"abc" });
+    assert_equal("eq", expected, actual)
+);
+
 test_sub_reader: TestCase;
 test_sub_reader = (
     make_test("test_sub_reader") $ |_|
@@ -139,6 +157,7 @@ main = (
     [
         test_reader_functor,
         test_reader_monad,
+        test_asks,
         test_sub_reader,
         test_reader_trans,
         test_reader_iofail_error,

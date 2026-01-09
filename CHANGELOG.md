@@ -1,3 +1,7 @@
+## 0.7.6
+### Added
+- Minilib.Monad.Reader: Add `asks` function.
+
 ## 0.7.4
 ### Added
 - Minilib.Monad.State: Add `SVar`, which is a variable bound to a substate of the State monad.
