@@ -20,6 +20,7 @@ files = [
     "lib/monad/state.fix",
     "lib/monad/trans.fix",
     "lib/monad/writer.fix",
+    "lib/monad/yield.fix",
     "lib/trait/monoid.fix",
     "lib/trait/semigroup.fix",
 ]
@@ -38,6 +39,7 @@ files = [
     "tests/monad/result_test.fix",
     "tests/monad/state_test.fix",
     "tests/monad/writer_test.fix",
+    "tests/monad/yield_test.fix",
     "tests/trait/monoid_test.fix",
 ]
 

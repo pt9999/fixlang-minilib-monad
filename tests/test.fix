@@ -12,6 +12,7 @@ import ReaderTest;
 import ResultTest;
 import StateTest;
 import WriterTest;
+import YieldTest;
 import MonoidTest;
 
 testsuite: TestSuite;
@@ -26,6 +27,7 @@ testsuite = [
     ("ResultTest", ResultTest::main),
     ("StateTest", StateTest::main),
     ("WriterTest", WriterTest::main),
+    ("YieldTest", YieldTest::main),
     ("MonoidTest", MonoidTest::main),
 ];
 
