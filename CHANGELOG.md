@@ -2,6 +2,8 @@
 ### Added
 - Added Minilib.Monad.Yield. `Yield` is a simple generator monad, as well as an iterator.
 - Minilib.Monad.Reader: Add `asks` function.
+- Minilib.Monad.Reader: Update documents.
+- Minilib.Monad.State: Update documents.
 
 ## 0.7.4
 ### Added
