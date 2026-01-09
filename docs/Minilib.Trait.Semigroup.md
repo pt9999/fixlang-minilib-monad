@@ -1,6 +1,6 @@
 # Minilib.Trait.Semigroup
 
-Defined in minilib-monad@0.7.5
+Defined in minilib-monad@0.7.6
 
 Semigroup trait and its several implementations (Array, Iterator, String etc).
 

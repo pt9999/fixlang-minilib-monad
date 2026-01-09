@@ -1,14 +1,34 @@
 # Minilib.Monad.Reader
 
-Defined in minilib-monad@0.7.5
+Defined in minilib-monad@0.7.6
 
 Reader monad.
 
 For details, see [blog post: The Reader and Writer Monads and Comonads](https://www.olivierverdier.com/posts/2014/12/31/reader-writer-monad-comonad/).
 
+Example:
+```
+type Obj = unbox struct { foo: I64, bar: String };
+
+main: IO () = (
+    let r: ReaderT Obj IO () = do {
+        let foo = *asks(@foo);
+        let bar = *asks(@bar);
+        println((foo,bar).format("foo={} bar={}")).lift_io     // will print "foo=1 bar=abc"
+    };
+    r.run_reader_t(Obj { foo:1, bar:"abc" })
+);
+```
+
 ## Values
 
 ### namespace Minilib.Monad.Reader
+
+#### asks
+
+Type: `[rm : Minilib.Monad.Reader::MonadReader] (Minilib.Monad.Reader::MonadReaderIF::EnvType rm -> a) -> rm a`
+
+`asks(f)` is same as `ask.map(f)`.
 
 #### map_reader_t
 

@@ -1,8 +1,21 @@
 # Minilib.Monad.State
 
-Defined in minilib-monad@0.7.5
+Defined in minilib-monad@0.7.6
 
 State Monad which maintains a mutable state.
+
+Example:
+```
+main: IO () = (
+    let sm: StateT String IO () = do {
+        let str = *get_state;
+        println(str).lift_io;;    // will print "hello"
+        put_state("world")
+    };
+    let (str, ()) = *sm.run_state_t("hello");
+    assert_eq(|_| "str", "world", str)
+);
+```
 
 ## Values
 
@@ -20,6 +33,15 @@ Type: `[m : Std::Monad] s -> Minilib.Monad.State::StateT s m a -> m a`
 
 Runs a StateT monad with the supplied initial state and return the final value, discarding the final state.
 
+Example:
+```
+    let sm: StateT I64 IO String = do {
+        State::mod_state(add(22));;
+        pure $ (*get_state).to_string
+    };
+    let str = *sm.eval_state_t(20);  // returns "42"
+```
+
 #### exec_state
 
 Type: `s -> Minilib.Monad.State::State s a -> s`
@@ -32,6 +54,21 @@ Type: `[m : Std::Monad] s -> Minilib.Monad.State::StateT s m a -> m s`
 
 Runs a StateT monad with the supplied initial state and return the final state, discarding the final value.
 
+Example:
+```
+    let sm: StateT String IO () = do {
+        State::mod_state(concat(" world"));;
+        pure $ ()
+    };
+    let str = *sm.exec_state_t("hello");  // returns "hello world"
+```
+
+#### gets
+
+Type: `[sm : Minilib.Monad.State::MonadState] (Minilib.Monad.State::MonadStateIF::StateType sm -> a) -> sm a`
+
+`gets(f)` is same as `get_state.map(f)`.
+
 #### lens_state
 
 Type: `((s -> Minilib.Functor.Pair::PairLT a Minilib.Monad.Iden::Iden s) -> t -> Minilib.Functor.Pair::PairLT a Minilib.Monad.Iden::Iden t) -> Minilib.Monad.State::State s a -> Minilib.Monad.State::State t a`
@@ -41,16 +78,20 @@ Type: `((s -> Minilib.Functor.Pair::PairLT a Minilib.Monad.Iden::Iden s) -> t ->
 Type: `[m : Std::Functor, m : Std::Monad] ((s -> Minilib.Functor.Pair::PairLT a m s) -> t -> Minilib.Functor.Pair::PairLT a m t) -> Minilib.Monad.State::StateT s m a -> Minilib.Monad.State::StateT t m a`
 
 Transforms a state monad with a lens action.
+
 For example, if `Foo` has a field `bar: Bar`, then `act_bar` is a function of type
 `[f: Functor] (Bar -> f Bar) -> (Foo -> f Foo)`.
 Using `act_bar`, a state monad of `Bar` can be transformed to a state monad of `Foo`.
+
+Note that `act_xxx` can be composed, for example `Foo::act_bar << Bar::act_baz << Baz::act_qux`.
+
+Example:
 ```
 change_bar: StateT Bar IO ();
 change_bar = ...;
 change_foo: StateT Foo IO ();
 change_foo = change_bar.lens_state_t(Foo::act_bar);
 ```
-Note that `act_xxx` can be composed, for example `Foo::act_bar << Bar::act_baz << Baz::act_qux`.
 
 #### make_state_monad
 
@@ -87,6 +128,15 @@ Runs a State monad with the supplied initial state.
 Type: `[m : Std::Monad] s -> Minilib.Monad.State::StateT s m a -> m (s, a)`
 
 Runs a StateT monad with the supplied initial state.
+
+Example:
+```
+    let sm: StateT String IO I64 = do {
+        State::mod_state(concat(" world"));;
+        pure $ 42
+    };
+    let (str, i64) = *sm.run_state_t("hello");  // returns ("hello world", 42)
+```
 
 #### state
 
@@ -128,8 +178,7 @@ Type: `[m : Minilib.Monad.State::MonadState, Minilib.Monad.State::MonadStateIF::
 
 Get the substate from a variable.
 
-##### Examples
-
+Example:
 ```
 let a = *svar.get;
 ```
@@ -144,8 +193,7 @@ Type: `(s -> (a -> Std::Result a a) -> Std::Result a s) -> Minilib.Monad.State::
 
 Create a variable bound to a substate.
 
-##### Examples
-
+Example:
 ```
 let svar = SVar::make(|s| s[^a]);
 ```
@@ -160,8 +208,7 @@ Type: `[m : Minilib.Monad.State::MonadState, Minilib.Monad.State::MonadStateIF::
 
 Modify the substate using a variable.
 
-##### Examples
-
+Example:
 ```
 svar.mod(|val| val + 123);;
 ```
@@ -177,8 +224,7 @@ Type: `[m : Minilib.Monad.State::MonadState, Minilib.Monad.State::MonadStateIF::
 
 Set the substate to a variable.
 
-##### Examples
-
+Example:
 ```
 svar.SVar::set(123);;
 ```
@@ -204,10 +250,9 @@ Defined as: `type SVar s a = unbox struct { ...fields... }`
 
 A variable bound to a substate of the State monad.
 You can get, set, and modify the bound substate.
-This is similar to `AsyncTask::Var`, but the operation results are State monad, not IO monad.
+This is similar to `AsyncTask::Var`, but the result of each operation is a State monad, not an IO monad.
 
-##### Examples
-
+Example:
 ```
 type S = unbox struct { a: I64 };
 
