@@ -10,13 +10,11 @@
 //     let r: ReaderT Obj IO () = do {
 //         let foo = *asks(@foo);
 //         let bar = *asks(@bar);
-//         println((foo,bar).format("foo={} bar={}")).lift_io
+//         println((foo,bar).format("foo={} bar={}")).lift_io     // will print "foo=1 bar=abc"
 //     };
 //     r.run_reader_t(Obj { foo:1, bar:"abc" })
-//     // will print "foo=1 bar=abc"
 // );
 // ```
-//
 module Minilib.Monad.Reader;
 
 import Minilib.Monad.Iden;
