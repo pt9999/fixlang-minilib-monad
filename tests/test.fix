@@ -4,9 +4,7 @@ import Minilib.Testing.UnitTest;
 
 import PairTest;
 import ContTest;
-import ErrorTest;
 import IdenTest;
-import IoTest;
 import OptionTest;
 import ReaderTest;
 import ResultTest;
@@ -19,9 +17,7 @@ testsuite: TestSuite;
 testsuite = [
     ("PairTest", PairTest::main),
     ("ContTest", ContTest::main),
-    ("ErrorTest", ErrorTest::main),
     ("IdenTest", IdenTest::main),
-    ("IoTest", IoTest::main),
     ("OptionTest", OptionTest::main),
     ("ReaderTest", ReaderTest::main),
     ("ResultTest", ResultTest::main),

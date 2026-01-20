@@ -1,3 +1,7 @@
+## 0.8.0
+### Removed
+- Moved Minilib.Monad.Error, Minilib.Monad.IO to minilib-common.
+
 ## 0.7.6
 ### Added
 - Added Minilib.Monad.Yield. `Yield` is a simple generator monad, as well as an iterator.

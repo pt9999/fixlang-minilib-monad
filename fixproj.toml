@@ -1,6 +1,6 @@
 [general]
 name = "minilib-monad"
-version = "0.7.6"
+version = "0.8.0-alpha"
 fix_version = "1.2.0"
 authors = ["pt9999"]
 description = "Monads (State/Reader/Writer monad, Monad transformer etc.)"
@@ -11,9 +11,7 @@ opt_level = "basic"
 files = [
     "lib/functor/pair.fix",
     "lib/monad/cont.fix",
-    "lib/monad/error.fix",
     "lib/monad/iden.fix",
-    "lib/monad/io.fix",
     "lib/monad/option.fix",
     "lib/monad/reader.fix",
     "lib/monad/result.fix",
@@ -31,9 +29,7 @@ files = [
     "tests/test.fix",
     "tests/functor/pair_test.fix",
     "tests/monad/cont_test.fix",
-    "tests/monad/error_test.fix",
     "tests/monad/iden_test.fix",
-    "tests/monad/io_test.fix",
     "tests/monad/option_test.fix",
     "tests/monad/reader_test.fix",
     "tests/monad/result_test.fix",
@@ -46,5 +42,5 @@ files = [
 [[dependencies]]
 name = "minilib-common"
 version = "*"
-# path = "../fixlang-minilib-common"
-git = { url = "https://github.com/pt9999/fixlang-minilib-common.git" }
+path = "../fixlang-minilib-common"
+# git = { url = "https://github.com/pt9999/fixlang-minilib-common.git" }
