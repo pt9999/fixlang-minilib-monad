@@ -1,6 +1,6 @@
 # Minilib.Monad.Cont
 
-Defined in minilib-monad@0.8.0
+Defined in minilib-monad@0.8.1
 
 Continuation Monad.
 
