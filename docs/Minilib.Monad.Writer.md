@@ -1,6 +1,6 @@
 # Minilib.Monad.Writer
 
-Defined in minilib-monad@0.7.6
+Defined in minilib-monad@0.8.0
 
 Writer monad.
 
