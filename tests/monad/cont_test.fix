@@ -1,13 +1,14 @@
 module ContTest;
 
-
+import Minilib.Common.IORef;
 import Minilib.Monad.Cont;
+import Minilib.Monad.IO;
 import Minilib.Monad.Trans;
 import Minilib.Testing.UnitTest;
 
-test_functor_cont: TestCase;
-test_functor_cont = (
-    make_test("test_functor_cont") $ |_|
+test_cont_functor: TestCase;
+test_cont_functor = (
+    make_test("test_cont_functor") $ |_|
     let cma: Cont (Array String) I64 = Cont::cont $ |far| far(42);
     let cmb = cma.map(to_string);
     let expected = ["foo-42", "bar-42"];
@@ -15,9 +16,9 @@ test_functor_cont = (
     assert_equal("eq", expected, actual)
 );
 
-test_functor_cont_t: TestCase;
-test_functor_cont_t = (
-    make_test("test_functor_cont_t") $ |_|
+test_cont_t_functor: TestCase;
+test_cont_t_functor = (
+    make_test("test_cont_t_functor") $ |_|
     let cma: ContT (Array String) IOFail I64 = Cont::cont_t $ |far| far(42);
     let cmb = cma.map(to_string);
     let expected = ["foo-42", "bar-42"];
@@ -25,9 +26,9 @@ test_functor_cont_t = (
     assert_equal("eq", expected, actual)
 );
 
-test_monad_cont: TestCase;
-test_monad_cont = (
-    make_test("test_monad_cont") $ |_|
+test_cont_monad: TestCase;
+test_cont_monad = (
+    make_test("test_cont_monad") $ |_|
     let mc: Cont (Array String) (Array I64)  = do {
         let a = *pure(3);
         let b = *pure(4);
@@ -47,14 +48,56 @@ test_monad_cont = (
     assert_equal("eq", expected, actual)
 );
 
-test_lift_cont: TestCase;
-test_lift_cont = (
-    make_test("test_monad_cont") $ |_|
+test_eval_cont_t: TestCase;
+test_eval_cont_t = (
+    make_test("test_eval_cont_t") $ |_|
+    let cma: ContT I64 IOFail I64 = pure(42);
+    let actual = *cma.eval_cont_t;
+    assert_equal("eq", 42, actual)
+);
+
+test_eval_cont: TestCase;
+test_eval_cont = (
+    make_test("test_eval_cont") $ |_|
+    let cma: Cont I64 I64 = pure(42);
+    let actual = cma.eval_cont;
+    assert_equal("eq", 42, actual)
+);
+
+test_cont_t_monad_trans: TestCase;
+test_cont_t_monad_trans = (
+    make_test("test_cont_t_monad_trans") $ |_|
     let ma: IOFail I64 = pure(42);
     let cma: ContT String IOFail I64 = ma.lift_t;
     let expected = "42";
     let actual = *cma.run_cont_t(to_string >> pure);
     assert_equal("eq", expected, actual)
+);
+
+test_cont_t_monad_io: TestCase;
+test_cont_t_monad_io = (
+    make_test("test_cont_t_monad_io") $ |_|
+    let ioref = *IORef::make(42);
+    let cma: ContT String IO String = do {
+        let val = *ioref.get.lift_io;
+        ioref.put(100).lift_io;;
+        pure $ val.to_string
+    };
+    assert_equal("result", "42", *cma.eval_cont_t.lift);;
+    assert_equal("ioref", 100, *ioref.get)
+);
+
+test_cont_t_monad_iofail: TestCase;
+test_cont_t_monad_iofail = (
+    make_test("test_cont_t_monad_iofail") $ |_|
+    let ioref = *IORef::make(42);
+    let cma: ContT String IOFail String = do {
+        let val = *ioref.get.lift_iofail;
+        ioref.put(100).lift_iofail;;
+        pure $ val.to_string
+    };
+    assert_equal("result", "42", *cma.eval_cont_t);;
+    assert_equal("ioref", 100, *ioref.get)
 );
 
 test_call_cc: TestCase;
@@ -113,10 +156,14 @@ test_call_cc_1 = (
 main: IO ();
 main = (
     [
-        test_functor_cont,
-        test_functor_cont_t,
-        test_monad_cont,
-        test_lift_cont,
+        test_cont_functor,
+        test_cont_t_functor,
+        test_cont_monad,
+        test_eval_cont_t,
+        test_eval_cont,
+        test_cont_t_monad_trans,
+        test_cont_t_monad_io,
+        test_cont_t_monad_iofail,
         test_call_cc,
         test_call_cc_1,
     ]
