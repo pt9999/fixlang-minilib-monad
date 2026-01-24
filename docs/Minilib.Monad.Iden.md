@@ -1,6 +1,6 @@
 # Minilib.Monad.Iden
 
-Defined in minilib-monad@0.8.1
+Defined in minilib-monad@0.8.2
 
 Identity monad
 

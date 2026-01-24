@@ -1,6 +1,6 @@
 # Minilib.Monad.Cont
 
-Defined in minilib-monad@0.8.1
+Defined in minilib-monad@0.8.2
 
 Continuation Monad.
 
@@ -19,6 +19,18 @@ Creates a Cont monad from a function which receives a continuation function and 
 Type: `[m : Std::Monad] ((a -> m r) -> m r) -> Minilib.Monad.Cont::ContT r m a`
 
 Creates a ContT monad from a function which receives a continuation function and returns the monadic value of the result.
+
+#### eval_cont
+
+Type: `Minilib.Monad.Cont::Cont r r -> r`
+
+Runs a Cont monad with `id` as a continuation function.
+
+#### eval_cont_t
+
+Type: `[m : Std::Monad] Minilib.Monad.Cont::ContT r m r -> m r`
+
+Runs a ContT monad with `pure` as a continuation function.
 
 #### lift_cont
 
@@ -102,6 +114,12 @@ The exit function can be passed to another function.
 ### impl `Minilib.Monad.Cont::ContT r : Minilib.Monad.Trans::MonadTrans`
 
 ### impl `[m : Std::Monad] Minilib.Monad.Cont::ContT r m : Minilib.Monad.Cont::MonadContIF`
+
+### impl `[m : Minilib.Monad.Error::MonadError] Minilib.Monad.Cont::ContT r m : Minilib.Monad.Error::MonadErrorIF`
+
+### impl `[m : Minilib.Monad.IO::MonadIOFail] Minilib.Monad.Cont::ContT r m : Minilib.Monad.IO::MonadIOFailIF`
+
+### impl `[m : Minilib.Monad.IO::MonadIO] Minilib.Monad.Cont::ContT r m : Minilib.Monad.IO::MonadIOIF`
 
 ### impl `[m : Std::Monad] Minilib.Monad.Cont::ContT r m : Std::Functor`
 
