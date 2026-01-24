@@ -1,6 +1,6 @@
 ## 0.8.2
 ### Added
-- Minilib.Monad.Cont: Added `eval_cont_t`, `eval_cont`, impls of `MonadIOIF`, `MonadIOFailIF`.
+- Minilib.Monad.Cont: Added `eval_cont_t`, `eval_cont`, impls of `MonadIOIF`, `MonadIOFailIF`, `MonadError`.
 
 ## 0.8.0
 ### Removed

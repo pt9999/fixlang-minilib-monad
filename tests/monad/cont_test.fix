@@ -2,6 +2,7 @@ module ContTest;
 
 import Minilib.Common.IORef;
 import Minilib.Monad.Cont;
+import Minilib.Monad.Error;
 import Minilib.Monad.IO;
 import Minilib.Monad.Trans;
 import Minilib.Testing.UnitTest;
@@ -100,6 +101,31 @@ test_cont_t_monad_iofail = (
     assert_equal("ioref", 100, *ioref.get)
 );
 
+test_cont_t_monad_error: TestCase;
+test_cont_t_monad_error = (
+    make_test("test_cont_t_monad_error") $ |_|
+    let func1: I64 -> ContT I64 IOFail I64 = |val| (
+        //emprintln("func1 begin");;
+        if val < 50 { error $ "too small" };
+        //emprintln("func1 end");;
+        pure $ val - 50
+    );
+    let func2: I64 -> ContT I64 IOFail I64 = |val| (
+        //emprintln("func2 begin");;
+        let val = *func1(val).catch(|errmsg| 
+            //emprintln("errmsg="+errmsg);;
+            pure $ val
+        );
+        //emprintln("func2 end");;
+        pure $ val
+    );
+    let actual = *func2(61).eval_cont_t;
+    assert_equal("61", 11, actual);;
+    let actual = *func2(31).eval_cont_t;
+    assert_equal("31", 31, actual);;
+    pure()
+);
+
 test_call_cc: TestCase;
 test_call_cc = (
     make_test("test_call_cc") $ |_|
@@ -164,6 +190,7 @@ main = (
         test_cont_t_monad_trans,
         test_cont_t_monad_io,
         test_cont_t_monad_iofail,
+        test_cont_t_monad_error,
         test_call_cc,
         test_call_cc_1,
     ]

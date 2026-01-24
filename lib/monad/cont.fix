@@ -2,10 +2,10 @@
 module Minilib.Monad.Cont;
 
 import Minilib.Common.Common;
-import Minilib.Monad.Iden;
-import Minilib.Monad.Trans;
 import Minilib.Monad.Error;
+import Minilib.Monad.Iden;
 import Minilib.Monad.IO;
+import Minilib.Monad.Trans;
 
 // A trait for the interface of generic continuation  monads.
 trait MonadCont = Monad + MonadContIF;
@@ -107,4 +107,14 @@ impl [m: MonadIO] ContT r m: MonadIOIF {
 
 impl [m: MonadIOFail] ContT r m: MonadIOFailIF {
     lift_iofail = lift_iofail >> lift_t;
+}
+
+impl [m: MonadError] ContT r m: MonadErrorIF {
+    error = error >> lift_t;
+    catch = |handler, cma| (
+        cont_t $ |f|
+        cma.run_cont_t(f).catch(|errmsg|
+            handler(errmsg).run_cont_t(f)
+        )
+    );
 }
