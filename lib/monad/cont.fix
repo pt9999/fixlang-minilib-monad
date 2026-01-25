@@ -60,6 +60,10 @@ eval_cont_t = |cm| cm.run_cont_t(pure);
 eval_cont: Cont r r -> r;
 eval_cont = |cm| cm.run_cont(id);
 
+// Applys a function to the result of a ContT monad.
+map_cont_t: [m: Monad] (r -> r) -> ContT r m a -> ContT r m a;
+map_cont_t = |f, cm| cont_t $ |fa_r| cm.run_cont_t(fa_r).bind(f >> pure);
+
 // Deprecated: Please use `MonadTrans::lift_t`.
 //
 // Lifts an underlying monad to a continuation monad.

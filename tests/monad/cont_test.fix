@@ -65,6 +65,15 @@ test_eval_cont = (
     assert_equal("eq", 42, actual)
 );
 
+test_map_cont_t: TestCase;
+test_map_cont_t = (
+    make_test("test_map_cont_t") $ |_|
+    let cma: ContT String IOFail I64 = pure(42);
+    let cma = cma.map_cont_t(concat("abc"));
+    let actual = *cma.run_cont_t(to_string >> pure);
+    assert_equal("eq", "42abc", actual)
+);
+
 test_cont_t_monad_trans: TestCase;
 test_cont_t_monad_trans = (
     make_test("test_cont_t_monad_trans") $ |_|
@@ -112,7 +121,7 @@ test_cont_t_monad_error = (
     );
     let func2: I64 -> ContT I64 IOFail I64 = |val| (
         //emprintln("func2 begin");;
-        let val = *func1(val).catch(|errmsg| 
+        let val = *func1(val).catch(|errmsg|
             //emprintln("errmsg="+errmsg);;
             pure $ val
         );
@@ -187,6 +196,7 @@ main = (
         test_cont_monad,
         test_eval_cont_t,
         test_eval_cont,
+        test_map_cont_t,
         test_cont_t_monad_trans,
         test_cont_t_monad_io,
         test_cont_t_monad_iofail,
