@@ -1,5 +1,6 @@
 ## 0.8.3
 ### Added
+- Minilib.Monad.Cont: Added `map_cont`.
 - Minilib.Monad.Cont: Added `map_cont_t`.
 
 ## 0.8.2

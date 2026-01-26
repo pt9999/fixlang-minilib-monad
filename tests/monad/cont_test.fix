@@ -74,6 +74,15 @@ test_map_cont_t = (
     assert_equal("eq", "42abc", actual)
 );
 
+test_map_cont: TestCase;
+test_map_cont = (
+    make_test("test_map_cont") $ |_|
+    let cma: Cont String I64 = pure(42);
+    let cma = cma.map_cont(concat("abc"));
+    let actual = cma.run_cont(to_string);
+    assert_equal("eq", "42abc", actual)
+);
+
 test_cont_t_monad_trans: TestCase;
 test_cont_t_monad_trans = (
     make_test("test_cont_t_monad_trans") $ |_|
@@ -197,6 +206,7 @@ main = (
         test_eval_cont_t,
         test_eval_cont,
         test_map_cont_t,
+        test_map_cont,
         test_cont_t_monad_trans,
         test_cont_t_monad_io,
         test_cont_t_monad_iofail,
