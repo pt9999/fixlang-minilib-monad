@@ -3,6 +3,7 @@ module Test;
 import Minilib.Testing.UnitTest;
 
 import PairTest;
+import AltTest;
 import ContTest;
 import IdenTest;
 import OptionTest;
@@ -16,6 +17,7 @@ import MonoidTest;
 testsuite: TestSuite;
 testsuite = [
     ("PairTest", PairTest::main),
+    ("AltTest", AltTest::main),
     ("ContTest", ContTest::main),
     ("IdenTest", IdenTest::main),
     ("OptionTest", OptionTest::main),

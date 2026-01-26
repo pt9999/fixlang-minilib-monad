@@ -1,5 +1,6 @@
-## 0.8.3
+## 0.9.0
 ### Added
+- Added Minilib.Monad.Alt.
 - Minilib.Monad.Cont: Added `map_cont_t`, `map_cont`.
 - Minilib.Monad.Result: Added `map_result_t`, `from_iofail`, `to_iofail`.
 

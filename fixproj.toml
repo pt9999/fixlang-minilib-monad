@@ -1,6 +1,6 @@
 [general]
 name = "minilib-monad"
-version = "0.8.2"
+version = "0.9.0-alpha"
 fix_version = "1.2.0"
 authors = ["pt9999"]
 description = "Monads (State/Reader/Writer monad, Monad transformer etc.)"
@@ -10,6 +10,7 @@ license = "MIT"
 opt_level = "basic"
 files = [
     "lib/functor/pair.fix",
+    "lib/monad/alt.fix",
     "lib/monad/cont.fix",
     "lib/monad/iden.fix",
     "lib/monad/option.fix",
@@ -28,6 +29,7 @@ opt_level = "basic"
 files = [
     "tests/test.fix",
     "tests/functor/pair_test.fix",
+    "tests/monad/alt_test.fix",
     "tests/monad/cont_test.fix",
     "tests/monad/iden_test.fix",
     "tests/monad/option_test.fix",
