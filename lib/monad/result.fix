@@ -75,6 +75,17 @@ impl [m: MonadIO] ResultT e m: MonadIOIF {
     lift_io = lift_t << lift_io;
 }
 
-impl [m: MonadIOFail] ResultT e m: MonadIOFailIF {
-    lift_iofail = lift_t << lift_iofail;
+// Implementation of `MonadIOFailIF`.
+//
+// NOTE: If `lift_iofail` is called and the lifted `IOFail` monad raises an error,
+// the error is recorded in the `ResultT` monad, not the underlying monad.
+//
+// The reason for this behavior change is to ensure that `ResultT ErrMsg (StateT s m)`
+// will not lose state even if an error occurs.
+impl [m: MonadIO] ResultT ErrMsg m: MonadIOFailIF {
+    lift_iofail = |iof| (
+        result_t $ do {
+            iof.to_result.lift_io
+        }
+    );
 }

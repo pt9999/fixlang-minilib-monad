@@ -1,3 +1,8 @@
+## 0.10.0
+### Changed
+- Minilib.Monad.Result: Changed the implementation of `MonadIOFailIF`, also changed its behavior.
+  * For details, see document comment of the implementation of `MonadIOFailIF`.
+
 ## 0.9.0
 ### Added
 - Added Minilib.Monad.Alt.

@@ -1,10 +1,11 @@
 module ResultTest;
 
-
+import Minilib.Common.IORef;
 import Minilib.Monad.Result;
 import Minilib.Monad.Trans;
 import Minilib.Monad.Error;
 import Minilib.Monad.IO;
+import Minilib.Monad.State;
 import Minilib.Trait.Traversable;
 //import Minilib.Text.StringEx;
 import Minilib.Testing.UnitTest;
@@ -185,7 +186,42 @@ test_lift_iofail = (
         lift_io $ println("this message will not be printed");;
         pure(a + 1)
     };
-    assert_equal("eq", err $ "err", *rma.run_result_t.to_result.lift)
+    // Before 0.10.0, `actual` was `err $ "err"`.
+    // That is, the error was hold in the `IOFail` monad, not `ResultT` monad.
+    // Now the error is hold in the `ResultT` monad.
+    //let expected: Result ErrMsg (Result ErrMsg I64) = err $ "err";    // before 0.10.0
+    let expected: Result ErrMsg (Result ErrMsg I64) = ok $ err $ "err"; // 0.10.0 and after
+    let actual: Result ErrMsg (Result ErrMsg I64) = *rma.run_result_t.to_result.lift;
+    assert_equal("eq", expected, actual)
+);
+
+// `ResultT ErrMsg (StateT s IO)` will not lost the state even if an error occurs.
+// On the other hand, `StateT s IOFail` will lost the state when an error occurs.
+test_result_state_io: TestCase;
+test_result_state_io = (
+    make_test("test_result_state_io") $ |_|
+    let logger: IORef String = *IORef::make("");
+    let rma: I64 -> ResultT ErrMsg (StateT String IO) I64 = |input| do {
+        lift_io $ logger.put("");;
+        lift_io $ logger.mod(concat("message1;"));;
+        lift_t $ put_state("state1");;
+        if input < 10 { lift_iofail $ throw("input < 10") };
+        lift_io $ logger.mod(concat("message2;"));;
+        lift_t $ put_state("state2");;
+        if input < 20 { error("input < 20") };
+        lift_io $ logger.mod(concat("message3;"));;
+        lift_t $ put_state("state3");;
+        pure(input + 1)
+    };
+    assert_equal("eq", ("state1", err $ "input < 10"), *rma(5).run_result_t.run_state_t("").lift);;
+    assert_equal("eq", "message1;", *logger.get);;
+
+    assert_equal("eq", ("state2", err $ "input < 20"), *rma(15).run_result_t.run_state_t("").lift);;
+    assert_equal("eq", "message1;message2;", *logger.get);;
+
+    assert_equal("eq", ("state3", ok $ 26), *rma(25).run_result_t.run_state_t("").lift);;
+    assert_equal("eq", "message1;message2;message3;", *logger.get);;
+    pure()
 );
 
 main: IO ();
@@ -203,6 +239,7 @@ main = (
         test_catch,
         test_lift_io,
         test_lift_iofail,
+        test_result_state_io,
     ]
     .run_test_driver
 );
