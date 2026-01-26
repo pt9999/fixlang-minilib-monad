@@ -1,12 +1,18 @@
 # Minilib.Monad.Result
 
-Defined in minilib-monad@0.8.2
+Defined in minilib-monad@0.9.0
 
 A monad transformer that wraps `m (Result e a)`.
 
 ## Values
 
 ### namespace Minilib.Monad.Result
+
+#### map_result_t
+
+Type: `(m (Std::Result e a) -> m2 (Std::Result e2 a2)) -> Minilib.Monad.Result::ResultT e m a -> Minilib.Monad.Result::ResultT e2 m2 a2`
+
+Maps a ResultT monad with the specified function.
 
 #### result_t
 
@@ -19,6 +25,20 @@ Creates a ResultT monad from an operation result.
 Type: `Minilib.Monad.Result::ResultT e m a -> m (Std::Result e a)`
 
 Gets the operation result.
+
+### namespace Minilib.Monad.Result::ResultT
+
+#### from_iofail
+
+Type: `Std::IO::IOFail a -> Minilib.Monad.Result::ResultT Std::ErrMsg Std::IO a`
+
+Converts an `IOFail` monad to a `ResultT ErrMsg IO` monad.
+
+#### to_iofail
+
+Type: `Minilib.Monad.Result::ResultT Std::ErrMsg Std::IO a -> Std::IO::IOFail a`
+
+Converts a `ResultT ErrMsg IO` monad to an `IOFail` monad.
 
 ## Types and aliases
 

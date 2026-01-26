@@ -1,6 +1,6 @@
 # Minilib.Monad.Cont
 
-Defined in minilib-monad@0.8.2
+Defined in minilib-monad@0.9.0
 
 Continuation Monad.
 
@@ -39,6 +39,18 @@ Type: `[m : Std::Monad] m a -> Minilib.Monad.Cont::ContT r m a`
 Deprecated: Please use `MonadTrans::lift_t`.
 
 Lifts an underlying monad to a continuation monad.
+
+#### map_cont
+
+Type: `(r -> r) -> Minilib.Monad.Cont::Cont r a -> Minilib.Monad.Cont::Cont r a`
+
+Applys a function to the result of a Cont monad.
+
+#### map_cont_t
+
+Type: `[m : Std::Monad] (r -> r) -> Minilib.Monad.Cont::ContT r m a -> Minilib.Monad.Cont::ContT r m a`
+
+Applys a function to the result of a ContT monad.
 
 #### run_cont
 
