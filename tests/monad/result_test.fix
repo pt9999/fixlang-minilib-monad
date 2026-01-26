@@ -9,6 +9,50 @@ import Minilib.Trait.Traversable;
 //import Minilib.Text.StringEx;
 import Minilib.Testing.UnitTest;
 
+test_map_result_t: TestCase;
+test_map_result_t = (
+    make_test("test_map_result_t") $ |_|
+    let f: IO (Result CInt I64) -> IOFail (Result String U64) = |io| (
+        pure $ match *io.lift {
+            ok(i64) => ok(i64.to_U64),
+            err(cint) => err("err: errcode=" + cint.to_string),
+        }
+    );
+    let res: ResultT CInt IO I64 = result_t $ pure $ ok(42);
+    let res: ResultT ErrMsg IOFail U64 = res.map_result_t(f);
+    let actual = *res.run_result_t;
+    assert_equal("eq", ok(42_U64), actual);;
+    let res: ResultT CInt IO I64 = result_t $ pure $ err(-2.to_CInt);
+    let res: ResultT ErrMsg IOFail U64 = res.map_result_t(f);
+    let actual = *res.run_result_t;
+    assert_equal("eq", err("err: errcode=-2"), actual);;
+    pure()
+);
+
+test_from_iofail: TestCase;
+test_from_iofail = (
+    make_test("test_from_iofail") $ |_|
+    let iof: IOFail I64 = pure(42);
+    let actual = *ResultT::from_iofail(iof).run_result_t.lift;
+    assert_equal("eq", ok(42), actual);;
+    let iof: IOFail I64 = throw $ "err";
+    let actual = *ResultT::from_iofail(iof).run_result_t.lift;
+    assert_equal("eq", err("err"), actual)
+);
+
+test_to_iofail: TestCase;
+test_to_iofail = (
+    make_test("test_to_iofail") $ |_|
+    let res: ResultT ErrMsg IO I64 = result_t $ pure $ ok(42);
+    let iof: IOFail I64 = res.to_iofail;
+    let actual = *iof.to_result.lift;
+    assert_equal("eq", ok(42), actual);;
+    let res: ResultT ErrMsg IO I64 = result_t $ pure $ err("err");
+    let iof: IOFail I64 = res.to_iofail;
+    let actual = *iof.to_result.lift;
+    assert_equal("eq", err("err"), actual)
+);
+
 test_functor: TestCase;
 test_functor = (
     make_test("test_functor") $ |_|
@@ -147,6 +191,9 @@ test_lift_iofail = (
 main: IO ();
 main = (
     [
+        test_map_result_t,
+        test_from_iofail,
+        test_to_iofail,
         test_functor,
         test_pure,
         test_bind,

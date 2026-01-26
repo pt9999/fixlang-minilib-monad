@@ -22,6 +22,24 @@ result_t = |ma| ResultT { data: ma };
 run_result_t: [m: *->*] ResultT e m a -> m (Result e a);
 run_result_t = @data;
 
+// Maps a ResultT monad with the specified function.
+map_result_t: [m: *->*, m2: *->*] (m (Result e a) -> m2 (Result e2 a2)) -> ResultT e m a -> ResultT e2 m2 a2;
+map_result_t = |f, ma| result_t $ f $ ma.run_result_t;
+
+namespace ResultT {
+    // Converts an `IOFail` monad to a `ResultT ErrMsg IO` monad.
+    from_iofail: IOFail a -> ResultT ErrMsg IO a;
+    from_iofail = |iof| (
+        result_t $ iof.to_result
+    );
+
+    // Converts a `ResultT ErrMsg IO` monad to an `IOFail` monad.
+    to_iofail: ResultT ErrMsg IO a -> IOFail a;
+    to_iofail = |res| (
+        from_io_result $ res.run_result_t
+    );
+}
+
 impl [m: Functor] ResultT e m: Functor {
     map = |f, rma| result_t $ (
         rma.run_result_t.map(map(f))
