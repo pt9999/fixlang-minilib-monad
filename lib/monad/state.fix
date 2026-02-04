@@ -56,6 +56,7 @@ type [m: *->*] StateT s m a = unbox struct {
     data: s -> m (s, a)
 };
 
+// `State s` is an alias of `StateT s Iden`.
 type State s = StateT s Iden;
 
 // Creates a StateT monad from a function.
@@ -186,7 +187,7 @@ impl [m: MonadIOFail] StateT s m: MonadIOFailIF {
     lift_iofail = lift_t << lift_iofail;
 }
 
-// Transforms a state monad with a lens action.
+// Transforms a StateT monad with a lens action.
 //
 // For example, if `Foo` has a field `bar: Bar`, then `act_bar` is a function of type
 // `[f: Functor] (Bar -> f Bar) -> (Foo -> f Foo)`.
@@ -210,12 +211,27 @@ lens_state_t = |act, sma| (
     make_state_t_monad(f)
 );
 
+// Transforms a State monad with a lens action.
+//
+// For example, if `Foo` has a field `bar: Bar`, then `act_bar` is a function of type
+// `[f: Functor] (Bar -> f Bar) -> (Foo -> f Foo)`.
+// Using `act_bar`, a state monad of `Bar` can be transformed to a state monad of `Foo`.
+//
+// Note that `act_xxx` can be composed, for example `Foo::act_bar << Bar::act_baz << Baz::act_qux`.
+//
+// Example:
+// ```
+// change_bar: State Bar ();
+// change_bar = ...;
+// change_foo: State Foo ();
+// change_foo = change_bar.lens_state(Foo::act_bar);
+// ```
 lens_state: ((s -> PairLT a Iden s) -> (t -> PairLT a Iden t)) -> State s a -> State t a;
 lens_state = lens_state_t;
 
-// A variable bound to a substate of the State monad.
+// A variable bound to a substate of the StateT monad (including State monad).
 // You can get, set, and modify the bound substate.
-// This is similar to `AsyncTask::Var`, but the result of each operation is a State monad, not an IO monad.
+// This is similar to `AsyncTask::Var`, but the result of each operation is a StateT monad, not an IO monad.
 //
 // Example:
 // ```
