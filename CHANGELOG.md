@@ -2,6 +2,8 @@
 ### Changed
 - Minilib.Monad.Result: Changed the implementation of `MonadIOFailIF`, also changed its behavior.
   * For details, see document comment of the implementation of `MonadIOFailIF`.
+### Added
+- Minilib.Monad.Iden: Added `identity`, `run_identity`, `lift_identity`.
 
 ## 0.9.0
 ### Added

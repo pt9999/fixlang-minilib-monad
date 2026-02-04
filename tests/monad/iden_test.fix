@@ -25,11 +25,29 @@ test_identity_monad = (
     assert_equal("eq", "3", mc.get)
 );
 
+test_run_identity: TestCase;
+test_run_identity = (
+    make_test("test_run_identity") $ |_|
+    let ma = identity $ 1;
+    let a = ma.run_identity;
+    assert_equal("eq", 1, a)
+);
+
+test_lift_identity: TestCase;
+test_lift_identity = (
+    make_test("test_lift_identity") $ |_|
+    let ma = identity $ 1;
+    let a = *ma.lift_identity;
+    assert_equal("eq", 1, a)
+);
+
 main: IO ();
 main = (
     [
         test_identity_functor,
         test_identity_monad,
+        test_run_identity,
+        test_lift_identity,
         TestCase::empty
     ]
     .run_test_driver

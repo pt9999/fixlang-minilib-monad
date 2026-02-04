@@ -8,6 +8,18 @@ type Iden = Std::Identity;
 make: a -> Iden a;
 make = |a| Identity { data: a };
 
+// `identity` is a synonym of `Iden::make`.
+identity: a -> Iden a;
+identity = Iden::make;
+
 // Gets a value from an identity monad.
 get: Iden a -> a;
 get = @data;
+
+// `run_identity` is a synonym of `Iden::get`.
+run_identity: Iden a -> a;
+run_identity = Iden::get;
+
+// Lifts an identity monad to any monad.
+lift_identity: [m: Monad] Iden a -> m a;
+lift_identity = run_identity >> pure;
