@@ -1,6 +1,6 @@
 # Minilib.Monad.Result
 
-Defined in minilib-monad@0.9.0
+Defined in minilib-monad@0.10.0
 
 A monad transformer that wraps `m (Result e a)`.
 
@@ -64,11 +64,23 @@ Type: `m (Std::Result e a)`
 
 ### impl `[m : Std::Monad] Minilib.Monad.Result::ResultT Std::String m : Minilib.Monad.Error::MonadErrorIF`
 
+### impl `[m : Minilib.Monad.IO::MonadIO] Minilib.Monad.Result::ResultT Std::String m : Minilib.Monad.IO::MonadIOFailIF`
+
+Implementation of `MonadIOFailIF`.
+
+NOTE: If `lift_iofail` is called and the lifted `IOFail` monad raises an error,
+the error is recorded in the `ResultT` monad, not the underlying monad.
+
+The reason for this behavior change is to ensure that `ResultT ErrMsg (StateT s m)`
+will not lose state even if an error occurs.
+
 ### impl `Minilib.Monad.Result::ResultT e : Minilib.Monad.Trans::MonadTrans`
 
-### impl `[m : Minilib.Monad.IO::MonadIOFail] Minilib.Monad.Result::ResultT e m : Minilib.Monad.IO::MonadIOFailIF`
-
 ### impl `[m : Minilib.Monad.IO::MonadIO] Minilib.Monad.Result::ResultT e m : Minilib.Monad.IO::MonadIOIF`
+
+### impl `[m : Minilib.Monad.Reader::MonadReader] Minilib.Monad.Result::ResultT e m : Minilib.Monad.Reader::MonadReaderIF`
+
+### impl `[m : Minilib.Monad.State::MonadState] Minilib.Monad.Result::ResultT e m : Minilib.Monad.State::MonadStateIF`
 
 ### impl `[m : Std::Functor] Minilib.Monad.Result::ResultT e m : Std::Functor`
 

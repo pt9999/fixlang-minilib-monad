@@ -1,6 +1,6 @@
 # Minilib.Monad.State
 
-Defined in minilib-monad@0.9.0
+Defined in minilib-monad@0.10.0
 
 State Monad which maintains a mutable state.
 
@@ -73,11 +73,27 @@ Type: `[sm : Minilib.Monad.State::MonadState] (Minilib.Monad.State::MonadStateIF
 
 Type: `((s -> Minilib.Functor.Pair::PairLT a Minilib.Monad.Iden::Iden s) -> t -> Minilib.Functor.Pair::PairLT a Minilib.Monad.Iden::Iden t) -> Minilib.Monad.State::State s a -> Minilib.Monad.State::State t a`
 
+Transforms a State monad with a lens action.
+
+For example, if `Foo` has a field `bar: Bar`, then `act_bar` is a function of type
+`[f: Functor] (Bar -> f Bar) -> (Foo -> f Foo)`.
+Using `act_bar`, a state monad of `Bar` can be transformed to a state monad of `Foo`.
+
+Note that `act_xxx` can be composed, for example `Foo::act_bar << Bar::act_baz << Baz::act_qux`.
+
+Example:
+```
+change_bar: State Bar ();
+change_bar = ...;
+change_foo: State Foo ();
+change_foo = change_bar.lens_state(Foo::act_bar);
+```
+
 #### lens_state_t
 
 Type: `[m : Std::Functor, m : Std::Monad] ((s -> Minilib.Functor.Pair::PairLT a m s) -> t -> Minilib.Functor.Pair::PairLT a m t) -> Minilib.Monad.State::StateT s m a -> Minilib.Monad.State::StateT t m a`
 
-Transforms a state monad with a lens action.
+Transforms a StateT monad with a lens action.
 
 For example, if `Foo` has a field `bar: Bar`, then `act_bar` is a function of type
 `[f: Functor] (Bar -> f Bar) -> (Foo -> f Foo)`.
@@ -248,9 +264,9 @@ A variable bound to the whole state.
 
 Defined as: `type SVar s a = unbox struct { ...fields... }`
 
-A variable bound to a substate of the State monad.
+A variable bound to a substate of the StateT monad (including State monad).
 You can get, set, and modify the bound substate.
-This is similar to `AsyncTask::Var`, but the result of each operation is a State monad, not an IO monad.
+This is similar to `AsyncTask::Var`, but the result of each operation is a StateT monad, not an IO monad.
 
 Example:
 ```
@@ -277,6 +293,8 @@ Type: `s -> (a -> Std::Result a a) -> Std::Result a s`
 #### State
 
 Defined as: `type State s = Minilib.Monad.State::StateT s Minilib.Monad.Iden::Iden`
+
+`State s` is an alias of `StateT s Iden`.
 
 #### StateT
 
