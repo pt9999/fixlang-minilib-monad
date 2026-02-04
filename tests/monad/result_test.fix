@@ -5,6 +5,7 @@ import Minilib.Monad.Result;
 import Minilib.Monad.Trans;
 import Minilib.Monad.Error;
 import Minilib.Monad.IO;
+import Minilib.Monad.Reader;
 import Minilib.Monad.State;
 import Minilib.Trait.Traversable;
 //import Minilib.Text.StringEx;
@@ -195,6 +196,24 @@ test_lift_iofail = (
     assert_equal("eq", expected, actual)
 );
 
+test_result_reader_io: TestCase;
+test_result_reader_io = (
+    make_test("test_result_reader_io") $ |_|
+    let rma: ResultT ErrMsg (ReaderT I64 IO) String = do {
+        let env = *ask;
+        if env < 0 { error $ "invalid env=" + env.to_string };
+        pure $ "env=" + env.to_string
+    };
+    let rmb: ResultT ErrMsg (ReaderT I64 IO) String = do {
+        rma.local(|env| env - 100)
+    };
+    assert_equal("eq", ok $ "env=42", *rma.run_result_t.run_reader_t(42).lift_io);;
+    assert_equal("eq", err $ "invalid env=-1", *rma.run_result_t.run_reader_t(-1).lift_io);;
+    assert_equal("eq", ok $ "env=33", *rmb.run_result_t.run_reader_t(133).lift_io);;
+    assert_equal("eq", err $ "invalid env=-67", *rmb.run_result_t.run_reader_t(33).lift_io);;
+    pure()
+);
+
 // `ResultT ErrMsg (StateT s IO)` will not lost the state even if an error occurs.
 // On the other hand, `StateT s IOFail` will lost the state when an error occurs.
 test_result_state_io: TestCase;
@@ -202,15 +221,26 @@ test_result_state_io = (
     make_test("test_result_state_io") $ |_|
     let logger: IORef String = *IORef::make("");
     let rma: I64 -> ResultT ErrMsg (StateT String IO) I64 = |input| do {
-        lift_io $ logger.put("");;
-        lift_io $ logger.mod(concat("message1;"));;
-        lift_t $ put_state("state1");;
+        // test for MonadState
+        put_state("abc");;
+        assert_equal("get_state", "abc", *get_state);;
+        State::mod_state(concat("def"));;
+        assert_equal("get_state", "abcdef", *get_state);;
+
+        // test for MonadIO
+        logger.put("");;
+        logger.mod(concat("message1;"));;
+
+        // test for MonadIOFail
+        put_state("state1");;
         if input < 10 { lift_iofail $ throw("input < 10") };
-        lift_io $ logger.mod(concat("message2;"));;
-        lift_t $ put_state("state2");;
+        logger.mod(concat("message2;"));;
+
+        // test for MonadError
+        put_state("state2");;
         if input < 20 { error("input < 20") };
-        lift_io $ logger.mod(concat("message3;"));;
-        lift_t $ put_state("state3");;
+        logger.mod(concat("message3;"));;
+        put_state("state3");;
         pure(input + 1)
     };
     assert_equal("eq", ("state1", err $ "input < 10"), *rma(5).run_result_t.run_state_t("").lift);;
@@ -239,6 +269,7 @@ main = (
         test_catch,
         test_lift_io,
         test_lift_iofail,
+        test_result_reader_io,
         test_result_state_io,
     ]
     .run_test_driver

@@ -3,6 +3,8 @@ module Minilib.Monad.Result;
 
 import Minilib.Monad.Trans;
 import Minilib.Monad.Error;
+import Minilib.Monad.Reader;
+import Minilib.Monad.State;
 import Minilib.Monad.IO;
 
 // A monad transformer that wraps `m (Result e a)`.
@@ -88,4 +90,17 @@ impl [m: MonadIO] ResultT ErrMsg m: MonadIOFailIF {
             iof.to_result.lift_io
         }
     );
+}
+
+impl [m: MonadReader] ResultT e m: MonadReaderIF {
+    type EnvType (ResultT e m) = EnvType m;
+    ask = ask.lift_t;
+    local = |f, ma| ma.run_result_t.local(f).result_t;
+}
+
+impl [m: MonadState] ResultT e m: MonadStateIF {
+    type StateType (ResultT e m) = StateType m;
+    get_state = get_state.lift_t;
+    put_state = put_state >> lift_t;
+    mod_state_ = mod_state_ >> lift_t;
 }

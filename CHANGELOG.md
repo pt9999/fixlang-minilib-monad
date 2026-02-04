@@ -5,6 +5,7 @@
 ### Added
 - Minilib.Monad.Iden: Added `identity`, `run_identity`, `lift_identity`.
 ### Changed
+- Minilib.Monad.Result: Added implementations of `MonadReaderIF`, `MonadStateIF`.
 - Minilib.Monad.State: Updated document comments.
 
 ## 0.9.0
