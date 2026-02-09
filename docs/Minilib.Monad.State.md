@@ -1,6 +1,6 @@
 # Minilib.Monad.State
 
-Defined in minilib-monad@0.10.1
+Defined in minilib-monad@0.11.0
 
 State Monad which maintains a mutable state.
 

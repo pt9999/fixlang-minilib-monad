@@ -1,6 +1,6 @@
 # Minilib.Monad.Result
 
-Defined in minilib-monad@0.10.1
+Defined in minilib-monad@0.11.0
 
 A monad transformer that wraps `m (Result e a)`.
 
