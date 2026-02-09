@@ -1,6 +1,6 @@
 # Minilib.Monad.Trans
 
-Defined in minilib-monad@0.10.0
+Defined in minilib-monad@0.10.1
 
 Trait for a monad transformer.
 

@@ -1,6 +1,6 @@
 # Minilib.Trait.Monoid
 
-Defined in minilib-monad@0.10.0
+Defined in minilib-monad@0.10.1
 
 Monoid trait and its several implementations (Array, Iterator, String etc).
 
