@@ -1,13 +1,13 @@
-proj_file_hash = "bd113eac2adf9fbe296a386a25103911"
+proj_file_hash = "f487ce8dd02724c1e11d626c7164406e"
 
 [[dependencies]]
 name = "minilib-common"
-version = "0.11.3"
-path = ".fixlang/deps/minilib-common_0.11.3"
+version = "0.11.4"
+path = ".fixlang/deps/minilib-common_0.11.4"
 
 [dependencies.git]
 repo = "https://github.com/pt9999/fixlang-minilib-common.git"
-rev = "5a61cfd26f2c314139d2cad7064c0359e133145a"
+rev = "6f8f5600359c7819e68f8e673a4270938a431ac1"
 
 [[dependencies]]
 name = "character"
