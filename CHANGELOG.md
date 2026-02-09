@@ -1,3 +1,8 @@
+
+## 0.11.0
+### Changed
+- fixproj.toml: Bumped `fix_version` to 1.3.0. Depends on minilib-common@0.12.0.
+
 ## 0.10.0
 ### Breaking Changes
 - Minilib.Monad.Result: Changed the implementation of `MonadIOFailIF`, also changed its behavior.
