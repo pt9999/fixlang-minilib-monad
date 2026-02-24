@@ -5,6 +5,7 @@ import Minilib.Testing.UnitTest;
 import PairTest;
 import AltTest;
 import ContTest;
+import FreeTest;
 import IdenTest;
 import OptionTest;
 import ReaderTest;
@@ -19,6 +20,7 @@ testsuite = [
     ("PairTest", PairTest::main),
     ("AltTest", AltTest::main),
     ("ContTest", ContTest::main),
+    ("FreeTest", FreeTest::main),
     ("IdenTest", IdenTest::main),
     ("OptionTest", OptionTest::main),
     ("ReaderTest", ReaderTest::main),

@@ -1,3 +1,6 @@
+## 0.11.1
+### Added
+- Added Minilib.Monad.Free.
 
 ## 0.11.0
 ### Changed
