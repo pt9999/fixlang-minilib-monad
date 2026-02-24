@@ -1,6 +1,6 @@
 # Minilib.Monad.Trans
 
-Defined in minilib-monad@0.11.0
+Defined in minilib-monad@0.11.1
 
 Trait for a monad transformer.
 
@@ -11,6 +11,8 @@ Trait for a monad transformer.
 #### lift_t
 
 Type: `[m : Std::Monad, t : Minilib.Monad.Trans::MonadTrans] m a -> t m a`
+
+Trait member of `Minilib.Monad.Trans::MonadTrans`
 
 Lifts an underlying monad to a transformed monad.
 

@@ -1,6 +1,6 @@
 # Minilib.Monad.Reader
 
-Defined in minilib-monad@0.11.0
+Defined in minilib-monad@0.11.1
 
 Reader monad.
 
@@ -78,11 +78,15 @@ Creates a reader monad with the modified environment.
 
 Type: `[rm : Minilib.Monad.Reader::MonadReaderIF] rm (Minilib.Monad.Reader::MonadReaderIF::EnvType rm)`
 
+Trait member of `Minilib.Monad.Reader::MonadReaderIF`
+
 A monad that returns the internal environment as a value.
 
 #### local
 
 Type: `[rm : Minilib.Monad.Reader::MonadReaderIF] (Minilib.Monad.Reader::MonadReaderIF::EnvType rm -> Minilib.Monad.Reader::MonadReaderIF::EnvType rm) -> rm a -> rm a`
+
+Trait member of `Minilib.Monad.Reader::MonadReaderIF`
 
 `rm.local(f)` creates a reader monad with an environment modified by `f`.
 

@@ -1,6 +1,6 @@
 # Minilib.Monad.Cont
 
-Defined in minilib-monad@0.11.0
+Defined in minilib-monad@0.11.1
 
 Continuation Monad.
 
@@ -69,6 +69,8 @@ Runs a ContT monad with the supplied continuation function.
 #### call_cc
 
 Type: `[cm : Minilib.Monad.Cont::MonadContIF] ((a -> cm b) -> cm a) -> cm a`
+
+Trait member of `Minilib.Monad.Cont::MonadContIF`
 
 `call_cc(f)` calls `f` with the current continuation, and returns a continuation monad.
 `f` takes the current continuation (the exit function) and should return a continuation monad.

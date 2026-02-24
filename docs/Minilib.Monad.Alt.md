@@ -1,6 +1,6 @@
 # Minilib.Monad.Alt
 
-Defined in minilib-monad@0.11.0
+Defined in minilib-monad@0.11.1
 
 The interface and implementations of Alternative Monad (`MonadAlt`), which is either a success or a failure.
 
@@ -67,11 +67,15 @@ Returns an array of the succeeded results. The returned array may be empty.
 
 Type: `[m : Minilib.Monad.Alt::MonadAltIF] m a`
 
+Trait member of `Minilib.Monad.Alt::MonadAltIF`
+
 `fail` is a monad which always fails.
 
 #### or_else
 
 Type: `[m : Minilib.Monad.Alt::MonadAltIF] m a -> m a -> m a`
+
+Trait member of `Minilib.Monad.Alt::MonadAltIF`
 
 `first.or_else(second)` is a monad. It performs `first` first, and if it failed, then performs `second`.
 

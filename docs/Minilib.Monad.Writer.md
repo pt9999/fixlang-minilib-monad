@@ -1,6 +1,6 @@
 # Minilib.Monad.Writer
 
-Defined in minilib-monad@0.11.0
+Defined in minilib-monad@0.11.1
 
 Writer monad.
 
@@ -76,17 +76,23 @@ Creates a generic writer monad from an enviroment and a value.
 
 Type: `[wm : Minilib.Monad.Writer::MonadWriterIF] wm a -> wm (Minilib.Monad.Writer::MonadWriterIF::EnvType wm, a)`
 
+Trait member of `Minilib.Monad.Writer::MonadWriterIF`
+
 Listens the internal environment.
 
 #### pass
 
 Type: `[wm : Minilib.Monad.Writer::MonadWriterIF] wm (Minilib.Monad.Writer::MonadWriterIF::EnvType wm -> Minilib.Monad.Writer::MonadWriterIF::EnvType wm, a) -> wm a`
 
+Trait member of `Minilib.Monad.Writer::MonadWriterIF`
+
 Provide a writer transformer which changes internals of the written object.
 
 #### tell
 
 Type: `[wm : Minilib.Monad.Writer::MonadWriterIF] Minilib.Monad.Writer::MonadWriterIF::EnvType wm -> wm ()`
+
+Trait member of `Minilib.Monad.Writer::MonadWriterIF`
 
 Tells specified value to the internal environment.
 

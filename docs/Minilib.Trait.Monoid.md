@@ -1,6 +1,6 @@
 # Minilib.Trait.Monoid
 
-Defined in minilib-monad@0.11.0
+Defined in minilib-monad@0.11.1
 
 Monoid trait and its several implementations (Array, Iterator, String etc).
 
@@ -23,6 +23,8 @@ Concats an iterator of monoids to a monoid.
 #### mempty
 
 Type: `[a : Minilib.Trait.Monoid::MEmpty] a`
+
+Trait member of `Minilib.Trait.Monoid::MEmpty`
 
 An identity of a monoid, such as an empty instance.
 

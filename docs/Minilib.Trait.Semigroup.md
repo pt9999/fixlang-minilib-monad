@@ -1,6 +1,6 @@
 # Minilib.Trait.Semigroup
 
-Defined in minilib-monad@0.11.0
+Defined in minilib-monad@0.11.1
 
 Semigroup trait and its several implementations (Array, Iterator, String etc).
 
@@ -16,6 +16,8 @@ For details, see [Wikipedia: Semigroup](https://en.wikipedia.org/wiki/Semigroup)
 #### sappend
 
 Type: `[a : Minilib.Trait.Semigroup::Semigroup] a -> a -> a`
+
+Trait member of `Minilib.Trait.Semigroup::Semigroup`
 
 `a.sappend(b)` appends `b` after `a`.
 

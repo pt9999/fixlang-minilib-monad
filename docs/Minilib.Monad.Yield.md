@@ -1,6 +1,6 @@
 # Minilib.Monad.Yield
 
-Defined in minilib-monad@0.11.0
+Defined in minilib-monad@0.11.1
 
 A simple generator monad.
 
@@ -76,6 +76,8 @@ The array of elements and the remaining generator.
 #### yield
 
 Type: `[m : Minilib.Monad.Yield::MonadYieldIF] Minilib.Monad.Yield::MonadYieldIF::YieldType m -> m ()`
+
+Trait member of `Minilib.Monad.Yield::MonadYieldIF`
 
 Writes an element to the generator output.
 
