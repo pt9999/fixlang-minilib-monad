@@ -80,7 +80,7 @@ test_yield_monad2_perf = (
     make_test("test_yield_monad2_perf") $ |_|
     let n = 100000;
     let k = 5;
-    let ma: Yield I64 I64 = Wrap::unwrap $ 
+    let ma: Yield I64 I64 = Wrap::unwrap $
         *timeit_io("test_yield_monad2_perf: creating yield",
             // time/loop=0.067 usec = 0.000000067 sec
             do {
@@ -93,7 +93,7 @@ test_yield_monad2_perf = (
             }
         ).lift;
     let expected = (range(n-k,n).to_array, n * (n-1) / 2);
-    let actual = 
+    let actual =
         *timeit_io("test_yield_monad2_perf: folding yield",
             // time/loop=7.057 msec = 0.0007057 sec
             do {
@@ -123,7 +123,7 @@ test_writer_monad2_perf = (
             }
         ).lift;
     let expected = (range(n-k,n).to_array, n * (n-1) / 2);
-    let actual = 
+    let actual =
         *timeit_io("test_writer_monad2_perf: folding yield",
             // time/loop=0.033 usec = 0.000000033 sec
             do {
