@@ -1,6 +1,6 @@
 # Minilib.Monad.Alt
 
-Defined in minilib-monad@0.11.1
+Defined in minilib-monad@0.11.2
 
 The interface and implementations of Alternative Monad (`MonadAlt`), which is either a success or a failure.
 
@@ -127,7 +127,7 @@ Type: `m a -> m a -> m a`
 
 ### impl `[m : Std::Monad] Minilib.Monad.Option::OptionT m : Minilib.Monad.Alt::MonadAltIF`
 
-### impl `[m : Std::Monad] Minilib.Monad.Result::ResultT e m : Minilib.Monad.Alt::MonadAltIF`
+### impl `[m : Std::Monad, e : Std::Zero] Minilib.Monad.Result::ResultT e m : Minilib.Monad.Alt::MonadAltIF`
 
 ### impl `[m : Minilib.Monad.Alt::MonadAlt] Minilib.Monad.State::StateT s m : Minilib.Monad.Alt::MonadAltIF`
 
