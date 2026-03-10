@@ -11,12 +11,12 @@ rev = "fd75a6634ec0c919f2d1703112d25da9a3c2346e"
 
 [[dependencies]]
 name = "minilib-common"
-version = "0.12.3"
-path = ".fixlang/deps/minilib-common_0.12.3"
+version = "0.12.4"
+path = ".fixlang/deps/minilib-common_0.12.4"
 
 [dependencies.git]
 repo = "https://github.com/pt9999/fixlang-minilib-common.git"
-rev = "e3751a7443234275c64bf6aafb2645c26f9363a1"
+rev = "a7e6aa2778fd6678e51f454b59aca90f0bb0898c"
 
 [[dependencies]]
 name = "time"
