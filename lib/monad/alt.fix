@@ -81,7 +81,7 @@ impl [m: Monad] OptionT m: MonadAltIF {
     );
 }
 
-impl [m: Monad] ResultT e m: MonadAltIF {
+impl [m: Monad, e: Zero] ResultT e m: MonadAltIF {
     fail = result_t $ pure $ fail;
     or_else = |second, first| (
         result_t $ do {

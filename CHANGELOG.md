@@ -1,3 +1,8 @@
+## 0.11.2
+### Fixed
+- Fixed problems which were found by `fix check` command.
+- Minilib.Monad.Alt: Added testcases.
+
 ## 0.11.1
 ### Added
 - Added Minilib.Monad.Free.
