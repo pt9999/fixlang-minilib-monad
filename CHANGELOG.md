@@ -1,6 +1,9 @@
 ## 0.11.3
 ### Changed
 - Utilized minilib-common@0.13.0.
+- Minilib.Trait.Monoid: Changed signature of `mconcat`.
+### Fixed
+- Minilib.Trait.Monoid: Added testcases.
 
 ## 0.11.2
 ### Fixed

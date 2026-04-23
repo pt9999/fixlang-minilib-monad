@@ -6,6 +6,16 @@ import Minilib.Trait.Monoid;
 import Minilib.Text.StringEx;
 import Minilib.Testing.UnitTest;
 
+test_mconcat: TestCase;
+test_mconcat = (
+    make_test("test_mconcat") $ |_|
+    let a = ["abc", "def", "ghi"].to_iter.mconcat;
+    assert_equal("mconcat string", "abcdefghi", a);;
+    let a = [[1], [2, 3], [4, 5]].to_iter.mconcat;
+    assert_equal("mconcat array", [1, 2, 3, 4, 5], a);;
+    pure()
+);
+
 test_array: TestCase;
 test_array = (
     make_test("test_array") $ |_|
@@ -42,13 +52,42 @@ test_string = (
     pure()
 );
 
+test_unit: TestCase;
+test_unit = (
+    make_test("test_unit") $ |_|
+    let a: () = mempty;
+    assert_equal("mempty", (), a);;
+    let a = a.sappend(());
+    assert_equal("sappend", (), a);;
+    pure()
+);
+
+test_option: TestCase;
+test_option = (
+    make_test("test_option") $ |_|
+    let a: Option String = mempty;
+    assert_equal("mempty", none(), a);;
+    [
+        (none(), none(), none()),
+        (none(), some("b"), some("b")),
+        (some("a"), none(), some("a")),
+        (some("a"), some("b"), some("ab")),
+    ].to_iter.fold_m(
+        (), |(a, b, expected), _|
+        let actual = a.sappend(b);
+        assert_equal("sappend" + (a, b).to_string, expected, actual)
+    )
+);
+
 main: IO ();
 main = (
     [
+        test_mconcat,
         test_array,
         test_iterator,
         test_string,
-        TestCase::empty
+        test_unit,
+        test_option,
     ]
     .run_test_driver
 );

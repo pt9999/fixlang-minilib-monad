@@ -17,7 +17,7 @@ trait a: MEmpty {
 trait Monoid = Semigroup + MEmpty;
 
 // Concats an iterator of monoids to a monoid.
-mconcat: [a: Monoid] DynIterator a -> a;
+mconcat: [a: Monoid, i: Iterator, Item i = a] i -> a;
 mconcat = |iter| iter.fold(mempty, |b,a| a.sappend(b));
 
 impl Array a: MEmpty {
