@@ -1,5 +1,6 @@
 module YieldTest;
 
+import Minilib.Common.IteratorEx;
 import Minilib.Common.TimeEx;
 import Minilib.Monad.Yield;
 import Minilib.Monad.Writer;
@@ -7,15 +8,6 @@ import Minilib.Text.StringEx;
 import Minilib.Testing.UnitTest;
 import Minilib.Trait.Traversable;
 import Minilib.Trait.Monoid;
-
-drop : [i: Iterator] I64 -> i -> i;
-drop = |n, iter| (
-    if n <= 0 { iter };
-    match iter.advance {
-        none() => iter,
-        some((next, a)) => next.drop(n-1)
-    }
-);
 
 test_simple: TestCase;
 test_simple = (
