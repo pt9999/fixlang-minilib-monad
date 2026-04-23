@@ -1,6 +1,6 @@
 # Minilib.Trait.Monoid
 
-Defined in minilib-monad@0.11.2
+Defined in minilib-monad@0.11.3
 
 Monoid trait and its several implementations (Array, Iterator, String etc).
 
@@ -14,7 +14,7 @@ For details, see [Wikipedia: Monoid](https://en.wikipedia.org/wiki/Monoid).
 
 #### mconcat
 
-Type: `[a : Minilib.Trait.Monoid::Monoid] Std::Iterator::DynIterator a -> a`
+Type: `[a : Minilib.Trait.Monoid::Monoid, i : Std::Iterator, Std::Iterator::Item i = a] i -> a`
 
 Concats an iterator of monoids to a monoid.
 
