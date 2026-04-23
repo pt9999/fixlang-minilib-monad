@@ -1,3 +1,7 @@
+## 0.11.3
+### Changed
+- Utilized minilib-common@0.13.0.
+
 ## 0.11.2
 ### Fixed
 - Fixed problems which were found by `fix check` command.
