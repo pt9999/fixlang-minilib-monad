@@ -1,6 +1,6 @@
 # Minilib.Monad.Alt
 
-Defined in minilib-monad@0.11.3
+Defined in minilib-monad@0.11.4
 
 The interface and implementations of Alternative Monad (`MonadAlt`), which is either a success or a failure.
 
