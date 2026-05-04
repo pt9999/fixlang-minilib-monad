@@ -181,8 +181,8 @@ test_freeop_perf = (
     );
     let state = *res.from_result;
     emprintln((n, time).format("test_freeop_perf: n={} time={} seconds"));;
-    assert_equal("outputs", n, state.get_outputs.get_size);;
-    assert_equal("ioref", n, (*ioref.get).get_size);;
+    assert_equal("outputs", n, state.get_outputs.@size);;
+    assert_equal("ioref", n, (*ioref.get).@size);;
     pure()
 );
 

@@ -132,7 +132,7 @@ parse: String -> Parser a -> Option a = |input, st| (
 
 match_any_char: Parser String = do {
     let (input, pos) = *get_state;
-    if pos >= input.get_size { fail };
+    if pos >= input.@size { fail };
     put_state((input, pos+1));;
     pure $ input.get_sub(pos, pos+1)
 };

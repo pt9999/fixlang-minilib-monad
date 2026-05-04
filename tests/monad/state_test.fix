@@ -54,7 +54,7 @@ test_eval_exec_state_t = (
     make_test("test_eval_exec_state_t") $ |_|
     let sm: StateT String (Result ErrMsg) I64 = do {
         let s = *get_state;
-        let a = s.get_size;
+        let a = s.@size;
         put_state("end");;
         pure $ a
     };
@@ -68,7 +68,7 @@ test_eval_exec_state = (
     make_test("test_eval_exec_state") $ |_|
     let sm: State String I64 = do {
         let s = *get_state;
-        let a = s.get_size;
+        let a = s.@size;
         put_state("end");;
         pure $ a
     };
@@ -81,15 +81,15 @@ test_map_state_t: TestCase;
 test_map_state_t = (
     make_test("test_map_state_t") $ |_|
     let sm: StateT I64 Iden I32 = do {
-        let i64 = *get_state;
-        put_state(i64 + 1);;
-        pure $ i64.to_I32
+        let i64val = *get_state;
+        put_state(i64val + 1);;
+        pure $ i64val.i32
     };
     let sm: StateT I64 IOFail String = sm.map_state_t(|ma|
         pure $ ma.get.map(to_string)
     );
-    let (i64, str) = *sm.run_state_t(42);
-    assert_equal("i64", 43, i64);;
+    let (i64val, str) = *sm.run_state_t(42);
+    assert_equal("i64val", 43, i64val);;
     assert_equal("str", "42", str);;
     pure()
 );
@@ -125,7 +125,7 @@ test_state_iofail_error = (
     let sm: StateT (Array I64) IOFail I64 = do {
         let arr: Array I64 = *get_state;
         let arr = arr.push_back(2);
-        if arr.get_size != 2 { error $ "err" };
+        if arr.@size != 2 { error $ "err" };
         put_state(arr);;
         pure $ arr.to_iter.sum
     };
@@ -189,7 +189,7 @@ test_lens_state_t = (
     make_test("test_lens_state_t") $ |_|
     let sm: StateT String (Result ErrMsg) I64 = do {
         let s = *get_state;
-        let a = s.get_size;
+        let a = s.@size;
         put_state("<" + s + ">");;
         pure $ a
     };
@@ -207,7 +207,7 @@ test_lens_state = (
     make_test("test_lens_state_t") $ |_|
     let sm: State String I64 = do {
         let s = *get_state;
-        let a = s.get_size;
+        let a = s.@size;
         put_state("<" + s + ">");;
         pure $ a
     };

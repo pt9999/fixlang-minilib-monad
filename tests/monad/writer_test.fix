@@ -24,8 +24,8 @@ test_writer_monad = (
     make_test("test_writer_monad") $ |_|
     let w = do {
         let x = *pure(2);
-        write(["a"]);;
-        write(["b","c"]);;
+        tell(["a"]);;
+        tell(["b","c"]);;
         pure(x + 1)
     };
     assert_equal("eq", (["a", "b", "c"], 3), w.run_writer)
@@ -35,57 +35,57 @@ test_tell_listen: TestCase;
 test_tell_listen = (
     make_test("test_tell_listen") $ |_|
     let w: WriterT String IOFail I64 = do {
-        let i64 = *pure(2);
+        let i64val = *pure(2);
         tell("log1");;
-        pure(i64 + 1)
+        pure(i64val + 1)
     };
     let w2: WriterT String IOFail String = do {
         tell("log0");;
-        let (log, i64) = *w.listen;
+        let (log, i64val) = *w.listen;
         tell("log2");;
-        pure("log="+log+" i64="+i64.to_string)
+        pure("log="+log+" i64val="+i64val.to_string)
     };
-    assert_equal("eq", ("log0log1log2", "log=log1 i64=3"), *w2.run_writer_t)
+    assert_equal("eq", ("log0log1log2", "log=log1 i64val=3"), *w2.run_writer_t)
 );
 
 test_pass: TestCase;
 test_pass = (
     make_test("test_pass") $ |_|
     let w: WriterT String IOFail I64 = do {
-        let i64 = *pure(2);
+        let i64val = *pure(2);
         tell("log1");;
-        pure(i64 + 1)
+        pure(i64val + 1)
     };
 
     let w2: WriterT String IOFail String = do {
         tell("log0");;
         let f = |e| "<" + e + ">";
-        let i64 = *w.map(|i64| (f, i64)).pass;
+        let i64val = *w.map(|i64val| (f, i64val)).pass;
         tell("log2");;
-        pure("i64=" + i64.to_string)
+        pure("i64val=" + i64val.to_string)
     };
-    assert_equal("eq", ("log0<log1>log2", "i64=3"), *w2.run_writer_t)
+    assert_equal("eq", ("log0<log1>log2", "i64val=3"), *w2.run_writer_t)
 );
 
 test_map_writer_t: TestCase;
 test_map_writer_t = (
     make_test("test_map_writer_t") $ |_|
     let w: WriterT String IO I64 = do {
-        let i64 = *pure(2);
+        let i64val = *pure(2);
         tell("log1");;
-        pure(i64 + 1)
+        pure(i64val + 1)
     };
     let f: IO (String, I64) -> IOFail (Array String, F64) = |io| (
         let (e, a) = *io.lift;
-        pure $ ([e], a.to_F64)
+        pure $ ([e], a.f64)
     );
     let w2: WriterT (Array String) IOFail String = do {
         tell(["log0"]);;
-        let f64 = *w.map_writer_t(f);
+        let f64val = *w.map_writer_t(f);
         tell(["log2"]);;
-        pure("f64=" + f64.to_string)
+        pure("f64val=" + f64val.to_string)
     };
-    assert_equal("eq", (["log0","log1","log2"], "f64=3.000000"), *w2.run_writer_t)
+    assert_equal("eq", (["log0","log1","log2"], "f64val=3.000000"), *w2.run_writer_t)
 );
 
 test_writer_trans: TestCase;
@@ -102,16 +102,16 @@ test_writer_trans = (
 test_writer_iofail_error: TestCase;
 test_writer_iofail_error = (
     make_test("test_writer_iofail_error") $ |_|
-    let iof: I64 -> IOFail F64 = |i64| (
-        if i64 >= 100 { throw $ "err1" };
-        pure $ i64.to_F64 * 2.0
+    let iof: I64 -> IOFail F64 = |i64val| (
+        if i64val >= 100 { throw $ "err1" };
+        pure $ i64val.f64 * 2.0
     );
-    let w: I64 -> WriterT String IOFail F64 = |i64| (
+    let w: I64 -> WriterT String IOFail F64 = |i64val| (
         tell("start ");;
-        if i64 < 0 { error $ "err2" };
-        tell(i64.to_string);;
-        let f64 = *iof(i64).lift_t;
-        pure $ f64
+        if i64val < 0 { error $ "err2" };
+        tell(i64val.to_string);;
+        let f64val = *iof(i64val).lift_t;
+        pure $ f64val
     );
     assert_equal("ok", ok $ ("start 12", 24.0), *w(12).run_writer_t.to_result.lift);;
     assert_equal("err1", err("err1"), *w(100).run_writer_t.to_result.lift);;
@@ -121,10 +121,10 @@ test_writer_iofail_error = (
         if errmsg == "err1" { pure $ 999.0 };
         error $ "rethrow: " + errmsg
     );
-    let w2 = |i64| (
-        let f64 = *w(i64).catch(handler);
+    let w2 = |i64val| (
+        let f64val = *w(i64val).catch(handler);
         tell(" end");;
-        pure $ f64
+        pure $ f64val
     );
     assert_equal("catch ok", ok $ ("start 12 end", 24.0), *w2(12).run_writer_t.to_result.lift);;
     assert_equal("catch err1", ok $ ("caught err1 end", 999.0), *w2(100).run_writer_t.to_result.lift);;

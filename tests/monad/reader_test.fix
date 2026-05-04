@@ -81,15 +81,15 @@ test_reader_trans = (
 test_reader_iofail_error: TestCase;
 test_reader_iofail_error = (
     make_test("test_reader_iofail_error") $ |_|
-    let iof: I64 -> IOFail F64 = |i64| (
-        if i64 >= 100 { throw $ "err1" };
-        pure $ i64.to_F64 * 2.0
+    let iof: I64 -> IOFail F64 = |val: I64| (
+        if val >= 100 { throw $ "err1" };
+        pure $ val.f64 * 2.0
     );
     let r: ReaderT I64 IOFail F64 = do {
-        let i64 = *ask;
-        if i64 < 0 { error $ "err2" };
-        let f64 = *iof(i64).lift_t;
-        pure $ f64
+        let val: I64 = *ask;
+        if val < 0 { error $ "err2" };
+        let fval: F64 = *iof(val).lift_t;
+        pure $ fval
     };
     assert_equal("ok", ok(24.0), *r.run_reader_t(12).to_result.lift);;
     assert_equal("err1", err("err1"), *r.run_reader_t(100).to_result.lift);;
@@ -99,8 +99,8 @@ test_reader_iofail_error = (
         error $ "rethrow: " + errmsg
     );
     let r2: ReaderT I64 IOFail String = do {
-        let f64 = *r.catch(handler);
-        pure $ f64.to_string
+        let val: F64 = *r.catch(handler);
+        pure $ val.to_string
     };
     assert_equal("catch ok", ok("24.000000"), *r2.run_reader_t(12).to_result.lift);;
     assert_equal("catch err1", ok("999.000000"), *r2.run_reader_t(100).to_result.lift);;
@@ -111,7 +111,7 @@ test_reader_iofail_error = (
 test_map_reader_t: TestCase;
 test_map_reader_t = (
     make_test("test_map_reader_t") $ |_|
-    let r: ReaderT I64 IO F64 = ask.map(to_F64);
+    let r: ReaderT I64 IO F64 = ask.map(f64);
     let r: ReaderT I64 IOFail String = r.map_reader_t(lift >> map(to_string));
     let expected = "123.000000";
     let actual = *r.run_reader_t(123);
@@ -122,7 +122,7 @@ test_with_reader_t: TestCase;
 test_with_reader_t = (
     make_test("test_with_reader_t") $ |_|
     let r: ReaderT F64 IOFail String = ask.map(to_string);
-    let r: ReaderT I64 IOFail String = r.with_reader_t(to_F64);
+    let r: ReaderT I64 IOFail String = r.with_reader_t(f64);
     let expected = "123.000000";
     let actual = *r.run_reader_t(123);
     assert_equal("eq", expected, actual)

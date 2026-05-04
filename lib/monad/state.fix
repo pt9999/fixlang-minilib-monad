@@ -83,7 +83,7 @@ state = make_state_monad;
 //         State::mod_state(concat(" world"));;
 //         pure $ 42
 //     };
-//     let (str, i64) = *sm.run_state_t("hello");  // returns ("hello world", 42)
+//     let (str, i64val) = *sm.run_state_t("hello");  // returns ("hello world", 42)
 // ```
 run_state_t: [m: Monad] s -> StateT s m a -> m (s, a);
 run_state_t = |s, ma| (ma.@data)(s);

@@ -121,7 +121,7 @@ test_writer_monad2_perf = (
             do {
                 pure();;
                 let (arr, a) = ma.run_writer;
-                let n = arr.get_size;
+                let n = arr.@size;
                 pure $ (arr.get_sub(n-k, n), a)
             }
         ).lift;

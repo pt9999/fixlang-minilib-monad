@@ -60,9 +60,9 @@ test_lift_t = (
     make_test("test_lift_t") $ |_|
     let oma: OptionT (StateT I64 IOFail) String = do {
         lift_t $ do {
-            let i64 = *get_state;
+            let v = *get_state;
             println("message from test_lift_t").lift_io;;
-            put_state(i64 + 1)
+            put_state(v + 1)
         };;
         some("abc").lift_option
     };

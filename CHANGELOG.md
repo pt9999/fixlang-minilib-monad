@@ -5,6 +5,7 @@
   - `Cont::lift_cont`
   - `Reader::read`
   - `Writer::write`
+- Modified some code to remove the deprecation warnings.
 
 ## 0.11.4
 ### Changed
