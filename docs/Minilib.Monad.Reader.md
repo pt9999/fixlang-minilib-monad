@@ -1,6 +1,6 @@
 # Minilib.Monad.Reader
 
-Defined in minilib-monad@0.11.4
+Defined in minilib-monad@0.11.5
 
 Reader monad.
 
@@ -37,6 +37,8 @@ Type: `[m : Std::Monad, n : Std::Monad] (m a -> n b) -> Minilib.Monad.Reader::Re
 Maps an underlying monad and a value using the specified function.
 
 #### read
+
+**Deprecated**: Use `MonadReaderIF::ask` instead.
 
 Type: `[m : Std::Monad] Minilib.Monad.Reader::ReaderT e m e`
 

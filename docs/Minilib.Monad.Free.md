@@ -1,6 +1,6 @@
 # Minilib.Monad.Free
 
-Defined in minilib-monad@0.11.4
+Defined in minilib-monad@0.11.5
 
 Free Monad.
 

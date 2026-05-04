@@ -1,6 +1,6 @@
 # Minilib.Monad.State
 
-Defined in minilib-monad@0.11.4
+Defined in minilib-monad@0.11.5
 
 State Monad which maintains a mutable state.
 
@@ -151,7 +151,7 @@ Example:
         State::mod_state(concat(" world"));;
         pure $ 42
     };
-    let (str, i64) = *sm.run_state_t("hello");  // returns ("hello world", 42)
+    let (str, i64val) = *sm.run_state_t("hello");  // returns ("hello world", 42)
 ```
 
 #### state

@@ -1,6 +1,6 @@
 # Minilib.Monad.Writer
 
-Defined in minilib-monad@0.11.4
+Defined in minilib-monad@0.11.5
 
 Writer monad.
 
@@ -53,6 +53,8 @@ Type: `[m : Std::Monad] Minilib.Monad.Writer::WriterT e m a -> m (e, a)`
 Runs a generic writer monad to get an enviroment and a value.
 
 #### write
+
+**Deprecated**: Use `MonadWriterIF::tell` instead.
 
 Type: `[e : Minilib.Trait.Monoid::Monoid, m : Std::Monad] e -> Minilib.Monad.Writer::WriterT e m ()`
 
