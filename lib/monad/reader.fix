@@ -67,6 +67,7 @@ run_reader_t = |e, rma| (rma.@data)(e);
 run_reader: e -> Reader e a -> a;
 run_reader = |e, rma| rma.run_reader_t(e).get;
 
+DEPRECATED[read, "Use `MonadReaderIF::ask` instead."];
 // A reader monad that returns the environment as a value.
 read: [m: Monad] ReaderT e m e;
 read = reader_t $ |e| pure $ e;

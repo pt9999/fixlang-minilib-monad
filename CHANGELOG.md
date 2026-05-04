@@ -1,3 +1,10 @@
+## 0.11.5
+### Changed
+- Added `DEPRECATED` pragmas to following functions.
+  - `Cont::lift_cont`
+  - `Reader::read`
+  - `Writer::write`
+
 ## 0.11.4
 ### Changed
 - Upgraded to minilib-common@0.13.1.

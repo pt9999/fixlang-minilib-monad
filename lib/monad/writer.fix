@@ -51,6 +51,7 @@ run_writer_t = @data;
 run_writer: Writer e a -> (e, a);
 run_writer = run_writer_t >> Iden::get;
 
+DEPRECATED[write, "Use `MonadWriterIF::tell` instead."];
 // Creates a writer monad that appends to the environment.
 write: [e: Monoid, m: Monad] e -> WriterT e m ();
 write = |e| writer_t $ pure $ (e, ());
@@ -97,7 +98,7 @@ impl [e: Monoid, m: Monad] WriterT e m: MonadWriterIF {
     // The type of the environment.
     type EnvType (WriterT e m) = e;
     // Tells specified value to the internal environment.
-    tell = write;
+    tell = |e| writer_t $ pure $ (e, ());
     // Listens the internal environment.
     listen = |wma| writer_t $ do {
         let (e, x) = *wma.run_writer_t;

@@ -68,9 +68,8 @@ map_cont_t = |f, cm| cont_t $ |fa_r| cm.run_cont_t(fa_r).bind(f >> pure);
 map_cont: (r -> r) -> Cont r a -> Cont r a;
 map_cont = |f, cm| cont $ |fa_r| cm.run_cont(fa_r).f;
 
-// Deprecated: Please use `MonadTrans::lift_t`.
-//
 // Lifts an underlying monad to a continuation monad.
+DEPRECATED[lift_cont, "Use `MonadTrans::lift_t` instead."];
 lift_cont: [m: Monad] m a -> ContT r m a;
 lift_cont = lift_t;
 
