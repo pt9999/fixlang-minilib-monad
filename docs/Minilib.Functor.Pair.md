@@ -1,6 +1,6 @@
 # Minilib.Functor.Pair
 
-Defined in minilib-monad@0.11.5
+Defined in minilib-monad@0.12.0
 
 ## Values
 
