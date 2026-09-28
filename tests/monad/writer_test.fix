@@ -85,7 +85,7 @@ test_map_writer_t = (
         tell(["log2"]);;
         pure("f64val=" + f64val.to_string)
     };
-    assert_equal("eq", (["log0","log1","log2"], "f64val=3.000000"), *w2.run_writer_t)
+    assert_equal("eq", (["log0","log1","log2"], "f64val=3.0"), *w2.run_writer_t)
 );
 
 test_writer_trans: TestCase;
