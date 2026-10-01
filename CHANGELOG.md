@@ -1,3 +1,8 @@
+## 0.12.1
+### Changed
+- Updated several testcases to reflect the specification changes in Fix v1.5.0.
+  - The result of `24.0.to_string` is now "24.0" instead of "24.000000".  See https://github.com/tttmmmyyyy/fixlang/pull/670
+
 ## 0.12.0
 ### Changed
 - Merged PR#2 (thanks to tttmmmyyyy san).
