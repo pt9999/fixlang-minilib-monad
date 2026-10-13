@@ -1,6 +1,6 @@
 # Minilib.Monad.Yield
 
-Defined in minilib-monad@0.12.1
+Defined in minilib-monad@0.13.0
 
 A simple generator monad.
 
