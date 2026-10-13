@@ -1,11 +1,12 @@
 // Continuation Monad.
 module Minilib.Monad.Cont;
 
-import Minilib.Common.Common;
-import Minilib.Monad.Error;
-import Minilib.Monad.Iden;
-import Minilib.Monad.IO;
-import Minilib.Monad.Trans;
+import Minilib.Common.Common::id;
+import Minilib.Monad.Error::{MonadError, MonadErrorIF, MonadErrorIF::{catch, error}};
+import Minilib.Monad.IO::{MonadIO, MonadIOFail, MonadIOFailIF, MonadIOIF, MonadIOFailIF::lift_iofail, MonadIOIF::lift_io};
+import Minilib.Monad.Iden::{get, make, Iden};
+import Minilib.Monad.Trans::{MonadTrans, MonadTrans::lift_t};
+import Std::{Functor, Monad, Monad::{bind, pure}};
 
 // A trait for the interface of generic continuation  monads.
 trait MonadCont = Monad + MonadContIF;

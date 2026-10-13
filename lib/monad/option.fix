@@ -1,9 +1,10 @@
 // A monad transformer that wraps `m (Option a)`.
 module Minilib.Monad.Option;
 
-import Minilib.Monad.Error;
-import Minilib.Monad.Trans;
-import Minilib.Monad.IO;
+import Minilib.Monad.Error::{MonadError, MonadErrorIF, MonadErrorIF::{catch, error}};
+import Minilib.Monad.IO::{MonadIO, MonadIOFail, MonadIOFailIF, MonadIOIF, MonadIOFailIF::lift_iofail, MonadIOIF::lift_io};
+import Minilib.Monad.Trans::{MonadTrans, MonadTrans::lift_t};
+import Std::{Functor, Monad, Option, Functor::map, Monad::{bind, pure}, Option::{none, some}};
 
 // A monad transformer that wraps `m (Option a)`.
 // This represents an optional value which may or may not exist.

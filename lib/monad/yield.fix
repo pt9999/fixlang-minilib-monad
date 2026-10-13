@@ -19,6 +19,11 @@
 // ```
 module Minilib.Monad.Yield;
 
+import Std::{
+    loop, Array, Functor, I64, Iterator, Monad, Array::{@size, push_back}, LoopState::{break, continue}, 
+    Monad::{bind, pure}, Option::{none, some}
+};
+
 // A trait for the interface of generic generator monads.
 trait MonadYield = Functor + Monad + MonadYieldIF;
 

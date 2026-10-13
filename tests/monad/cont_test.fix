@@ -1,11 +1,18 @@
 module ContTest;
 
-import Minilib.Common.IORef;
-import Minilib.Monad.Cont;
-import Minilib.Monad.Error;
-import Minilib.Monad.IO;
-import Minilib.Monad.Trans;
-import Minilib.Testing.UnitTest;
+import Minilib.Common.IORef::IORef::{get, make, put};
+import Minilib.Monad.Cont::{
+    cont, cont_t, eval_cont, eval_cont_t, map_cont, map_cont_t, run_cont, run_cont_t, Cont, ContT, 
+    MonadCont, MonadContIF::call_cc
+};
+import Minilib.Monad.Error::MonadErrorIF::{catch, error};
+import Minilib.Monad.IO::{MonadIOFailIF::lift_iofail, MonadIOIF::lift_io};
+import Minilib.Monad.Trans::MonadTrans::lift_t;
+import Minilib.Testing.UnitTest::{assert_equal, make_test, run_test_driver, TestCase};
+import Std::{
+    loop_m, Array, I64, IO, String, Array::{@, append}, Functor::map, IO::{IOFail, IOFail::lift}, 
+    LoopState::{break_m, continue_m}, Monad::pure, String::concat, ToString::to_string
+};
 
 test_cont_functor: TestCase;
 test_cont_functor = (

@@ -1,8 +1,9 @@
 module IdenTest;
 
+import Minilib.Monad.Iden::{get, identity, lift_identity, make, run_identity};
+import Minilib.Testing.UnitTest::{assert_equal, make_test, run_test_driver, TestCase, TestCase::empty};
+import Std::{IO, Add::add, Functor::map, Monad::pure, ToString::to_string};
 
-import Minilib.Monad.Iden;
-import Minilib.Testing.UnitTest;
 
 test_identity_functor: TestCase;
 test_identity_functor = (

@@ -1,6 +1,8 @@
 // Identity monad
 module Minilib.Monad.Iden;
 
+import Std::{Identity, Monad, Identity::@data, Monad::pure};
+
 // The identity monad, which is an alias for `Std::Identity`.
 type Iden = Std::Identity;
 

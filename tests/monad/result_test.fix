@@ -1,16 +1,21 @@
 module ResultTest;
 
-import Minilib.Common.IORef;
-import Minilib.Monad.Result;
-import Minilib.Monad.Trans;
-import Minilib.Monad.Error;
-import Minilib.Monad.IO;
-import Minilib.Monad.Reader;
-import Minilib.Monad.State;
-import Minilib.Trait.Traversable;
-//import Minilib.Text.StringEx;
-import Minilib.Testing.UnitTest;
+import Minilib.Common.IORef::{IORef, IORef::{get, make, mod, put}};
+import Minilib.Monad.Error::MonadErrorIF::{catch, error};
+import Minilib.Monad.IO::{MonadIOFailIF::lift_iofail, MonadIOIF::lift_io};
+import Minilib.Monad.Reader::{run_reader_t, ReaderT, MonadReaderIF::{ask, local}};
+import Minilib.Monad.Result::{map_result_t, result_t, run_result_t, ResultT, ResultT::{from_iofail, to_iofail}};
+import Minilib.Monad.State::{mod_state, run_state_t, StateT, MonadStateIF::{get_state, put_state}};
+import Minilib.Monad.Trans::MonadTrans::lift_t;
+import Minilib.Testing.UnitTest::{assert_equal, make_test, run_test_driver, TestCase};
+import Std::{
+    Array, ErrMsg, I64, IO, Option, Result, String, U64, FFI::CInt, Functor::map, 
+    IO::{println, IOFail, IOFail::{lift, throw, to_result, try}}, Monad::{bind, pure}, 
+    Option::{none, some}, Result::{err, ok}, String::concat, ToCInt::c_int, ToString::to_string, 
+    ToU64::u64
+};
 
+//import Minilib.Text.StringEx;
 test_map_result_t: TestCase;
 test_map_result_t = (
     make_test("test_map_result_t") $ |_|

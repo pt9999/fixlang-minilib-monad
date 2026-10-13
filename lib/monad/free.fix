@@ -14,7 +14,8 @@
 // - [Haskell for all: Why free monads matter](https://www.haskellforall.com/2012/06/you-could-have-invented-free-monads.html)
 module Minilib.Monad.Free;
 
-import Minilib.Monad.IO;
+import Minilib.Monad.IO::{MonadIOFailIF, MonadIOIF, MonadIOFailIF::lift_iofail, MonadIOIF::lift_io};
+import Std::{Functor, Monad, Functor::map, Monad::bind};
 
 // The type of Free Monad
 type [f: *->*] Free f a = box union {

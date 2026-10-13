@@ -1,5 +1,7 @@
 module Minilib.Functor.Pair;
 
+import Std::{Functor, Functor::map};
+
 // A functor on the right component. This is same as `Tuple2`.
 type PairR l r = unbox struct {
     data: (l, r)

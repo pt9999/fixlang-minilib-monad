@@ -1,10 +1,13 @@
 module MonoidTest;
 
+import Minilib.Testing.UnitTest::{assert_equal, make_test, run_test_driver, TestCase};
+import Minilib.Trait.Monoid::{mconcat, MEmpty::mempty};
+import Minilib.Trait.Semigroup::Semigroup::sappend;
+import Std::{
+    Array, I64, IO, Option, String, Array::to_iter, Iterator::{fold_m, to_array, to_dyn, DynIterator}, 
+    Monad::pure, Option::{none, some}, ToString::to_string
+};
 
-import Minilib.Trait.Semigroup;
-import Minilib.Trait.Monoid;
-import Minilib.Text.StringEx;
-import Minilib.Testing.UnitTest;
 
 test_mconcat: TestCase;
 test_mconcat = (

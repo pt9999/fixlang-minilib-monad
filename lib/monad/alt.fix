@@ -1,11 +1,16 @@
 // The interface and implementations of Alternative Monad (`MonadAlt`), which is either a success or a failure.
 module Minilib.Monad.Alt;
 
-import Minilib.Monad.State;
-import Minilib.Monad.Trans;
-import Minilib.Monad.Error;
-import Minilib.Monad.Option;
-import Minilib.Monad.Result;
+import Minilib.Monad.Error::MonadErrorIF::catch;
+import Minilib.Monad.Option::{option_t, run_option_t, OptionT};
+import Minilib.Monad.Result::{result_t, run_result_t, ResultT};
+import Minilib.Monad.State::{make_state_t_monad, run_state_t, StateT};
+import Minilib.Monad.Trans::MonadTrans::lift_t;
+import Std::{
+    fix, Array, Bool, Functor, Monad, Option, Result, Zero, Array::{push_back, to_iter}, Functor::map, 
+    IO::{IOFail, IOFail::throw}, Iterator::fold, Monad::pure, Option::{is_some, none, some}, 
+    Result::{err, is_ok}, Zero::zero
+};
 
 trait MonadAlt = Monad + Functor + MonadAltIF;
 

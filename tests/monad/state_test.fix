@@ -1,13 +1,22 @@
 module StateTest;
 
+import Minilib.Monad.Error::MonadErrorIF::{catch, error};
+import Minilib.Monad.IO::{MonadIOFailIF::lift_iofail, MonadIOIF::lift_io};
+import Minilib.Monad.Iden::{get, Iden};
+import Minilib.Monad.State::{
+    eval_state, eval_state_t, exec_state, exec_state_t, lens_state, lens_state_t, make_state_monad, 
+    map_state_t, mod_state, run_state, run_state_t, State, StateT, MonadStateIF::{get_state, put_state}, 
+    SVar::{get, make, mod, set, whole_state}
+};
+import Minilib.Testing.UnitTest::{assert_equal, make_test, run_test_driver, TestCase, TestCase::empty};
+import Minilib.Trait.Traversable::foreach_m;
+import Std::{
+    Array, ErrMsg, I32, I64, IO, Result, String, Add::add, 
+    Array::{@, @size, act, push_back, set, to_iter}, Debug::assert_unique_array, Functor::map, 
+    IO::{IOFail, IOFail::{lift, to_result}}, Iterator::{range, sum}, Monad::pure, Result::{err, ok}, 
+    String::@size, ToI32::i32, ToString::to_string
+};
 
-import Minilib.Monad.Iden;
-import Minilib.Monad.State;
-import Minilib.Monad.Error;
-import Minilib.Monad.IO;
-import Minilib.Text.StringEx;
-import Minilib.Testing.UnitTest;
-import Minilib.Trait.Traversable;
 
 test_state_functor: TestCase;
 test_state_functor = (

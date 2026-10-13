@@ -1,6 +1,8 @@
 // Trait for a monad transformer.
 module Minilib.Monad.Trans;
 
+import Std::Monad;
+
 // Trait for a monad transformer.
 trait [t: (* -> *) -> * -> *] t: MonadTrans {
     // Lifts an underlying monad to a transformed monad.

@@ -1,11 +1,16 @@
 module OptionTest;
 
-import Minilib.Monad.Option;
-import Minilib.Monad.State;
-import Minilib.Monad.IO;
-import Minilib.Monad.Trans;
-import Minilib.Monad.Error;
-import Minilib.Testing.UnitTest;
+import Minilib.Monad.Error::MonadErrorIF::{catch, error};
+import Minilib.Monad.IO::{MonadIOFailIF::lift_iofail, MonadIOIF::lift_io};
+import Minilib.Monad.Option::{lift_option, option_t, run_option_t, OptionT};
+import Minilib.Monad.State::{run_state_t, StateT, MonadStateIF::{get_state, put_state}};
+import Minilib.Monad.Trans::MonadTrans::lift_t;
+import Minilib.Testing.UnitTest::{assert_equal, make_test, run_test_driver, TestCase};
+import Std::{
+    Array, ErrMsg, I64, IO, Option, Result, String, Functor::map, 
+    IO::{println, IOFail, IOFail::{lift, throw, to_result}}, Monad::{bind, pure}, Option::{none, some}, 
+    Result::{err, ok}, ToString::to_string
+};
 
 test_lift_option: TestCase;
 test_lift_option = (

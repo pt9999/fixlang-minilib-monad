@@ -1,14 +1,16 @@
 module WriterTest;
 
+import Minilib.Monad.Error::MonadErrorIF::{catch, error};
+import Minilib.Monad.IO::{MonadIOFailIF::lift_iofail, MonadIOIF::lift_io};
+import Minilib.Monad.Trans::MonadTrans::lift_t;
+import Minilib.Monad.Writer::{map_writer_t, run_writer, run_writer_t, writer, WriterT, MonadWriterIF::{listen, pass, tell}};
+import Minilib.Testing.UnitTest::{assert_equal, make_test, run_test_driver, TestCase};
+import Std::{
+    Array, ErrMsg, F64, I64, IO, String, Add::add, Functor::map, 
+    IO::{IOFail, IOFail::{lift, throw, to_result}}, Monad::pure, Result::{err, ok}, ToF64::f64, 
+    ToString::to_string
+};
 
-import Minilib.Monad.Writer;
-import Minilib.Monad.Trans;
-import Minilib.Monad.Error;
-import Minilib.Monad.IO;
-import Minilib.Trait.Monoid;
-import Minilib.Trait.Semigroup;
-import Minilib.Text.StringEx;
-import Minilib.Testing.UnitTest;
 
 test_writer_functor: TestCase;
 test_writer_functor = (

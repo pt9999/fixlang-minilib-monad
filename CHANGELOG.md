@@ -1,6 +1,7 @@
 ## 0.13.0
 ### Changed
 - fixproj.toml: Bumped `fix_version` to 1.6.0. Depends on minilib-common@0.15.0.
+- Reorganized imports using `fix edit explicit-import`.
 
 ## 0.12.1
 ### Changed

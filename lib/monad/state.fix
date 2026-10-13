@@ -14,11 +14,12 @@
 // ```
 module Minilib.Monad.State;
 
-import Minilib.Functor.Pair;
-import Minilib.Monad.Iden;
-import Minilib.Monad.Trans;
-import Minilib.Monad.Error;
-import Minilib.Monad.IO;
+import Minilib.Functor.Pair::{PairLT, PairLT::{get, make}};
+import Minilib.Monad.Error::{MonadError, MonadErrorIF, MonadErrorIF::{catch, error}};
+import Minilib.Monad.IO::{MonadIO, MonadIOFail, MonadIOFailIF, MonadIOIF, MonadIOFailIF::lift_iofail, MonadIOIF::lift_io};
+import Minilib.Monad.Iden::{get, Iden};
+import Minilib.Monad.Trans::{MonadTrans, MonadTrans::lift_t};
+import Std::{Functor, Monad, Result, Monad::{bind, pure}, Result::{as_err, as_ok, err, ok}};
 
 // A trait for the interface of generic state monads.
 trait MonadState = Monad + MonadStateIF;

@@ -1,13 +1,15 @@
 module YieldTest;
 
-import Minilib.Common.IteratorEx;
-import Minilib.Common.TimeEx;
-import Minilib.Monad.Yield;
-import Minilib.Monad.Writer;
-import Minilib.Text.StringEx;
-import Minilib.Testing.UnitTest;
-import Minilib.Trait.Traversable;
-import Minilib.Trait.Monoid;
+import Minilib.Common.IteratorEx::drop;
+import Minilib.Common.TimeEx::timeit_io;
+import Minilib.Monad.Yield::{collect_yield, fold_yield, take_array, Yield, MonadYieldIF::yield};
+import Minilib.Testing.UnitTest::{assert_equal, make_test, run_test_driver, TestCase};
+import Minilib.Text.StringEx::Format::format;
+import Minilib.Trait.Traversable::foreach_m;
+import Std::{
+    fix, I64, IO, String, ToString, Add::add, Array::push_back, Functor::map, IO::IOFail::lift, 
+    Iterator::{fold, fold_m, map, range, to_array}, Monad::{pure, unless, when}, ToString::to_string
+};
 
 test_simple: TestCase;
 test_simple = (

@@ -3,12 +3,13 @@
 // For details, see [blog post: The Reader and Writer Monads and Comonads](https://www.olivierverdier.com/posts/2014/12/31/reader-writer-monad-comonad/).
 module Minilib.Monad.Writer;
 
-import Minilib.Monad.Iden;
-import Minilib.Monad.Trans;
-import Minilib.Monad.Error;
-import Minilib.Monad.IO;
-import Minilib.Trait.Monoid;
-import Minilib.Trait.Semigroup;
+import Minilib.Monad.Error::{MonadError, MonadErrorIF, MonadErrorIF::{catch, error}};
+import Minilib.Monad.IO::{MonadIO, MonadIOFail, MonadIOFailIF, MonadIOIF, MonadIOFailIF::lift_iofail, MonadIOIF::lift_io};
+import Minilib.Monad.Iden::{get, make, Iden};
+import Minilib.Monad.Trans::{MonadTrans, MonadTrans::lift_t};
+import Minilib.Trait.Monoid::{Monoid, MEmpty::mempty};
+import Minilib.Trait.Semigroup::Semigroup::sappend;
+import Std::{Functor, Monad, Monad::{bind, pure}, Tuple2::{@0, @1}};
 
 // A trait for the interface of generic writer monads.
 trait MonadWriter = Monad + MonadWriterIF;

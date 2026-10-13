@@ -1,19 +1,19 @@
 module Test;
 
-import Minilib.Testing.UnitTest;
-
-import PairTest;
-import AltTest;
-import ContTest;
-import FreeTest;
-import IdenTest;
-import OptionTest;
-import ReaderTest;
-import ResultTest;
-import StateTest;
-import WriterTest;
-import YieldTest;
-import MonoidTest;
+import AltTest::main;
+import ContTest::main;
+import FreeTest::main;
+import IdenTest::main;
+import Minilib.Testing.UnitTest::{TestSuite, TestSuite::run};
+import MonoidTest::main;
+import OptionTest::main;
+import PairTest::main;
+import ReaderTest::main;
+import ResultTest::main;
+import StateTest::main;
+import Std::IO;
+import WriterTest::main;
+import YieldTest::main;
 
 testsuite: TestSuite;
 testsuite = [

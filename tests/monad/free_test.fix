@@ -1,14 +1,19 @@
 module FreeTest;
 
-import Minilib.Common.Common;
-import Minilib.Common.IORef;
-import Minilib.Common.TimeEx;
-import Minilib.Monad.Free;
-import Minilib.Monad.IO;
-import Minilib.Monad.Error;
-import Minilib.Monad.State;
-import Minilib.Text.StringEx;
-import Minilib.Testing.UnitTest;
+import Minilib.Common.Common::{id, swap};
+import Minilib.Common.IORef::{IORef, IORef::{get, make, mod}};
+import Minilib.Common.TimeEx::consumed_realtime_while_io;
+import Minilib.Monad.Free::{Free, Free::{as_f_functor, as_f_pure, is_f_functor, is_f_pure, lift_f}};
+import Minilib.Monad.IO::{emprintln, MonadIOFailIF, MonadIOIF, MonadIOFailIF::lift_iofail};
+import Minilib.Monad.State::{exec_state_t, make_state_t_monad, mod_state, StateT};
+import Minilib.Testing.UnitTest::{assert_equal, assert_true, make_test, run_test_driver, TestCase};
+import Minilib.Text.StringEx::Format::format;
+import Std::{
+    loop_m, Array, Functor, I64, IO, Monad, Option, String, 
+    Array::{@, @size, fill, get_last, pop_back, push_back, reverse}, Functor::map, 
+    IO::{IOFail, IOFail::{from_result, lift, to_result}}, LoopState::{break_m, continue_m}, 
+    Monad::{bind, pure}, Option::{as_some, is_some, none, some}, ToString::to_string
+};
 
 test_free_lift_f: TestCase;
 test_free_lift_f = (

@@ -5,7 +5,11 @@
 // For details, see [Wikipedia: Monoid](https://en.wikipedia.org/wiki/Monoid).
 module Minilib.Trait.Monoid;
 
-import Minilib.Trait.Semigroup;
+import Minilib.Trait.Semigroup::{Semigroup, Semigroup::sappend};
+import Std::{
+    Array, Iterator, Option, String, Iterator::{fold, DynIterator, Item, DynIterator::empty}, 
+    Option::none
+};
 
 // A trait that represents an identity of a monoid.
 trait a: MEmpty {

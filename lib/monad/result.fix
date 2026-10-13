@@ -1,11 +1,15 @@
 // A monad transformer that wraps `m (Result e a)`.
 module Minilib.Monad.Result;
 
-import Minilib.Monad.Trans;
-import Minilib.Monad.Error;
-import Minilib.Monad.Reader;
-import Minilib.Monad.State;
-import Minilib.Monad.IO;
+import Minilib.Monad.Error::MonadErrorIF;
+import Minilib.Monad.IO::{MonadIO, MonadIOFailIF, MonadIOIF, MonadIOIF::lift_io};
+import Minilib.Monad.Reader::{MonadReader, MonadReaderIF, MonadReaderIF::{ask, local, EnvType}};
+import Minilib.Monad.State::{MonadState, MonadStateIF, MonadStateIF::{get_state, mod_state_, put_state, StateType}};
+import Minilib.Monad.Trans::{MonadTrans, MonadTrans::lift_t};
+import Std::{
+    ErrMsg, Functor, IO, Monad, Result, Functor::map, IO::{IOFail, IOFail::{from_io_result, to_result}}, 
+    Monad::{bind, pure}, Result::{as_err, as_ok, err, is_err, is_ok, ok}
+};
 
 // A monad transformer that wraps `m (Result e a)`.
 // This represents an operation result (success or error).

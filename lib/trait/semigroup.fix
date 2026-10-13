@@ -6,6 +6,11 @@
 // For details, see [Wikipedia: Semigroup](https://en.wikipedia.org/wiki/Semigroup).
 module Minilib.Trait.Semigroup;
 
+import Std::{
+    Array, Option, String, Array::append, Iterator::{append, to_dyn, DynIterator}, 
+    Option::{as_some, is_none, some}, String::concat
+};
+
 // A trait that represents a semigroup.
 trait a: Semigroup {
     // `a.sappend(b)` appends `b` after `a`.

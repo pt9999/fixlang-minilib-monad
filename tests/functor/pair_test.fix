@@ -1,7 +1,8 @@
 module PairTest;
 
-import Minilib.Functor.Pair;
-import Minilib.Testing.UnitTest;
+import Minilib.Functor.Pair::{PairL::{get, make}, PairLT::{get, make}, PairR::{get, make}, PairRT::{get, make}};
+import Minilib.Testing.UnitTest::{assert_equal, make_test, run_test_driver, TestCase};
+import Std::{IO, Functor::map, Monad::pure, ToString::to_string};
 
 test_pair_r_functor: TestCase;
 test_pair_r_functor = (

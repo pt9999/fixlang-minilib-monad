@@ -1,12 +1,17 @@
 module AltTest;
 
-import Minilib.Monad.Alt;
-import Minilib.Monad.State;
-import Minilib.Monad.Option;
-import Minilib.Monad.Result;
-import Minilib.Monad.Trans;
-import Minilib.Testing.UnitTest;
-import Minilib.Trait.Traversable;
+import Minilib.Monad.Alt::{filter, guard, if_exists, one_or_more, try_all, try_first, zero_or_more, MonadAltIF::{fail, or_else}};
+import Minilib.Monad.Option::{option_t, run_option_t, OptionT};
+import Minilib.Monad.Result::{result_t, run_result_t, ResultT};
+import Minilib.Monad.State::{run_state, run_state_t, State, StateT, MonadStateIF::{get_state, put_state}};
+import Minilib.Monad.Trans::MonadTrans::lift_t;
+import Minilib.Testing.UnitTest::{assert_equal, make_test, run_test_driver, TestCase};
+import Minilib.Trait.Traversable::Traversable::sequence;
+import Std::{
+    Array, ErrMsg, I64, IO, Option, Result, String, Array::{fill, from_map}, Functor::{forget, map}, 
+    IO::{IOFail, IOFail::{lift, throw, to_result}}, Iterator::{map, range_step, to_array}, Monad::pure, 
+    Option::{as_some_or, none, some}, Result::{err, ok}, String::{@size, get_sub}, ToString::to_string
+};
 
 test_option: TestCase;
 test_option = (
