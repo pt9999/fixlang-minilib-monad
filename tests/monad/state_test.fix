@@ -55,7 +55,7 @@ test_mod_state = (
         let s = assert_unique_array(|_| "state is not unique!", s);
         s.set(0, 42)
     );
-    assert_equal("eq", ([42, 1, 2], ()), sm.run_state([0, 1, 2]))
+    assert_equal("eq", ([42, 1, 2], ()), sm.run_state([0, 1, 2] + []))
 );
 
 test_eval_exec_state_t: TestCase;

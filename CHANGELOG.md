@@ -1,6 +1,8 @@
 ## 0.13.0
 ### Changed
 - fixproj.toml: Bumped `fix_version` to 1.6.0. Depends on minilib-common@0.15.0.
+- Updated state_test.fix to reflect the specification changes in Fix v1.6.0.
+  - A constant array in a function is now not necessarily unique.
 - Reorganized imports using `fix edit explicit-import`.
 
 ## 0.12.1
